@@ -12,9 +12,9 @@ public class EmployeDaoImpl implements EmployeDao {
     public static List<Employe> employes = new ArrayList<Employe>();
 
     static {
-        employes.add(new Employe(1, "René", "de Possel 2"));
-        employes.add(new Employe(2, "Claude", "Pair"));
-        employes.add(new Employe(3, "Blaise", "Pascal"));
+        employes.add(new Employe(1, "René", "de Possel 2", 15));
+        employes.add(new Employe(2, "Claude", "Pair", 17));
+        employes.add(new Employe(3, "Blaise", "Pascal", 4));
     }
     @Override
     public List<Employe> findAll() {
@@ -34,9 +34,10 @@ public class EmployeDaoImpl implements EmployeDao {
     }
 
     @Override
-    public void save(Employe employe) {
+    public Employe save(Employe employe) {
 
         employes.add(employe);
+        return employe;
 
     }
 }

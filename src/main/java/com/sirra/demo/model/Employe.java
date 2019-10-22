@@ -1,18 +1,24 @@
 package com.sirra.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = {"note", "id"})
 public class Employe {
     private int id;
     private String prenom;
     private String nom;
+    private int note;
 
     public Employe() {
 
     }
 
-    public Employe(int id, String prenom, String nom) {
+    public Employe(int id, String prenom, String nom, int note) {
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;
+        this.note = note;
     }
 
     public int getId() {
@@ -39,12 +45,21 @@ public class Employe {
         this.nom = nom;
     }
 
+    public int getNote() {
+        return note;
+    }
+
+    public void setNote(int note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         return "Employe{" +
                 "id=" + id +
                 ", prenom='" + prenom + '\'' +
                 ", nom='" + nom + '\'' +
+                ", note=" + note +
                 '}';
     }
 }
