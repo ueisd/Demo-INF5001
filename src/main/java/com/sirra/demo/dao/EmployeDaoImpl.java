@@ -23,11 +23,20 @@ public class EmployeDaoImpl implements EmployeDao {
 
     @Override
     public Employe getById(int id) {
+
+        for (Employe employe : employes) {
+            if(employe.getId() == id) {
+                return employe;
+            }
+        }
+
         return null;
     }
 
     @Override
     public void save(Employe employe) {
+
+        employes.add(employe);
 
     }
 }
