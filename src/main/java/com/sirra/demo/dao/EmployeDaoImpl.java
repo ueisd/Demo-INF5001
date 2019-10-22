@@ -12,7 +12,7 @@ public class EmployeDaoImpl implements EmployeDao {
     public static List<Employe> employes = new ArrayList<Employe>();
 
     static {
-        employes.add(new Employe(1, "René", "de Possel"));
+        employes.add(new Employe(1, "René", "de Possel 2"));
         employes.add(new Employe(2, "Claude", "Pair"));
         employes.add(new Employe(3, "Blaise", "Pascal"));
     }
