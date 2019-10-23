@@ -1,0 +1,1 @@
+INSERT INTO employe VALUES(2, 'Ordinateur portable' , 120, 'De posssel');

@@ -3,8 +3,15 @@ package com.sirra.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 @JsonIgnoreProperties(value = {"note", "id"})
 public class Employe {
+    @Id
+    @GeneratedValue
     private int id;
     private String prenom;
     private String nom;
