@@ -12,8 +12,6 @@ public class DatabaseConfig {
 
     static {
         config.setJdbcUrl(System.getenv("JDBC_DATABASE_URL"));
-        config.setUsername(System.getenv("JDBC_DATABASE_USERNAME"));
-        config.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
