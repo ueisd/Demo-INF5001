@@ -1,12 +1,14 @@
 package com.sirra.demo.controler;
 
 import com.sirra.demo.dao.EmployeDao;
+import com.sirra.demo.exceptions.EmployeIntrouvableException;
 import com.sirra.demo.model.Employe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -24,14 +26,19 @@ public class EmployeControler {
 
     //Employes/{id}
     @GetMapping(value = "Employes/{id}")
-    public Employe afficherUnEmploye(@PathVariable int id) {
+    public Employe afficherUnEmploye(@PathVariable int id) throws EmployeIntrouvableException {
 
-        return employeDao.findById(id);
+        Employe employe = employeDao.findById(id);
+        if(employe==null) {
+            throw new EmployeIntrouvableException("Le produit avec l'id " + id + " est INTROUVABLE. Écran Bleu si je pouvais.");
+        }
+
+        return employe;
 
     }
 
     @PostMapping(value = "/Employes")
-    public ResponseEntity<Void> ajouterEmploye(@RequestBody Employe employe) {
+    public ResponseEntity<Void> ajouterEmploye(@Valid @RequestBody Employe employe) {
     //public Employe ajouterEmploye(@RequestBody Employe employe) {
 
         Employe employe1 = employeDao.save(employe);
