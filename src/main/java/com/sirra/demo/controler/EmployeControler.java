@@ -26,7 +26,7 @@ public class EmployeControler {
     @GetMapping(value = "Employes/{id}")
     public Employe afficherUnEmploye(@PathVariable int id) {
 
-        return employeDao.getById(id);
+        return employeDao.findById(id);
 
     }
 
@@ -49,6 +49,21 @@ public class EmployeControler {
         return ResponseEntity.created(location).build();
         //return  employeDao.save(employe);
 
+    }
+
+    @PutMapping (value = "/modifier/Employes")
+    public void updateProduit(@RequestBody Employe employe) {
+        employeDao.save(employe);
+    }
+
+    @GetMapping(value = "test/Employe/{noteLimite}")
+    public List<Employe> testDeRequete(@PathVariable int noteLimite) {
+        return employeDao.findByNoteGreaterThan(noteLimite);
+    }
+
+    @DeleteMapping (value = "Delete/Employe/{id}")
+    public void supprimerEmploye(@PathVariable int id) {
+        employeDao.deleteById(id);
     }
 
 

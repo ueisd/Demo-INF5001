@@ -1,5 +1,9 @@
 package com.sirra.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,9 +14,14 @@ public class Employe {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
+    @Column(name = "prenom")
     private String prenom;
+    @Column(name = "nom")
     private String nom;
+    @Column(name = "noteEmp")
     private int note;
 
     public Employe() {
