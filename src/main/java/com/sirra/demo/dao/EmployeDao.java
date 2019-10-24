@@ -1,12 +1,13 @@
 package com.sirra.demo.dao;
 
 import com.sirra.demo.model.Employe;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface EmployeDao {
+public interface EmployeDao  extends JpaRepository<Employe, Integer> {
 
     public List<Employe> findAll();
 
