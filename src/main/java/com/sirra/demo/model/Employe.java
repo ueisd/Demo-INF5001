@@ -12,9 +12,8 @@ import javax.persistence.*;
 public class Employe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false)
-    //@Column(name = "id", unique = true, nullable = false, )
+    @GeneratedValue
+    //@Column(name = "id", updatable = false, nullable = false)
     private int id;
     private String prenom;
     private String nom;

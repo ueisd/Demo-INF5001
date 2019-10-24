@@ -32,6 +32,7 @@ public class EmployeControler {
 
     @PostMapping(value = "/Employes")
     public ResponseEntity<Void> ajouterEmploye(@RequestBody Employe employe) {
+    //public Employe ajouterEmploye(@RequestBody Employe employe) {
 
         Employe employe1 = employeDao.save(employe);
 
@@ -46,6 +47,7 @@ public class EmployeControler {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+        //return  employeDao.save(employe);
 
     }
 
