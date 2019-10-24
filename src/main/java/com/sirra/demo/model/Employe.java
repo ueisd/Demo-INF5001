@@ -2,15 +2,19 @@ package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Generated;
 import org.springframework.context.annotation.Primary;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@JsonIgnoreProperties(value = {"note", "id"})
+//@JsonIgnoreProperties(value = {"note", "id"})
 @Entity
 public class Employe {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", updatable = false, nullable = false)
+    //@Column(name = "id", unique = true, nullable = false, )
     private int id;
     private String prenom;
     private String nom;
