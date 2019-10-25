@@ -3,6 +3,8 @@ package com.sirra.demo.controler;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.EmployeIntrouvableException;
 import com.sirra.demo.model.Employe;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@Api(description = "Gestion des Employes")
 @RestController
 public class EmployeControler {
 
@@ -25,6 +28,7 @@ public class EmployeControler {
     }
 
     //Employes/{id}
+    @ApiOperation(value = "Récupère un employé selon son ID.")
     @GetMapping(value = "Employes/{id}")
     public Employe afficherUnEmploye(@PathVariable int id) throws EmployeIntrouvableException {
 
@@ -37,7 +41,7 @@ public class EmployeControler {
 
     }
 
-    @PostMapping(value = "/Employes")
+    @PostMapping(value = "Employes")
     public ResponseEntity<Void> ajouterEmploye(@Valid @RequestBody Employe employe) {
     //public Employe ajouterEmploye(@RequestBody Employe employe) {
 
@@ -58,20 +62,19 @@ public class EmployeControler {
 
     }
 
-    @PutMapping (value = "/modifier/Employes")
+    @PutMapping (value = "Employes/modifier")
     public void updateProduit(@RequestBody Employe employe) {
         employeDao.save(employe);
+    }
+
+    @DeleteMapping (value = "Employes/Delete/{id}")
+    public void supprimerEmploye(@PathVariable int id) {
+        employeDao.deleteById(id);
     }
 
     @GetMapping(value = "test/Employe/{noteLimite}")
     public List<Employe> testDeRequete(@PathVariable int noteLimite) {
         return employeDao.findByNoteGreaterThan(noteLimite);
     }
-
-    @DeleteMapping (value = "Delete/Employe/{id}")
-    public void supprimerEmploye(@PathVariable int id) {
-        employeDao.deleteById(id);
-    }
-
 
 }
