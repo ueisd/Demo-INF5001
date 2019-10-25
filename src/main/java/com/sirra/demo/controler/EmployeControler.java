@@ -34,7 +34,7 @@ public class EmployeControler {
 
         Employe employe = employeDao.findById(id);
         if(employe==null) {
-            throw new EmployeIntrouvableException("Le produit avec l'id " + id + " est INTROUVABLE. Écran Bleu si je pouvais.");
+            throw new EmployeIntrouvableException("L'employé avec l'id " + id + " est INTROUVABLE.");
         }
 
         return employe;
