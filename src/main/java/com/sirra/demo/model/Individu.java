@@ -15,7 +15,7 @@ public class Individu {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //git @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
     @Column(name = "prenom")
     @Length(min=3, max=20, message="Nom trop long ou trop court")
