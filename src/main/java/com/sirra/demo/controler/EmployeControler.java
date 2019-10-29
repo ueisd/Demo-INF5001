@@ -72,9 +72,9 @@ public class EmployeControler {
         employeDao.deleteById(id);
     }
 
-    @GetMapping(value = "test/Employe/{noteLimite}")
-    public List<Employe> testDeRequete(@PathVariable int noteLimite) {
-        return employeDao.findByNoteGreaterThan(noteLimite);
+    @GetMapping(value = "test/Employe/{id}")
+    public List<Employe> testDeRequete(@PathVariable int id) {
+        return employeDao.findByidGreaterThan(id);
     }
 
 }
