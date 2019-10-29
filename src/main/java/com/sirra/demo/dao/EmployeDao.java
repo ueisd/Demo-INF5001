@@ -13,6 +13,6 @@ public interface EmployeDao  extends JpaRepository<Employe, Integer> {
 
     public Employe findById(int id);
 
-    List<Employe> findByNoteGreaterThan(int noteLimit);
+    List<Employe> findByidGreaterThan(int noteLimit);
 
 }
