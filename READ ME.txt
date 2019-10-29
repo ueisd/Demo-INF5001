@@ -1,0 +1,4 @@
+Notre projet utilise 'SWAGGER' voici le lien de la documentation
+pour utiliser les services disponibles : https://inf5001-demo.herokuapp.com/swagger-ui.html
+
+Le lien pour consulter le projet est https://inf5001-demo.herokuapp.com (Le lien envoie a une erreur , mais les manipulation dans swagger fonctionnent)
