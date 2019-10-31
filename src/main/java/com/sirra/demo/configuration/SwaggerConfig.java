@@ -16,7 +16,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.sirra.demo"))
-                .paths(PathSelectors.regex("/Employes.*|/Individus.*"))
+                .paths(PathSelectors.regex("/Employes.*|/Individus.*|*/Contacts.*"))
                 .build();
     }
 }
