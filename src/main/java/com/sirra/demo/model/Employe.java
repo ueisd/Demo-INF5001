@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Date;
 
@@ -25,8 +22,9 @@ public class Employe {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
-    //a voir le format pour clee etrangere
-    private int idIndividu;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private Individu individu;
 
 
     @Length(min=2, max=30, message="Nom de poste trop long ou trop court")
@@ -77,13 +75,6 @@ public class Employe {
         this.id = id;
     }
 
-    public int getIdIndividu() {
-        return idIndividu;
-    }
-
-    public void setIdIndividu(int idIndividu) {
-        this.idIndividu = idIndividu;
-    }
 
     public String getTitrePoste() {
         return titrePoste;
@@ -209,7 +200,6 @@ public class Employe {
     public String toString() {
         return "Employe{" +
                 "id=" + id +
-                ", idIndividu=" + idIndividu +
                 ", titrePoste='" + titrePoste + '\'' +
                 ", tauxHoraire=" + tauxHoraire +
                 ", superieurImediat='" + superieurImediat + '\'' +

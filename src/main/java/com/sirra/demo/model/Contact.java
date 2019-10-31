@@ -4,10 +4,7 @@ package com.sirra.demo.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -21,7 +18,9 @@ public class Contact {
    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
-    private int idIndividu;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private Individu individu;
 
     @Column (name = "ville")
     @Length(min=5,max=30,message = "Veuillez verifier le nombre de charactere")
@@ -69,6 +68,8 @@ public class Contact {
 
     private Date modifierLe;
 
+
+
     public int getId() {
         return id;
     }
@@ -77,13 +78,7 @@ public class Contact {
         this.id = id;
     }
 
-    public int getIdIndividu() {
-        return idIndividu;
-    }
 
-    public void setIdIndividu(int idIndividu) {
-        this.idIndividu = idIndividu;
-    }
 
     public String getVille() {
         return ville;
@@ -193,7 +188,6 @@ public class Contact {
     public String toString() {
         return "Contact{" +
                 "id=" + id +
-                ", idIndividu=" + idIndividu +
                 ", ville='" + ville + '\'' +
                 ", telPersonnel='" + telPersonnel + '\'' +
                 ", telProfessionel='" + telProfessionel + '\'' +
