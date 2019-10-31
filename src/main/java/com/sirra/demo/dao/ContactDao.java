@@ -16,5 +16,5 @@ public interface ContactDao extends JpaRepository<Contact, Integer> {
     List<Contact> findByidGreaterThan(int noteLimit);
 
 
-    List<Object[]>  chercherLeContactLePlusProchhe(@Param("prixLimit") int prix);
+//mANQUE UNE QUERRY    List<Object[]>  chercherLeContactLePlusProchhe(@Param("prixLimit") int prix);
 }

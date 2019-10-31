@@ -26,9 +26,6 @@ public class Contact {
     @Length(min=5,max=30,message = "Veuillez verifier le nombre de charactere")
     private String ville;
 
-    @Column (name="telPerso")
-    @Length (min=10, max = 20,message = "Veuillez changer le format de 'telephone'")
-    private String telPersonnel;
 
     @Column (name="telProf")
     @Length (min=10, max = 20,message = "Veuillez changer le format de 'telephone'")
@@ -88,13 +85,6 @@ public class Contact {
         this.ville = ville;
     }
 
-    public String getTelPersonnel() {
-        return telPersonnel;
-    }
-
-    public void setTelPersonnel(String telPersonnel) {
-        this.telPersonnel = telPersonnel;
-    }
 
     public String getTelProfessionel() {
         return telProfessionel;
@@ -189,7 +179,6 @@ public class Contact {
         return "Contact{" +
                 "id=" + id +
                 ", ville='" + ville + '\'' +
-                ", telPersonnel='" + telPersonnel + '\'' +
                 ", telProfessionel='" + telProfessionel + '\'' +
                 ", telPerso='" + telPerso + '\'' +
                 ", prenom='" + prenom + '\'' +
