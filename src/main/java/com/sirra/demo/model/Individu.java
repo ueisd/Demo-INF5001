@@ -8,9 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
+import java.util.Date;
 
 @Entity
 public class Individu {
+
+    public Individu() {
+
+    }
 
     @Id
     @GeneratedValue
@@ -25,60 +30,55 @@ public class Individu {
     @Column(name = "nom")
     private String nom;
 
-    @Column(name = "noteEmp")
-    @Min(value = 0)
-    private int note;
+    @Column (name = "ville")
+    @Length(min=5,max=30,message = "Veuillez verifier le nombre de charactere")
+    private String ville;
 
-    public Individu() {
 
-    }
+    @Column (name="telProf")
+    @Length (min=10, max = 20,message = "Veuillez changer le format de 'telephone'")
+    private String telProfessionel;
 
-    public Individu(int id, String prenom, String nom, int note) {
-        this.id = id;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.note = note;
-    }
+    @Column (name="telPerso")
+    @Length (min=10, max = 20,message = "Veuillez changer le format de 'telephone'")
+    private String telPerso;
 
-    public int getId() {
-        return id;
-    }
+    @Column (name = "statut_Civil")
+    private String statutCivil;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Column (name = "nom_Banque")
+    private String succursalBanque;
 
-    public String getPrenom() {
-        return prenom;
-    }
+    @Column (name = "sexe")
+    private String sexe;
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+    @Column (name = "province")
+    private String province;
 
-    public String getNom() {
-        return nom;
-    }
+    @Column (name = "numero_ass_social")
+    private String nas;
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    @Column (name = "language")
+    private String languageCommunication;
 
-    public int getNote() {
-        return note;
-    }
+    @Column (name = "handicap")
+    private String handicap;// aucun ou description
 
-    public void setNote(int note) {
-        this.note = note;
-    }
+    @Column (name = "date_de_naissance")
+    private Date dateNaissance;
 
-    @Override
-    public String toString() {
-        return "Individu{" +
-                "id=" + id +
-                ", prenom='" + prenom + '\'' +
-                ", nom='" + nom + '\'' +
-                ", note=" + note +
-                '}';
-    }
+    @Column (name = "code_Postal")
+    private String codePostal;
+
+    @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    private String creationPar;
+
+    private Date creerLe;
+
+    @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    private String modificationPar;
+
+    private Date modifierLe;
+
+
 }
