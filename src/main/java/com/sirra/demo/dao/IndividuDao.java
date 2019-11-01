@@ -12,6 +12,6 @@ public interface IndividuDao  extends JpaRepository<Individu, Integer> {
 
     public Individu findById(int id);
 
-    List<Employe> findByNoteGreaterThan(int noteLimit);
+    List<Employe> findByIdGreaterThan(int noteLimit);
 
 }
