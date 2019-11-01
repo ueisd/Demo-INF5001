@@ -17,11 +17,14 @@ public class Individu {
     @Column(name = "id")
     //git @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
+
     @Column(name = "prenom")
     @Length(min=3, max=20, message="Nom trop long ou trop court")
     private String prenom;
+
     @Column(name = "nom")
     private String nom;
+
     @Column(name = "noteEmp")
     @Min(value = 0)
     private int note;
