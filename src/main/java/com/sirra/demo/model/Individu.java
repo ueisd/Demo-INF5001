@@ -120,6 +120,7 @@ public class Individu {
         this.ville = ville;
     }
 
+    @ApiModelProperty(example = "1 450 999 9999")
     public String getTelProfessionel() {
         return telProfessionel;
     }
@@ -128,6 +129,7 @@ public class Individu {
         this.telProfessionel = telProfessionel;
     }
 
+    @ApiModelProperty(example = "1 450 999 9999")
     public String getTelPerso() {
         return telPerso;
     }
