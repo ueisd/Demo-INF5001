@@ -1,12 +1,11 @@
 package com.sirra.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Date;
 
@@ -23,9 +22,18 @@ public class Individu {
     //git @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
+    @JsonBackReference
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "employe_id", nullable = false)
+    @ApiModelProperty(notes = "Property linking the userprofile with the user")
+    private Employe employe;
+
+
+
     @Column(name = "prenom")
     @Length(min=3, max=20, message="Nom trop long ou trop court")
     private String prenom;
+
 
     @Column(name = "nom")
     private String nom;

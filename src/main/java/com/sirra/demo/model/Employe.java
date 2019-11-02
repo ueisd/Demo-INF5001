@@ -1,7 +1,9 @@
 package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -22,8 +24,12 @@ public class Employe {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Individu", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "employe")
+    @JsonManagedReference
+    @JsonIgnore
+    @ApiModelProperty(notes = "Variable linking the user with his user profile")
     private Individu individu;
 
 
