@@ -23,7 +23,7 @@ public class Individu {
     private int id;
 
     @JsonBackReference
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL, optional = false)
     @JoinColumn(name = "employe_id", nullable = false)
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
     private Employe employe;

@@ -1,8 +1,9 @@
 package com.sirra.demo.controler;
 
+import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.dao.IndividuDao;
+
 import com.sirra.demo.exceptions.IndividuIntrouvableException;
-import com.sirra.demo.model.Employe;
 import com.sirra.demo.model.Individu;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,9 @@ public class IndividuControler {
 
     @Autowired
     private IndividuDao individuDao;
+
+    @Autowired
+    private EmployeDao employeDao;
 
     @GetMapping(value = "Individus")
     public List<Individu> listeEmployes() {
@@ -54,6 +58,7 @@ public class IndividuControler {
                 .path("/{id}")
                 .buildAndExpand(individu1.getId())
                 .toUri();
+
 
         return ResponseEntity.created(location).build();
     }
