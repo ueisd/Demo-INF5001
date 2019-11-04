@@ -17,7 +17,7 @@ public class Individu {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     //git @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
@@ -26,7 +26,7 @@ public class Individu {
     @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL, optional = false)
     @JoinColumn(name = "employe_id", nullable = false)
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
-    private Employe employe;
+  private Employe employe;
 
 
 

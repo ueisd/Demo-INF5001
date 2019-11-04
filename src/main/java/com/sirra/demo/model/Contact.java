@@ -1,6 +1,7 @@
 package com.sirra.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,13 +14,14 @@ public class Contact {
     public Contact () {}
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy=GenerationType.AUTO)
     @Column(name = "id")
    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JoinColumn(name = "idIndividu", referencedColumnName = "id")
     private Individu individu;
 
     @Column (name = "ville")

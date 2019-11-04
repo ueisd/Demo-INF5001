@@ -11,7 +11,7 @@ public class Diplome {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy=GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 

@@ -15,11 +15,10 @@ import java.util.Date;
 public class Employe {
 
     public Employe() {
-
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy=GenerationType.AUTO)
     @Column(name = "id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
