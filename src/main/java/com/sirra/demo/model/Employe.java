@@ -23,7 +23,7 @@ public class Employe {
     @GeneratedValue
     @Column(name = "id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private int id;
+    int id;
 
     //a voir le format pour clee etrangere
     private int idIndividu;
