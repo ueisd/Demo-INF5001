@@ -28,7 +28,7 @@ public class DiplomeController {
     }
     @PostMapping(value = "Diplomes")
     public ResponseEntity<Void> ajouterDiplome(@Valid @RequestBody Diplome diplome){
-        Diplome diplome1 = (Diplome) diplomeDao.save(diplome);
+        Diplome diplome1 = diplomeDao.save(diplome);
         if(diplome1 == null){
             return ResponseEntity.noContent().build();
         }
