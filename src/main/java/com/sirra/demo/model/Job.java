@@ -13,7 +13,7 @@ public class Job {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "job_id")
     private int id;
 
     @Column(name = "CodeJob")
@@ -52,12 +52,12 @@ public class Job {
 
     private Date modifierLe;
 
-    public int getId() {
+    public int getJobId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setJobId(int jobId) {
+        this.id = jobId;
     }
 
     public String getCodeJob() {

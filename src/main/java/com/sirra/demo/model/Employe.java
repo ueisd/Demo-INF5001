@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -19,7 +20,7 @@ public class Employe {
 
     @Id
     @GeneratedValue (strategy=GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "employe_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
@@ -51,35 +52,46 @@ public class Employe {
 
     private double heureSemaine;
 
-
+    @Temporal(TemporalType.DATE)
     private Date dateSalaire;
 
+    @Temporal(TemporalType.DATE)
     private Date dateFinProbation;
 
+    @Temporal(TemporalType.DATE)
     private Date dateFinPoste;
 
+    @Temporal(TemporalType.DATE)
     private Date dateDebutPoste;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date creerLe;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
 
-
-    public int getId() {
+    public int getEmployeId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEmployeId(int employeId) {
+        this.id = employeId;
     }
 
+    public Individu getIndividu() {
+        return individu;
+    }
+
+    public void setIndividu(Individu individu) {
+        this.individu = individu;
+    }
 
     public String getTitrePoste() {
         return titrePoste;

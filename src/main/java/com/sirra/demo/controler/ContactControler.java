@@ -58,7 +58,7 @@ public class ContactControler {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(contact1.getId())
+                .buildAndExpand(contact1.getContactId())
                 .toUri();
 
         return ResponseEntity.created(location).build();

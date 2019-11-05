@@ -11,11 +11,11 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "note_id")
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Individu", referencedColumnName = "id")
+    @JoinColumn(name = "id_Individu", referencedColumnName = "Individu_Id")
     private Individu individu;
 
 
@@ -38,12 +38,12 @@ public class Note {
 
     private Date modifierLe;
 
-    public int getId() {
+    public int getNoteId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNoteId(int noteId) {
+        this.id = noteId;
     }
 
     public Individu getIndividu() {
@@ -100,6 +100,21 @@ public class Note {
 
     public void setModifierLe(Date modifierLe) {
         this.modifierLe = modifierLe;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "noteId=" + id +
+                ", individu=" + individu +
+                ", note='" + note + '\'' +
+                ", notePar='" + notePar + '\'' +
+                ", creationPar='" + creationPar + '\'' +
+                ", creerLe=" + creerLe +
+                ", modificationPar='" + modificationPar + '\'' +
+                ", modifierLe=" + modifierLe +
+                '}';
     }
 }
 

@@ -17,9 +17,8 @@ public class Individu {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id")
-    //git @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @GeneratedValue
+    @Column(name = "Individu_Id")
     private int id;
 
     @JsonBackReference
@@ -72,6 +71,7 @@ public class Individu {
     @Column (name = "handicap")
     private String handicap;// aucun ou description
 
+    @Temporal(TemporalType.DATE)
     @Column (name = "date_de_naissance")
     private Date dateNaissance;
 
@@ -81,20 +81,16 @@ public class Individu {
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date creerLe;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getPrenom() {
         return prenom;
@@ -240,6 +236,22 @@ public class Individu {
 
     public void setModifierLe(Date modifierLe) {
         this.modifierLe = modifierLe;
+    }
+
+    public int getIndividuId() {
+        return id;
+    }
+
+    public void setIndividuId(int individuId) {
+        this.id = individuId;
+    }
+
+    public Employe getEmploye() {
+        return employe;
+    }
+
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
     }
 
     @Override
