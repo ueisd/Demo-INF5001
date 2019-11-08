@@ -100,4 +100,18 @@ public class Note {
     public void setModifierLe(Date modifierLe) {
         this.modifierLe = modifierLe;
     }
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", idIndividu=" + individu +
+                ", note='" + note + '\'' +
+                ", notePar=" + notePar +
+                ", creationPar='" + creationPar + '\'' +
+                ", creerLe='" + creerLe + '\'' +
+                ", modificationPar=" + modificationPar +
+                ", modifierLe='" + modifierLe + '\'' +
+                '}';
+    }
 }
+
