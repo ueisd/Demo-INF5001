@@ -7,75 +7,56 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import java.text.DateFormat;
 import java.util.Date;
 
 
 @Entity
 public class Employe {
 
-    public Employe() {
-    }
-
     @Id
-    @GeneratedValue (strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "employe_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
     @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
+            cascade = CascadeType.ALL,
             mappedBy = "employe")
     @JsonManagedReference
     @JsonIgnore
     @ApiModelProperty(notes = "Variable linking the user with his user profile")
     private Individu individu;
 
-
-    @Length(min=2, max=30, message="Nom de poste trop long ou trop court")
+    @Length(min = 2, max = 30, message = "Nom de poste trop long ou trop court")
     private String titrePoste;
-
-
     private double tauxHoraire;
-
-    @Length(min=2, max=40, message= "Nom de superieur est trop long ou trop court")
+    @Length(min = 2, max = 40, message = "Nom de superieur est trop long ou trop court")
     private String superieurImediat;
-
-    @Length(min=5, max=60 , message="Nom de programme trop long ou trop court")
+    @Length(min = 5, max = 60, message = "Nom de programme trop long ou trop court")
     private String programme;
-
     private int jourSemaine;
-
-    @Length(min =1 , max= 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
+    @Length(min = 1, max = 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
     private String horaire;
-
     private double heureSemaine;
-
     @Temporal(TemporalType.DATE)
     private Date dateSalaire;
-
     @Temporal(TemporalType.DATE)
     private Date dateFinProbation;
-
     @Temporal(TemporalType.DATE)
     private Date dateFinPoste;
-
     @Temporal(TemporalType.DATE)
     private Date dateDebutPoste;
-
-    @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
-
     @Temporal(TemporalType.DATE)
     private Date creerLe;
-
-    @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
-
     @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
+    public Employe() {
+    }
 
     public int getEmployeId() {
         return id;

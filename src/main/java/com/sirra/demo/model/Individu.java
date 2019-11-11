@@ -2,12 +2,14 @@ package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Individu {
@@ -21,12 +23,30 @@ public class Individu {
     @Column(name = "Individu_Id")
     private int id;
 
-    @JsonBackReference
+   @JsonBackReference
     @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL, optional = false)
     @JoinColumn(name = "employe_id", nullable = false)
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
   private Employe employe;
 
+
+   @JsonBackReference
+   @OneToMany
+   @JoinColumn(name = "note", nullable = true)
+   @ApiModelProperty(notes = "Property containing the notes of the individu")
+   private List<Note> note;
+
+    @JsonBackReference
+    @OneToMany
+    @JoinColumn(name = "diplome", nullable = true)
+    @ApiModelProperty(notes = "Property containing the diplomes of the individu")
+    private List<Diplome> diplomes;
+
+    @JsonBackReference
+    @OneToMany
+    @JoinColumn(name = "contact", nullable = true)
+    @ApiModelProperty(notes = "Property containing the contact of the individu")
+    private List<Contact> contacts;
 
 
     @Column(name = "prenom")
@@ -90,7 +110,66 @@ public class Individu {
     @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
+    @Override
+    public String toString() {
+        return "Individu{" +
+                "id=" + id +
+                ", employe=" + employe +
+                ", note=" + note +
+                ", diplomes=" + diplomes +
+                ", contacts=" + contacts +
+                ", prenom='" + prenom + '\'' +
+                ", nom='" + nom + '\'' +
+                ", ville='" + ville + '\'' +
+                ", telProfessionel='" + telProfessionel + '\'' +
+                ", telPerso='" + telPerso + '\'' +
+                ", statutCivil='" + statutCivil + '\'' +
+                ", succursalBanque='" + succursalBanque + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", province='" + province + '\'' +
+                ", nas='" + nas + '\'' +
+                ", languageCommunication='" + languageCommunication + '\'' +
+                ", handicap='" + handicap + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", codePostal='" + codePostal + '\'' +
+                ", creationPar='" + creationPar + '\'' +
+                ", creerLe=" + creerLe +
+                ", modificationPar='" + modificationPar + '\'' +
+                ", modifierLe=" + modifierLe +
+                '}';
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Note> getNote() {
+        return note;
+    }
+
+    public void setNote(List<Note> note) {
+        this.note = note;
+    }
+
+    public List<Diplome> getDiplomes() {
+        return diplomes;
+    }
+
+    public void setDiplomes(List<Diplome> diplomes) {
+        this.diplomes = diplomes;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
 
     public String getPrenom() {
         return prenom;
@@ -246,6 +325,7 @@ public class Individu {
         this.id = individuId;
     }
 
+
     public Employe getEmploye() {
         return employe;
     }
@@ -254,28 +334,5 @@ public class Individu {
         this.employe = employe;
     }
 
-    @Override
-    public String toString() {
-        return "Individu{" +
-                "id=" + id +
-                ", prenom='" + prenom + '\'' +
-                ", nom='" + nom + '\'' +
-                ", ville='" + ville + '\'' +
-                ", telProfessionel='" + telProfessionel + '\'' +
-                ", telPerso='" + telPerso + '\'' +
-                ", statutCivil='" + statutCivil + '\'' +
-                ", succursalBanque='" + succursalBanque + '\'' +
-                ", sexe='" + sexe + '\'' +
-                ", province='" + province + '\'' +
-                ", nas='" + nas + '\'' +
-                ", languageCommunication='" + languageCommunication + '\'' +
-                ", handicap='" + handicap + '\'' +
-                ", dateNaissance=" + dateNaissance +
-                ", codePostal='" + codePostal + '\'' +
-                ", creationPar='" + creationPar + '\'' +
-                ", creerLe=" + creerLe +
-                ", modificationPar='" + modificationPar + '\'' +
-                ", modifierLe=" + modifierLe +
-                '}';
-    }
+
 }

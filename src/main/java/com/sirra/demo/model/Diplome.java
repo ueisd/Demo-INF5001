@@ -15,7 +15,7 @@ public class Diplome {
     @Column(name = "diplome_id")
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_Individu", referencedColumnName = "Individu_Id")
     private Individu individu;
 
