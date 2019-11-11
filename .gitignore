@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### serveur contenu ###
+/backend/src/main/resources/static/
