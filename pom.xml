@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>backend</module>
-        <module>demoui</module>
+        <module>demo-ui</module>
     </modules>
 
     <parent>

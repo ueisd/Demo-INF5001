@@ -32,3 +32,6 @@ build/
 
 ### serveur contenu ###
 /backend/src/main/resources/static/
+/demo-ui/dist/
+/demo-ui/node_modules/
+/demo-ui/node/
