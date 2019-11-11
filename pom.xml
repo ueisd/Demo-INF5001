@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>backend</module>
         <module>demo-ui</module>
+        <module>backend</module>
     </modules>
 
     <parent>
