@@ -42,6 +42,7 @@ public class Job {
     private double salaireHorMax;
 
 
+
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 

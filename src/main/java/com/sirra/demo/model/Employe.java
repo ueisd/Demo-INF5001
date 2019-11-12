@@ -29,7 +29,9 @@ public class Employe {
 
     @Length(min = 2, max = 30, message = "Nom de poste trop long ou trop court")
     private String titrePoste;
+
     private double tauxHoraire;
+
     @Length(min = 2, max = 40, message = "Nom de superieur est trop long ou trop court")
     private String superieurImediat;
     @Length(min = 5, max = 60, message = "Nom de programme trop long ou trop court")
@@ -54,6 +56,24 @@ public class Employe {
     private String modificationPar;
     @Temporal(TemporalType.DATE)
     private Date modifierLe;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isActif() {
+        return actif;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
+    private boolean actif;
 
     public Employe() {
     }
@@ -198,6 +218,7 @@ public class Employe {
     public String toString() {
         return "Employe{" +
                 "id=" + id +
+                ", individu=" + individu +
                 ", titrePoste='" + titrePoste + '\'' +
                 ", tauxHoraire=" + tauxHoraire +
                 ", superieurImediat='" + superieurImediat + '\'' +
@@ -213,8 +234,7 @@ public class Employe {
                 ", creerLe=" + creerLe +
                 ", modificationPar='" + modificationPar + '\'' +
                 ", modifierLe=" + modifierLe +
+                ", actif=" + actif +
                 '}';
     }
-
-
 }
