@@ -19,10 +19,10 @@ public class Entreprise {
     private boolean[] journesOuvert = new boolean[7];
 
 
-    public Entreprise(int heureOuverture, int heureFermeture, boolean[] journesOuvert) {
+    public Entreprise(int heureOuverture, int heureFermeture) {
         this.heureOuverture = heureOuverture;
         this.heureFermeture = heureFermeture;
-        this.journesOuvert = journesOuvert;
+
     }
 
     public void peuplerEntreprise(int nbrEmploye){
@@ -48,7 +48,12 @@ public class Entreprise {
         if(binaire7.trim().length() == 7){
             for(int i = 0 ; i < binaire7.length()-1; i++){
                 if(binaire7.charAt(i) == '0'){
-                    
+                    journesOuvert[i] = false;
+                } else if (binaire7.charAt(i) == '1') {
+                    journesOuvert[i] = true;
+                } else {
+                    System.out.println("Votre binaire7 contient un charactere different de 0 ou 1");
+                    System.exit(1);
                 }
             }
 

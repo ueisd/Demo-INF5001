@@ -4,26 +4,18 @@ import java.util.Date;
 
 public class Temporal {
 
-    private EmployeProto employeProto;
-
+    private Entreprise entreprise;
 
     private Date entre;
 
     private Date sortie;
 
-    public Temporal(EmployeProto employeProto, Date entre, Date sortie) {
-        this.employeProto = employeProto;
-        this.entre = entre;
-        this.sortie = sortie;
+
+
+    public Temporal() {
+
     }
 
-    public EmployeProto getEmployeProto() {
-        return employeProto;
-    }
-
-    public void setEmployeProto(EmployeProto employeProto) {
-        this.employeProto = employeProto;
-    }
 
     public Date getEntre() {
         return entre;
@@ -44,7 +36,6 @@ public class Temporal {
     @Override
     public String toString() {
         return "Temporal{" +
-                "employeProto=" + employeProto +
                 ", entre=" + entre +
                 ", sortie=" + sortie +
                 '}';

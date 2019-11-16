@@ -9,23 +9,25 @@ import java.util.Date;
 
 public class GenerationFeuilleTmp {
 
-    public static void main(String[] args) {
+    public static  void main(String[] args) {
 
+        initialiserLentreprise(7,18,5,"0011110");
 
 
     }
 
 
 
-
-
-    private Entreprise entreprise = new Entreprise(9,18,;
-
     private EmployeProto employeProto;
 
     private ArrayList<Temporal> tabTemp;
 
-    public void initialiserLesEmploye(int nbrEmploye){
+
+
+    public static  void initialiserLentreprise(int hrOuvert,int hrFerme, int nbrEmploye,String journeOuvertEnBinaire){
+        Entreprise entreprise = new Entreprise(hrOuvert, hrFerme);
+        entreprise.initiliaserLesJr(journeOuvertEnBinaire);
+        entreprise.peuplerEntreprise(nbrEmploye);
 
     }
 
@@ -45,19 +47,6 @@ public class GenerationFeuilleTmp {
         }
     }
 
-    public void getJrOuvert(Entreprise entreprise){
-        {
-            int z = 0;
-          for (boolean b : entreprise.getJournesOuvert()) {
-                if(b){
-                    genererFDT();
-
-                }
-
-            }
-
-        }
-    }
 
 
 }
