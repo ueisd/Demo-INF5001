@@ -8,21 +8,20 @@ public class EtatEmploye {
 
     private int jrCongeRestant = 14;
 
-    private EmployeProto employeProto;
+
+
+    public EtatEmploye(){
+
+    }
 
     public EtatEmploye(boolean actif, TypeEtat typeEtat, EmployeProto employeProto) {
         this.actif = actif;
         this.typeEtat = typeEtat;
-        this.employeProto = employeProto;
             }
 
-    public EmployeProto getEmployeProto() {
-        return employeProto;
-    }
 
-    public void setEmployeProto(EmployeProto employeProto) {
-        this.employeProto = employeProto;
-    }
+
+
 
     public boolean isActif() {
         return actif;
@@ -51,7 +50,7 @@ public class EtatEmploye {
     public void enlever1JrConge(){
         this.jrCongeRestant = jrCongeRestant-1;
         if(jrCongeRestant < 0 ) {
-            System.out.println("L'employe numero " + employeProto.getId()  + " a epuise tout ces jours de conges." +
+            System.out.println("Cette employe a epuise tout ces jours de conges." +
                     " Veuillez aviser un superieur");
         }
     }
@@ -62,7 +61,6 @@ public class EtatEmploye {
                 "actif=" + actif +
                 ", typeEtat=" + typeEtat +
                 ", jrCongeRestant=" + jrCongeRestant +
-                ", employeProto=" + employeProto +
                 '}';
     }
 }
