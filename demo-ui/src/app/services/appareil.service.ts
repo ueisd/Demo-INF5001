@@ -21,7 +21,7 @@ export class AppareilService {
                 return appareilObject.id === id;
             }
         );
-        return appareil;
+        return appareil;{}
     }
 
     SwitchOnAll() {

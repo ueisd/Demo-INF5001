@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
 
 @Component({
   selector: 'app-four-oh-four',
