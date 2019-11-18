@@ -36,6 +36,7 @@ public class Document {
     @Column(name ="creer_Le")
     private Date creerLe;
     @Column(name = "moification_Par")
+    @Length(min=3,message = "Nom trop court")
     private String modificationPar;
     @Column(name = "modifier_Le")
     private Date modifierLe;
