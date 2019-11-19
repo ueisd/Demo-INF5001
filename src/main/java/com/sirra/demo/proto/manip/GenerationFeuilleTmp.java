@@ -17,7 +17,7 @@ public class GenerationFeuilleTmp {
     public static void main(String[] args) {
         Entreprise entreprise = initialiserLentreprise(7,18,5,"0011110");
         System.out.println(entreprise);
-
+        genererParNombreSemPrFDT(1,entreprise);
 
 
 
@@ -55,7 +55,8 @@ public class GenerationFeuilleTmp {
             ArrayList<Temporal> temporals = new ArrayList<>();
             int hrRestant = empPr.getNbrHrMax();
                 while(hrRestant > 0) {
-                    hrRestant = hrRestant - attributerUneFDT(empPr,hrRestant,temporals,ouverture,fermeture);
+
+                    hrRestant = attributerUneFDT(empPr,hrRestant,temporals,ouverture,fermeture);
                 }
                 ArrayList<StockEmployeEtFDT> tabStockEmpFDT = new ArrayList<>();
                 tabStockEmpFDT.add(new StockEmployeEtFDT(temporals,empPr));
@@ -119,7 +120,7 @@ public class GenerationFeuilleTmp {
 
 
     //Premier 'jr' doit etre 0 du for
-    public Date setLaJourner(int jr){
+    public static Date setLaJourner(int jr){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_MONTH,jr);
@@ -128,9 +129,10 @@ public class GenerationFeuilleTmp {
 
 
 
-    public void genererParNombreSemPrFDT(int nbrSemaine){
+    public static void genererParNombreSemPrFDT(int nbrSemaine,Entreprise entreprise){
         for (int i = 0 ;i<nbrSemaine*7;i++){
-
+            Date dateeffectif = setLaJourner(i);
+            phase1GererLesHRouvertEtFermer(entreprise,dateeffectif);
         }
     }
 
