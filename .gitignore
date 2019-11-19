@@ -38,3 +38,5 @@ build/
 /demo-ui/dist/
 /demo-ui/node_modules/
 /demo-ui/node/
+
+/target/
