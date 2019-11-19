@@ -2,10 +2,7 @@ package com.sirra.demo.model;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,8 +12,8 @@ public class Job {
     public Job () {}
 
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "job_id")
     private int id;
 
     @Column(name = "CodeJob")
@@ -45,6 +42,7 @@ public class Job {
     private double salaireHorMax;
 
 
+
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
@@ -55,12 +53,12 @@ public class Job {
 
     private Date modifierLe;
 
-    public int getId() {
+    public int getJobId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setJobId(int jobId) {
+        this.id = jobId;
     }
 
     public String getCodeJob() {

@@ -1,6 +1,7 @@
 package com.sirra.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,13 +14,14 @@ public class Contact {
     public Contact () {}
 
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue (strategy=GenerationType.AUTO)
+    @Column(name = "contact_id")
    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JoinColumn(name = "idIndividu", referencedColumnName = "Individu_Id")
     private Individu individu;
 
     @Column (name = "ville")
@@ -58,22 +60,17 @@ public class Contact {
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date creerLe;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
 
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
 
@@ -172,6 +169,22 @@ public class Contact {
 
     public void setModifierLe(Date modifierLe) {
         this.modifierLe = modifierLe;
+    }
+
+    public int getContactId() {
+        return id;
+    }
+
+    public void setContactId(int contactId) {
+        this.id = contactId;
+    }
+
+    public Individu getIndividu() {
+        return individu;
+    }
+
+    public void setIndividu(Individu individu) {
+        this.individu = individu;
     }
 
     @Override
