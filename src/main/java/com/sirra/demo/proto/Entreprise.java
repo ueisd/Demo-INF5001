@@ -36,7 +36,7 @@ public class Entreprise {
 
     public void peuplerEntreprise(int nbrEmploye){
         while(nbrEmploye > 0){
-            employeProtos.add(new EmployeProto(dernierIdDispo,"mike"+ random.nextInt() ,14.50,24,new EtatEmploye()));
+            employeProtos.add(new EmployeProto(dernierIdDispo,"mike"+ random.nextInt() ,14.50,25,new EtatEmploye()));
             dernierIdDispo++;
             nbrEmploye--;
         }

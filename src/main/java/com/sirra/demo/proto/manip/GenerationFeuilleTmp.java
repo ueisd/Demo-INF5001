@@ -15,11 +15,9 @@ public class GenerationFeuilleTmp {
 
 
     public static void main(String[] args) {
-        Entreprise entreprise = initialiserLentreprise(7,18,5,"0011110");
+        Entreprise entreprise = initialiserLentreprise(07,18,1,"0011110");
         System.out.println(entreprise);
         genererParNombreSemPrFDT(1,entreprise);
-
-
 
     }
 
@@ -38,18 +36,21 @@ public class GenerationFeuilleTmp {
 
     public static void phase1GererLesHRouvertEtFermer(Entreprise entreprise,Date date){
         //Comparer que d est bien etre a et b exlcusiemvement sinon >= (date) a.compareTo(d) * d.compareTo(b) > 0;
-       // DateFormat formatHrEtMin = new SimpleDateFormat("HH-mm");
         Date dateOuverture = date;
         Date dateSortie = date;
         dateOuverture.setHours(entreprise.getHeureOuverture());
         dateSortie.setHours(entreprise.getHeureFermeture());
+        System.out.println(dateOuverture);
+        System.out.println(dateSortie);
+
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
-
+        System.out.println(dateOuverture +"....."+ dateSortie + "tracksa");
         phase2GererLeshoraireDesEmploye(entreprise,dateOuverture,dateSortie);
     }
     
     public static void phase2GererLeshoraireDesEmploye(Entreprise entreprise,Date ouverture, Date fermeture){
+        System.out.println(entreprise.getEmployeProtos().size());
         for (EmployeProto empPr: entreprise.getEmployeProtos()
              ) {
             ArrayList<Temporal> temporals = new ArrayList<>();
@@ -57,9 +58,11 @@ public class GenerationFeuilleTmp {
                 while(hrRestant > 0) {
 
                     hrRestant = attributerUneFDT(empPr,hrRestant,temporals,ouverture,fermeture);
+
                 }
                 ArrayList<StockEmployeEtFDT> tabStockEmpFDT = new ArrayList<>();
                 tabStockEmpFDT.add(new StockEmployeEtFDT(temporals,empPr));
+            System.out.println("\n"+temporals);
         }
         
     }
@@ -93,18 +96,9 @@ public class GenerationFeuilleTmp {
             heureAttribuer = hrRestant;
             setSoirePrise(true);
         }
+
         return hrRestant - heureAttribuer;
     }
-
-
-
-
-    public static void genrerFDT(){
-
-
-    }
-
-
 
 
     /*
@@ -113,6 +107,7 @@ public class GenerationFeuilleTmp {
     public static  Date cleanHeureA0(Date date){
         date.setMinutes(00);
         date.setSeconds(00);
+
         return date;
     }
     
@@ -131,6 +126,7 @@ public class GenerationFeuilleTmp {
 
     public static void genererParNombreSemPrFDT(int nbrSemaine,Entreprise entreprise){
         for (int i = 0 ;i<nbrSemaine*7;i++){
+
             Date dateeffectif = setLaJourner(i);
             phase1GererLesHRouvertEtFermer(entreprise,dateeffectif);
         }
