@@ -13,7 +13,7 @@ public class Poste {
     @Id
     @GeneratedValue
     @Column(name = "id")
-        private int posteId;
+        private int id;
     @Column(name = "codePoste")
         private int codePoste;
     @Column(name = "codeDepartement")
@@ -46,11 +46,11 @@ public class Poste {
         private Date modifierLe;
 
     public int getPosteId() {
-        return posteId;
+        return id;
     }
 
     public void setPosteId(int posteId) {
-        this.posteId = posteId;
+        this.id = posteId;
     }
 
     public int getCodePoste() {
