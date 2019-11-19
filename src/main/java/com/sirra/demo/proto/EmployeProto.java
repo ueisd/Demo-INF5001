@@ -8,17 +8,22 @@ public class EmployeProto {
 
     private Double salaire;
 
-    private double nbrHrMax;
+    private int nbrHrMax;
 
     private EtatEmploye etatEmploye;
 
-    public EmployeProto(int id, String nom, Double salaire, double nbrHrMax, EtatEmploye etatEmploye) {
+
+
+
+    public EmployeProto(int id, String nom, Double salaire, int nbrHrMax, EtatEmploye etatEmploye) {
         this.id = id;
         this.nom = nom;
         this.salaire = salaire;
         this.nbrHrMax = nbrHrMax;
         this.etatEmploye = etatEmploye;
     }
+
+
 
     public int getId() {
         return id;
@@ -44,11 +49,11 @@ public class EmployeProto {
         this.salaire = salaire;
     }
 
-    public double getNbrHrMax() {
+    public int getNbrHrMax() {
         return nbrHrMax;
     }
 
-    public void setNbrHrMax(double nbrHrMax) {
+    public void setNbrHrMax(int nbrHrMax) {
         this.nbrHrMax = nbrHrMax;
     }
 

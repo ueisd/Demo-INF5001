@@ -1,11 +1,15 @@
 package com.sirra.demo.proto;
 
+import com.sirra.demo.proto.manip.StockEmployeEtFDT;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Entreprise {
 
     private Random  random = new Random();
+
 
     private int dernierIdDispo = 1;
 
@@ -13,10 +17,13 @@ public class Entreprise {
 
     private int heureFermeture;
 
-    private ArrayList<EmployeProto> employeProtos = new ArrayList<>(); ;
+    private ArrayList<EmployeProto> employeProtos = new ArrayList<>();
 
     //1-7 = lundi a dimanche
     private boolean[] journesOuvert = new boolean[7];
+
+    private ArrayList<StockEmployeEtFDT> listDeFDT;
+
 
 
     public Entreprise(int heureOuverture, int heureFermeture) {
@@ -24,6 +31,8 @@ public class Entreprise {
         this.heureFermeture = heureFermeture;
 
     }
+
+
 
     public void peuplerEntreprise(int nbrEmploye){
         while(nbrEmploye > 0){
@@ -35,7 +44,6 @@ public class Entreprise {
 
 
 
-
     public ArrayList<EmployeProto> getEmployeProtos() {
         return employeProtos;
     }
@@ -44,6 +52,10 @@ public class Entreprise {
         this.employeProtos = employeProtos;
     }
 
+
+    /*
+    Cette methode intilise les journes ouvert de l'entreprise avec un STRING BINAIRE de 7 char ex. 0110110
+     */
     public void initiliaserLesJr(String binaire7){
         if(binaire7.trim().length() == 7){
             for(int i = 0 ; i < binaire7.length()-1; i++){
@@ -63,6 +75,8 @@ public class Entreprise {
         }
 
     }
+
+
 
     public void setLundi(boolean ouvert) {
         journesOuvert[0] = ouvert;
@@ -109,8 +123,6 @@ public class Entreprise {
                 return "Samedi";
             case 6:
                 return "Dimanche";
-
-
         }
         return null;
     }
@@ -137,5 +149,16 @@ public class Entreprise {
 
     public void setJournesOuvert(boolean[] journesOuvert) {
         this.journesOuvert = journesOuvert;
+    }
+
+    @Override
+    public String toString() {
+        return "Entreprise{" +
+                "dernierIdDispo=" + dernierIdDispo +
+                ", heureOuverture=" + heureOuverture +
+                ", heureFermeture=" + heureFermeture + "\n"+
+                ", employeProtos=" + employeProtos +
+                ", journesOuvert=" + Arrays.toString(journesOuvert) +
+                '}';
     }
 }

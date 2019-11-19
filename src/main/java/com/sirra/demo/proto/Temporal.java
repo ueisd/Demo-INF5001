@@ -1,19 +1,24 @@
 package com.sirra.demo.proto;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Temporal {
 
-    private Entreprise entreprise;
 
     private Date entre;
 
     private Date sortie;
 
 
+//    private DateFormat formatJr = new SimpleDateFormat("dd");
 
-    public Temporal() {
+    private DateFormat formatHrEtMin = new SimpleDateFormat("HH-mm");
 
+    public Temporal(Date entre, Date sortie) {
+        this.entre = entre;
+        this.sortie = sortie;
     }
 
 
@@ -35,9 +40,8 @@ public class Temporal {
 
     @Override
     public String toString() {
-        return "Temporal{" +
-                ", entre=" + entre +
-                ", sortie=" + sortie +
-                '}';
+        return "Date :" + entre.getDay() + entre.getMonth() + entre.getYear() +
+                ", entre=" + formatHrEtMin.format(entre) +
+                ", sortie=" + formatHrEtMin.format(sortie);
     }
 }
