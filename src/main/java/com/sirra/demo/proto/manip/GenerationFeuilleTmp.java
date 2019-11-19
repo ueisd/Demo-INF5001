@@ -1,19 +1,16 @@
 package com.sirra.demo.proto.manip;
 
-import com.sirra.demo.model.Employe;
 import com.sirra.demo.proto.EmployeProto;
 import com.sirra.demo.proto.Entreprise;
 import com.sirra.demo.proto.Temporal;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class GenerationFeuilleTmp {
 
-
+    private static boolean soirePrise = true;
     private ArrayList<StockEmployeEtFDT> tabTempEmp;
 
 
@@ -49,33 +46,57 @@ public class GenerationFeuilleTmp {
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
 
-
-
-        
-
+        phase2GererLeshoraireDesEmploye(entreprise,dateOuverture,dateSortie);
     }
     
-    public static void phase2GererLeshoraireDesEmploye(Entreprise entreprise,Date entree, Date sortie){
+    public static void phase2GererLeshoraireDesEmploye(Entreprise entreprise,Date ouverture, Date fermeture){
         for (EmployeProto empPr: entreprise.getEmployeProtos()
              ) {
+            ArrayList<Temporal> temporals = new ArrayList<>();
             int hrRestant = empPr.getNbrHrMax();
                 while(hrRestant > 0) {
-
-
-                       int heuresDonne = phase3();
-                    hrRestant = hrRestant - heuresDonne;
+                    hrRestant = hrRestant - attributerUneFDT(empPr,hrRestant,temporals,ouverture,fermeture);
                 }
+                ArrayList<StockEmployeEtFDT> tabStockEmpFDT = new ArrayList<>();
+                tabStockEmpFDT.add(new StockEmployeEtFDT(temporals,empPr));
         }
         
     }
 
-    public static int phase3(EmployeProto employeProto, int hrRestant){
 
+    public static int attributerUneFDT(EmployeProto employeProto, int hrRestant, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
+        int heureAttribuer = 0;
 
-
-        int nombreHrDonne=0;
-        return  nombreHrDonne;
+        if(soirePrise && hrRestant >= 8){
+            Date sortie = ouverture;
+            sortie.setHours(ouverture.getHours()+8);
+            temporals.add(new Temporal(ouverture,sortie));
+            heureAttribuer = 8;
+            setSoirePrise(false);
+        } else if (soirePrise && hrRestant < 8){
+            Date sortie = ouverture;
+            sortie.setHours(ouverture.getHours() + hrRestant);
+            temporals.add(new Temporal(ouverture,sortie));
+            heureAttribuer = hrRestant;
+            setSoirePrise(false);
+        } else if (!soirePrise && hrRestant >= 8) {
+            Date entre = fermeture;
+            entre.setHours(fermeture.getHours()-8);
+            temporals.add(new Temporal(entre,fermeture));
+            heureAttribuer = 8;
+            setSoirePrise(true);
+        } else if (!soirePrise && hrRestant < 8){
+            Date entre = fermeture;
+            entre.setHours(fermeture.getHours()-hrRestant);
+            temporals.add(new Temporal(entre,fermeture));
+            heureAttribuer = hrRestant;
+            setSoirePrise(true);
+        }
+        return hrRestant - heureAttribuer;
     }
+
+
+
 
     public static void genrerFDT(){
 
@@ -83,19 +104,29 @@ public class GenerationFeuilleTmp {
     }
 
 
+
+
+    /*
+    Met les minutes et secondes a 0
+     */
     public static  Date cleanHeureA0(Date date){
         date.setMinutes(00);
         date.setSeconds(00);
         return date;
     }
     
-    //Premier 'jr' doit etre 0
+
+
+
+    //Premier 'jr' doit etre 0 du for
     public Date setLaJourner(int jr){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_MONTH,jr);
         return calendar.getTime();
     }
+
+
 
     public void genererParNombreSemPrFDT(int nbrSemaine){
         for (int i = 0 ;i<nbrSemaine*7;i++){
@@ -105,6 +136,23 @@ public class GenerationFeuilleTmp {
 
 
 
+
+
+    public ArrayList<StockEmployeEtFDT> getTabTempEmp() {
+        return tabTempEmp;
+    }
+
+    public void setTabTempEmp(ArrayList<StockEmployeEtFDT> tabTempEmp) {
+        this.tabTempEmp = tabTempEmp;
+    }
+
+    public boolean isSoirePrise() {
+        return soirePrise;
+    }
+
+    public static void setSoirePrise(boolean soirePrise) {
+        soirePrise = soirePrise;
+    }
 }
 
 

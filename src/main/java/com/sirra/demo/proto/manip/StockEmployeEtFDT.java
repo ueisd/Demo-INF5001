@@ -11,6 +11,11 @@ public class StockEmployeEtFDT {
 
     private EmployeProto employeProto;
 
+    public StockEmployeEtFDT(ArrayList<Temporal> temporals, EmployeProto employeProto) {
+        this.temporals = temporals;
+        this.employeProto = employeProto;
+    }
+
     public EmployeProto getEmployeProto() {
         return employeProto;
     }
