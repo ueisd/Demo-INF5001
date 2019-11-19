@@ -2,6 +2,7 @@ package com.sirra.demo.proto.manip;
 
 import com.sirra.demo.proto.EmployeProto;
 import com.sirra.demo.proto.Entreprise;
+import com.sirra.demo.proto.StockEmployeEtFDT;
 import com.sirra.demo.proto.Temporal;
 
 import java.util.ArrayList;
@@ -10,15 +11,17 @@ import java.util.Date;
 
 public class GenerationFeuilleTmp {
 
+    private static int hrRestant;
     private static boolean soirePrise = true;
-    private ArrayList<StockEmployeEtFDT> tabTempEmp;
+    private static  ArrayList<StockEmployeEtFDT> tabTempEmp = new ArrayList<>();
 
 
     public static void main(String[] args) {
-        Entreprise entreprise = initialiserLentreprise(07,18,1,"0011110");
+        Entreprise entreprise = initialiserLentreprise(07,18,2,"0011110");
         System.out.println(entreprise);
         genererParNombreSemPrFDT(1,entreprise);
-
+        System.out.println("\n*\n*\n*\n*\n*\n**********************"+tabTempEmp);
+        entreprise.setListDeFDT(tabTempEmp);
     }
 
 
@@ -33,71 +36,62 @@ public class GenerationFeuilleTmp {
 
 
 
-
-    public static void phase1GererLesHRouvertEtFermer(Entreprise entreprise,Date date){
+    public static void phase1GererLesHRouvertEtFermer(ArrayList<Temporal> temporals,EmployeProto emp, Entreprise entreprise,Date date){
         //Comparer que d est bien etre a et b exlcusiemvement sinon >= (date) a.compareTo(d) * d.compareTo(b) > 0;
-        Date dateOuverture = date;
-        Date dateSortie = date;
+        Date dateOuverture = (Date) date.clone();
+        Date dateSortie = (Date) date.clone();
         dateOuverture.setHours(entreprise.getHeureOuverture());
         dateSortie.setHours(entreprise.getHeureFermeture());
-        System.out.println(dateOuverture);
-        System.out.println(dateSortie);
-
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
-        System.out.println(dateOuverture +"....."+ dateSortie + "tracksa");
-        phase2GererLeshoraireDesEmploye(entreprise,dateOuverture,dateSortie);
+
+       // System.out.println("\n*\n*\n*\n*\n*\n*"+dateOuverture +"....."+ dateSortie + "tracksa");
+         phase2GererLeshoraireDesEmploye(temporals,emp,entreprise,dateOuverture,dateSortie);
+
+
     }
     
-    public static void phase2GererLeshoraireDesEmploye(Entreprise entreprise,Date ouverture, Date fermeture){
-        System.out.println(entreprise.getEmployeProtos().size());
-        for (EmployeProto empPr: entreprise.getEmployeProtos()
-             ) {
-            ArrayList<Temporal> temporals = new ArrayList<>();
-            int hrRestant = empPr.getNbrHrMax();
-                while(hrRestant > 0) {
+    public static void phase2GererLeshoraireDesEmploye(ArrayList<Temporal> temporals,EmployeProto emp,Entreprise entreprise,Date ouverture, Date fermeture) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(ouverture);
 
-                    hrRestant = attributerUneFDT(empPr,hrRestant,temporals,ouverture,fermeture);
+            attributerUneFDT(emp, temporals, ouverture, fermeture);
 
-                }
-                ArrayList<StockEmployeEtFDT> tabStockEmpFDT = new ArrayList<>();
-                tabStockEmpFDT.add(new StockEmployeEtFDT(temporals,empPr));
-            System.out.println("\n"+temporals);
-        }
-        
+
+
     }
 
 
-    public static int attributerUneFDT(EmployeProto employeProto, int hrRestant, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
+    public static void attributerUneFDT(EmployeProto employeProto, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
         int heureAttribuer = 0;
 
         if(soirePrise && hrRestant >= 8){
-            Date sortie = ouverture;
+            Date sortie = (Date) ouverture.clone();
             sortie.setHours(ouverture.getHours()+8);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = 8;
             setSoirePrise(false);
         } else if (soirePrise && hrRestant < 8){
-            Date sortie = ouverture;
+            Date sortie = (Date) ouverture.clone();
             sortie.setHours(ouverture.getHours() + hrRestant);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = hrRestant;
             setSoirePrise(false);
         } else if (!soirePrise && hrRestant >= 8) {
-            Date entre = fermeture;
+            Date entre = (Date) fermeture.clone();
             entre.setHours(fermeture.getHours()-8);
             temporals.add(new Temporal(entre,fermeture));
             heureAttribuer = 8;
             setSoirePrise(true);
         } else if (!soirePrise && hrRestant < 8){
-            Date entre = fermeture;
+            Date entre = (Date) fermeture.clone();
             entre.setHours(fermeture.getHours()-hrRestant);
             temporals.add(new Temporal(entre,fermeture));
             heureAttribuer = hrRestant;
             setSoirePrise(true);
         }
 
-        return hrRestant - heureAttribuer;
+       setHrRestant(hrRestant - heureAttribuer);
     }
 
 
@@ -107,7 +101,6 @@ public class GenerationFeuilleTmp {
     public static  Date cleanHeureA0(Date date){
         date.setMinutes(00);
         date.setSeconds(00);
-
         return date;
     }
     
@@ -125,24 +118,24 @@ public class GenerationFeuilleTmp {
 
 
     public static void genererParNombreSemPrFDT(int nbrSemaine,Entreprise entreprise){
-        for (int i = 0 ;i<nbrSemaine*7;i++){
-
-            Date dateeffectif = setLaJourner(i);
-            phase1GererLesHRouvertEtFermer(entreprise,dateeffectif);
+        for (EmployeProto emp: entreprise.getEmployeProtos()
+             ) { hrRestant =emp.getNbrHrMax();
+            ArrayList<Temporal> temporals = new ArrayList<>();
+            for (int i = 0 ;i<nbrSemaine*7;i++){
+                if(hrRestant > 0 ) {
+                    Date dateeffectif = setLaJourner(i);
+                    phase1GererLesHRouvertEtFermer(temporals,emp, entreprise, dateeffectif);
+                }
+            }
+            tabTempEmp.add(new StockEmployeEtFDT(temporals,emp));
         }
     }
-
-
-
 
 
     public ArrayList<StockEmployeEtFDT> getTabTempEmp() {
         return tabTempEmp;
     }
 
-    public void setTabTempEmp(ArrayList<StockEmployeEtFDT> tabTempEmp) {
-        this.tabTempEmp = tabTempEmp;
-    }
 
     public boolean isSoirePrise() {
         return soirePrise;
@@ -150,6 +143,14 @@ public class GenerationFeuilleTmp {
 
     public static void setSoirePrise(boolean soirePrise) {
         soirePrise = soirePrise;
+    }
+
+    public static int getHrRestant() {
+        return hrRestant;
+    }
+
+    public static void setHrRestant(int hrRestant) {
+        GenerationFeuilleTmp.hrRestant = hrRestant;
     }
 }
 

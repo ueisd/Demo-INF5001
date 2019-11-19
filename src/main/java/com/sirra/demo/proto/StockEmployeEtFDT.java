@@ -1,4 +1,4 @@
-package com.sirra.demo.proto.manip;
+package com.sirra.demo.proto;
 
 import com.sirra.demo.proto.EmployeProto;
 import com.sirra.demo.proto.Temporal;

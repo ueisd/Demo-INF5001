@@ -1,7 +1,5 @@
 package com.sirra.demo.proto;
 
-import com.sirra.demo.proto.manip.StockEmployeEtFDT;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -160,5 +158,13 @@ public class Entreprise {
                 ", employeProtos=" + employeProtos +
                 ", journesOuvert=" + Arrays.toString(journesOuvert) +
                 '}';
+    }
+
+    public ArrayList<StockEmployeEtFDT> getListDeFDT() {
+        return listDeFDT;
+    }
+
+    public void setListDeFDT(ArrayList<StockEmployeEtFDT> listDeFDT) {
+        this.listDeFDT = listDeFDT;
     }
 }
