@@ -8,6 +8,7 @@ import com.sirra.demo.proto.Temporal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class GenerationFeuilleTmp {
 
@@ -17,7 +18,7 @@ public class GenerationFeuilleTmp {
 
 
     public static void main(String[] args) {
-        Entreprise entreprise = initialiserLentreprise(07,18,2,"0011110");
+        Entreprise entreprise = initialiserLentreprise(07,16,1,"0011110");
         System.out.println(entreprise);
         genererParNombreSemPrFDT(1,entreprise);
         System.out.println("\n*\n*\n*\n*\n*\n**********************"+tabTempEmp);
@@ -65,25 +66,29 @@ public class GenerationFeuilleTmp {
     public static void attributerUneFDT(EmployeProto employeProto, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
         int heureAttribuer = 0;
 
-        if(soirePrise && hrRestant >= 8){
+            int value = (int) (Math.random()*(fermeture.getHours()-ouverture.getHours())) + ouverture.getHours();
+        System.out.println(fermeture.getHours());
+        System.out.println(ouverture.getHours());
+        System.out.println(value+"&&&&&&&&&&&&&&&&&&"); // Sort une heure entre louverture et la fermeture
+        if(hrRestant >= 8){
             Date sortie = (Date) ouverture.clone();
             sortie.setHours(ouverture.getHours()+8);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = 8;
             setSoirePrise(false);
-        } else if (soirePrise && hrRestant < 8){
+        } else if (hrRestant < 8){
             Date sortie = (Date) ouverture.clone();
             sortie.setHours(ouverture.getHours() + hrRestant);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = hrRestant;
             setSoirePrise(false);
-        } else if (!soirePrise && hrRestant >= 8) {
+        } else if (hrRestant >= 8) {
             Date entre = (Date) fermeture.clone();
             entre.setHours(fermeture.getHours()-8);
             temporals.add(new Temporal(entre,fermeture));
             heureAttribuer = 8;
             setSoirePrise(true);
-        } else if (!soirePrise && hrRestant < 8){
+        } else if (hrRestant < 8){
             Date entre = (Date) fermeture.clone();
             entre.setHours(fermeture.getHours()-hrRestant);
             temporals.add(new Temporal(entre,fermeture));
