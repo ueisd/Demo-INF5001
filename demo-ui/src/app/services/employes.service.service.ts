@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Individu } from '../models/Individu.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs/internal/observable';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
