@@ -39,4 +39,4 @@ build/
 /demo-ui/node_modules/
 /demo-ui/node/
 
-/target/
+/target/*
