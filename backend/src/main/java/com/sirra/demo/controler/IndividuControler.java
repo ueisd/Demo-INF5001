@@ -18,6 +18,7 @@ import java.util.List;
 
 @Api(description = "Gestion des Individus")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class IndividuControler {
 
     @Autowired

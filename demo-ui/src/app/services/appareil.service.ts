@@ -56,7 +56,11 @@ export class AppareilService {
         };
         appareilObject.name = name;
         appareilObject.status = status;
-        appareilObject.id = this.appareils[(this.appareils.length - 1)].id + 1;
+        if(this.appareils.length == 0){
+            appareilObject.id = 0;
+        }else {
+            appareilObject.id = this.appareils[(this.appareils.length - 1)].id + 1;
+        }
         this.appareils.push(appareilObject);
         this.emitAppareilSubject();
 
