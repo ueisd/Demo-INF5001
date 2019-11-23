@@ -1,6 +1,5 @@
 package com.sirra.demo.model;
 
-
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -10,7 +9,7 @@ import java.util.Date;
 public class Note {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
@@ -20,20 +19,20 @@ public class Note {
 
 
     @Column(name = "Note")
-    @Length(min=6,max = 150,message = "Veuillez revoir la longueur de la note (entre 6 et 150 charactere)")
+    @Length(min = 6, max = 150, message = "Veuillez revoir la longueur de la note (entre 6 et 150 charactere)")
     private String note;
 
 
     @Column(name = "Note_Par")
-    @Length(min=3,max = 25)
+    @Length(min = 3, max = 25)
     private String notePar;
 
-    @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
     private Date creerLe;
 
-    @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
     private Date modifierLe;
@@ -101,7 +100,18 @@ public class Note {
     public void setModifierLe(Date modifierLe) {
         this.modifierLe = modifierLe;
     }
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", idIndividu=" + individu +
+                ", note='" + note + '\'' +
+                ", notePar=" + notePar +
+                ", creationPar='" + creationPar + '\'' +
+                ", creerLe='" + creerLe + '\'' +
+                ", modificationPar=" + modificationPar +
+                ", modifierLe='" + modifierLe + '\'' +
+                '}';
+    }
 }
-
-
 
