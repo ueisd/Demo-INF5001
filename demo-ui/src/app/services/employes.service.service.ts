@@ -21,7 +21,15 @@ export class EmployesServiceService {
   private getIndividusUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = "http://localhost:9090"
+
+    this.baseUrl = window.location.protocol + "//" + window.location.hostname;
+    if(window.location.hostname == "localhost"){
+      this.baseUrl = this.baseUrl + ":" + 9090;
+    }
+    console.log("url: " + this.baseUrl);
+    //this.baseUrl='https://inf5001-demo.herokuapp.com/';
+
+    //this.baseUrl = "http://localhost:9090"
     this.postIndividuUrl = this.baseUrl + '/Individus';
     this.getIndividusUrl = this.baseUrl + '/Individus';
     this.deleteIndividuUrl = this.baseUrl + '/Individus/Delete/'
