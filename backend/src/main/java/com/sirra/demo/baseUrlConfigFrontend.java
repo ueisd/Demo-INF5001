@@ -11,16 +11,18 @@ import java.net.InetAddress;
 @Configuration
 public class baseUrlConfigFrontend {
     static {
-        UrlConfig urlConfig = new UrlConfig(
-                InetAddress.getLoopbackAddress().getHostName(), 9090);
-        try{
-            Gson gson = new GsonBuilder().create();
-            FileWriter writer = new FileWriter("demo-ui/src/assets/baseUrlConfig.json");
-            gson.toJson(urlConfig, writer);
-            writer.flush();
-            writer.close();
-        }catch(Exception e){
-            e.printStackTrace();
+        if(InetAddress.getLoopbackAddress().getHostName() == "localhost"){
+            String baseUrl = "http://" + InetAddress.getLoopbackAddress().getHostName();
+            UrlConfig urlConfig = new UrlConfig(baseUrl, 9090);
+            try{
+                Gson gson = new GsonBuilder().create();
+                FileWriter writer = new FileWriter("demo-ui/src/assets/baseUrlConfig.json");
+                gson.toJson(urlConfig, writer);
+                writer.flush();
+                writer.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }

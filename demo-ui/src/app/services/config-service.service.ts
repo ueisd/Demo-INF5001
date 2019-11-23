@@ -12,7 +12,7 @@ export class ConfigServiceService {
   public baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = "http://" + data['serverHost'] + ":" + data['serverPort'];
+    this.baseUrl = data['serverHost'];
    }
 
   configUrl = './assets/baseUrlConfig.json';
