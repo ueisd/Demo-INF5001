@@ -8,11 +8,14 @@ import { Config } from '../models/config.js';
 })
 export class ConfigServiceService {
 
-
   public baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = data['serverHost'];
+    this.baseUrl = window.location.protocol + "//" + window.location.hostname;
+    if(window.location.hostname == "localhost"){
+      this.baseUrl = this.baseUrl + ":" + 9090;
+    }
+    console.log("url: " + this.baseUrl);
    }
 
   

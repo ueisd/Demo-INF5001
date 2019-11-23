@@ -24,6 +24,7 @@ export class EmployesServiceService {
   private getIndividusUrl: string;
 
   constructor(private httpClient: HttpClient, private configServiceService: ConfigServiceService) {
+    console.log(this.configServiceService.baseUrl);
     this.baseUrl = this.configServiceService.baseUrl;
     this.postIndividuUrl = this.baseUrl + '/Individus';
     this.getIndividusUrl = this.baseUrl + '/Individus';
