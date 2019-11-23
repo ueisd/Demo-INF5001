@@ -3,6 +3,7 @@ import { Individu } from '../models/Individu.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
+import { BaseUrlService } from './base-url.service.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,16 +21,8 @@ export class EmployesServiceService {
   private baseUrl: string;
   private getIndividusUrl: string;
 
-  constructor(private httpClient: HttpClient) {
-
-    this.baseUrl = window.location.protocol + "//" + window.location.hostname;
-    if(window.location.hostname == "localhost"){
-      this.baseUrl = this.baseUrl + ":" + 9090;
-    }
-    console.log("url: " + this.baseUrl);
-    //this.baseUrl='https://inf5001-demo.herokuapp.com/';
-
-    //this.baseUrl = "http://localhost:9090"
+  constructor(private httpClient: HttpClient, private baseUrlService: BaseUrlService) {
+    this.baseUrl = baseUrlService.baseUrl;
     this.postIndividuUrl = this.baseUrl + '/Individus';
     this.getIndividusUrl = this.baseUrl + '/Individus';
     this.deleteIndividuUrl = this.baseUrl + '/Individus/Delete/'
