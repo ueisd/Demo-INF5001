@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.InetAddress;
 import java.net.URI;
 import java.util.List;
 
@@ -30,6 +31,16 @@ public class IndividuControler {
     @GetMapping(value = "Individus")
     public List<Individu> listeEmployes() {
         return individuDao.findAll();
+    }
+
+
+
+    @GetMapping(value = "Individus/hhh")
+    public String testUneChaine(){
+        String chaine = new String("");
+        chaine = InetAddress.getLoopbackAddress().getHostAddress() + "  " +
+                InetAddress.getLoopbackAddress().getHostName();
+        return chaine;
     }
 
     //Employes/{id}

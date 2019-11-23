@@ -21,6 +21,8 @@ import { IndividuFormComponent } from './liste-individus/individu-form/individu-
 import { HeaderComponent } from './header/header.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AccueilComponent } from './principal/accueil/accueil.component';
+import { ConfigServiceService } from './services/config-service.service';
+import { BaseUrlConfigServiceService } from './services/base-url-config-service.service';
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
@@ -59,6 +61,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
   ],
   providers: [
+    BaseUrlConfigServiceService,
     AppareilService,
     AuthService,
     AuthGuard,

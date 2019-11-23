@@ -39,4 +39,7 @@ build/
 /demo-ui/node_modules/
 /demo-ui/node/
 
+## fichier baseUrl ##
+/demo-ui/src/assets/baseUrlConfig.json
+
 /target/*

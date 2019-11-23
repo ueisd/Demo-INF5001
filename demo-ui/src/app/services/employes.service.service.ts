@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Individu } from '../models/Individu.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/';
+import { ConfigServiceService } from './config-service.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
   })
 };
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +23,14 @@ export class EmployesServiceService {
   private baseUrl: string;
   private getIndividusUrl: string;
 
-  constructor(private httpClient: HttpClient) {
-    this.baseUrl = "http://localhost:9090"
+  constructor(private httpClient: HttpClient, private configServiceService: ConfigServiceService) {
+    this.baseUrl = this.configServiceService.baseUrl;
     this.postIndividuUrl = this.baseUrl + '/Individus';
     this.getIndividusUrl = this.baseUrl + '/Individus';
     this.deleteIndividuUrl = this.baseUrl + '/Individus/Delete/'
   }
+
+ 
 
   individus: Individu[] = [];
   individuSubject = new Subject<Individu[]>();
