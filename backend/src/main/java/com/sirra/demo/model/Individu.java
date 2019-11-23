@@ -1,6 +1,8 @@
 package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
@@ -8,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Individu {
@@ -19,16 +22,25 @@ public class Individu {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    //git @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
     @JsonBackReference
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL, optional = false)
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade=CascadeType.ALL,
+            optional = false
+    )
     @JoinColumn(name = "employe_id", nullable = false)
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
     private Employe employe;
 
-
+    @JsonManagedReference
+    @OneToMany(
+            mappedBy = "individu",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Contact> contact;
 
     @Column(name = "prenom")
     @Length(min=3, max=20, message="Nom trop long ou trop court")
@@ -87,6 +99,14 @@ public class Individu {
     private String modificationPar;
 
     private Date modifierLe;
+
+    public List<Contact> getContact() {
+        return contact;
+    }
+
+    public void setContact(List<Contact> contact) {
+        this.contact = contact;
+    }
 
     public int getId() {
         return id;

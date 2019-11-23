@@ -1,7 +1,8 @@
 package com.sirra.demo.model;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -15,11 +16,11 @@ public class Contact {
     @Id
     @GeneratedValue
     @Column(name = "id")
-   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "individu_id")
     private Individu individu;
 
     @Column (name = "ville")
@@ -64,7 +65,6 @@ public class Contact {
     private String modificationPar;
 
     private Date modifierLe;
-
 
 
     public int getId() {
