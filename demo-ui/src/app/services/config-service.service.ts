@@ -15,15 +15,5 @@ export class ConfigServiceService {
     this.baseUrl = data['serverHost'];
    }
 
-  configUrl = './assets/baseUrlConfig.json';
-
-  setConfig() {
-
-  }
-
-  getConfig() {
-    return this.http.get(this.configUrl);
-  }
-
   
 }
