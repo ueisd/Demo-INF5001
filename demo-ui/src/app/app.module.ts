@@ -21,12 +21,14 @@ import { IndividuFormComponent } from './liste-individus/individu-form/individu-
 import { HeaderComponent } from './header/header.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AccueilComponent } from './principal/accueil/accueil.component';
+import { FormtestComponent } from './liste-individus/formtest/formtest/formtest.component';
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
   { path: 'appareils/:id', canActivate: [AuthGuard], component: SingleAppareilComponent },
   { path: 'users', canActivate: [AuthGuard], component: UserListComponent },
   { path: 'individus', canActivate: [AuthGuard], component: ListeIndividusComponent },
+  { path: 'formtest', canActivate: [AuthGuard], component: FormtestComponent },
   { path: 'new/individu', canActivate: [AuthGuard], component: IndividuFormComponent },
   { path: 'new-user', canActivate: [AuthGuard], component: NewUserComponent },
   { path: 'auth/signin',  component: SigninComponent },
@@ -49,7 +51,8 @@ const appRoutes: Routes = [
     IndividuFormComponent,
     HeaderComponent,
     SigninComponent,
-    AccueilComponent
+    AccueilComponent,
+    FormtestComponent
   ],
   imports: [
     BrowserModule,
