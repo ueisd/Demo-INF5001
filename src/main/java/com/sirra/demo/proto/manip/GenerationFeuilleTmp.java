@@ -13,13 +13,13 @@ import java.util.Random;
 public class GenerationFeuilleTmp {
 
     private static int hrRestant;
-    private static boolean soirePrise = true;
+
     private static  ArrayList<StockEmployeEtFDT> tabTempEmp = new ArrayList<>();
 
 
     public static void main(String[] args) {
-        Entreprise entreprise = initialiserLentreprise(07,16,1,"0011110");
-        System.out.println(entreprise);
+        Entreprise entreprise = initialiserLentreprise(07,18,3,"0011110");
+        System.out.println(entreprise+"ENNNNNNNTTTTTTREEEEEEPRISEEEEEEEE");
         genererParNombreSemPrFDT(1,entreprise);
         System.out.println("\n*\n*\n*\n*\n*\n**********************"+tabTempEmp);
         entreprise.setListDeFDT(tabTempEmp);
@@ -56,49 +56,53 @@ public class GenerationFeuilleTmp {
             Calendar c = Calendar.getInstance();
             c.setTime(ouverture);
 
-            attributerUneFDT(emp, temporals, ouverture, fermeture);
+            attributerUneFDT (temporals, ouverture, fermeture);
 
 
 
     }
 
+    public static Date trouveUneHrIdeal8(Date ouverture, Date fermeture) {
+        int value = 0;
 
-    public static void attributerUneFDT(EmployeProto employeProto, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
+         do {
+            value = (int) (Math.random() * (fermeture.getHours() - ouverture.getHours())) + ouverture.getHours();
+        }while (value + 8 > fermeture.getHours());
+
+        Date datecloner = (Date) ouverture.clone();
+        datecloner.setHours(value);
+        return datecloner;
+    }
+
+    public static Date trouverUneHrInferieurA8(Date ouverture, Date fermeture){
+        int value = 0;
+        do{
+            value = (int) (Math.random() * (fermeture.getHours() - ouverture.getHours())) + ouverture.getHours();
+
+        } while (value + hrRestant > fermeture.getHours());
+        Date datecloner = (Date) ouverture.clone();
+        datecloner.setHours(value);
+        return datecloner;
+    }
+
+    public static void attributerUneFDT(ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
         int heureAttribuer = 0;
 
-            int value = (int) (Math.random()*(fermeture.getHours()-ouverture.getHours())) + ouverture.getHours();
-        System.out.println(fermeture.getHours());
-        System.out.println(ouverture.getHours());
-        System.out.println(value+"&&&&&&&&&&&&&&&&&&"); // Sort une heure entre louverture et la fermeture
         if(hrRestant >= 8){
-            Date sortie = (Date) ouverture.clone();
-            sortie.setHours(ouverture.getHours()+8);
-            temporals.add(new Temporal(ouverture,sortie));
+            Date entreee = trouveUneHrIdeal8(ouverture,fermeture);
+            Date sortie = (Date) entreee.clone();
+            sortie.setHours(entreee.getHours()+8);
+            temporals.add(new Temporal(entreee,sortie));
             heureAttribuer = 8;
-            setSoirePrise(false);
         } else if (hrRestant < 8){
-            Date sortie = (Date) ouverture.clone();
-            sortie.setHours(ouverture.getHours() + hrRestant);
+            Date entreee =  trouverUneHrInferieurA8(ouverture,fermeture);
+            Date sortie = (Date) entreee.clone();
+            sortie.setHours(entreee.getHours() + hrRestant);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = hrRestant;
-            setSoirePrise(false);
-        } else if (hrRestant >= 8) {
-            Date entre = (Date) fermeture.clone();
-            entre.setHours(fermeture.getHours()-8);
-            temporals.add(new Temporal(entre,fermeture));
-            heureAttribuer = 8;
-            setSoirePrise(true);
-        } else if (hrRestant < 8){
-            Date entre = (Date) fermeture.clone();
-            entre.setHours(fermeture.getHours()-hrRestant);
-            temporals.add(new Temporal(entre,fermeture));
-            heureAttribuer = hrRestant;
-            setSoirePrise(true);
         }
-
        setHrRestant(hrRestant - heureAttribuer);
     }
-
 
     /*
     Met les minutes et secondes a 0
@@ -127,10 +131,12 @@ public class GenerationFeuilleTmp {
              ) { hrRestant =emp.getNbrHrMax();
             ArrayList<Temporal> temporals = new ArrayList<>();
             for (int i = 0 ;i<nbrSemaine*7;i++){
-                if(hrRestant > 0 ) {
-                    Date dateeffectif = setLaJourner(i);
-                    phase1GererLesHRouvertEtFermer(temporals,emp, entreprise, dateeffectif);
-                }
+                    if (hrRestant > 0) {
+                        Date dateeffectif = setLaJourner(i);
+                        if(entreprise.getJournesOuvert()[dateeffectif.getDay()] == true) {
+                            phase1GererLesHRouvertEtFermer(temporals, emp, entreprise, dateeffectif);
+                        }
+                    }
             }
             tabTempEmp.add(new StockEmployeEtFDT(temporals,emp));
         }
@@ -142,9 +148,6 @@ public class GenerationFeuilleTmp {
     }
 
 
-    public boolean isSoirePrise() {
-        return soirePrise;
-    }
 
     public static void setSoirePrise(boolean soirePrise) {
         soirePrise = soirePrise;

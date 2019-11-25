@@ -17,7 +17,7 @@ public class Entreprise {
 
     private ArrayList<EmployeProto> employeProtos = new ArrayList<>();
 
-    //1-7 = lundi a dimanche
+    //1-7 = Dimanche a Samedi
     private boolean[] journesOuvert = new boolean[7];
 
     private ArrayList<StockEmployeEtFDT> listDeFDT;
@@ -33,11 +33,14 @@ public class Entreprise {
 
 
     public void peuplerEntreprise(int nbrEmploye){
+
+        employeProtos.add((new EmployeProto(dernierIdDispo,"gustavo",15.50,40,new EtatEmploye())));
         while(nbrEmploye > 0){
             employeProtos.add(new EmployeProto(dernierIdDispo,"mike"+ random.nextInt() ,14.50,25,new EtatEmploye()));
             dernierIdDispo++;
             nbrEmploye--;
         }
+
     }
 
 
@@ -148,6 +151,7 @@ public class Entreprise {
     public void setJournesOuvert(boolean[] journesOuvert) {
         this.journesOuvert = journesOuvert;
     }
+
 
     @Override
     public String toString() {
