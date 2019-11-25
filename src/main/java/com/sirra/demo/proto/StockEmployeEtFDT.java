@@ -48,9 +48,9 @@ public class StockEmployeEtFDT {
 
     @Override
     public String toString() {
-        return "StockEmployeEtFDT{" +
+        return "\n**\n*\n*:StockEmployeEtFDT{" +
                 "temporals=" + temporals +
-                ", employeProto=" + employeProto +
+                ", employeProto=" + employeProto.getId() +
                 '}';
     }
 }
