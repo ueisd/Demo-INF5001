@@ -11,10 +11,24 @@ public class StockEmployeEtFDT {
 
     private EmployeProto employeProto;
 
+    private double salaireDeCetteHoraire = 0;
+
     public StockEmployeEtFDT(ArrayList<Temporal> temporals, EmployeProto employeProto) {
         this.temporals = temporals;
         this.employeProto = employeProto;
+        calculerSalaire();
+        System.out.println(salaireDeCetteHoraire+"ddddddddd"+employeProto.getId());
     }
+
+
+    public void calculerSalaire(){
+        for (Temporal tmp: temporals
+             ) {
+            salaireDeCetteHoraire = salaireDeCetteHoraire + (tmp.nombreHrExercer() * employeProto.getSalaire());
+        }
+    }
+
+
 
     public EmployeProto getEmployeProto() {
         return employeProto;

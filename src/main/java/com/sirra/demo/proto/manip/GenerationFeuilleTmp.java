@@ -1,14 +1,10 @@
 package com.sirra.demo.proto.manip;
 
-import com.sirra.demo.proto.EmployeProto;
-import com.sirra.demo.proto.Entreprise;
-import com.sirra.demo.proto.StockEmployeEtFDT;
-import com.sirra.demo.proto.Temporal;
+import com.sirra.demo.proto.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
 public class GenerationFeuilleTmp {
 
@@ -128,17 +124,20 @@ public class GenerationFeuilleTmp {
 
     public static void genererParNombreSemPrFDT(int nbrSemaine,Entreprise entreprise){
         for (EmployeProto emp: entreprise.getEmployeProtos()
-             ) { hrRestant =emp.getNbrHrMax();
-            ArrayList<Temporal> temporals = new ArrayList<>();
-            for (int i = 0 ;i<nbrSemaine*7;i++){
+             ) {
+            if (emp.getEtatEmploye().isActif() == true) {
+                hrRestant = emp.getNbrHrMax();
+                ArrayList<Temporal> temporals = new ArrayList<>();
+                for (int i = 0; i < nbrSemaine * 7; i++) {
                     if (hrRestant > 0) {
                         Date dateeffectif = setLaJourner(i);
-                        if(entreprise.getJournesOuvert()[dateeffectif.getDay()] == true) {
+                        if (entreprise.getJournesOuvert()[dateeffectif.getDay()] == true) {
                             phase1GererLesHRouvertEtFermer(temporals, emp, entreprise, dateeffectif);
                         }
                     }
+                }
+                tabTempEmp.add(new StockEmployeEtFDT(temporals, emp));
             }
-            tabTempEmp.add(new StockEmployeEtFDT(temporals,emp));
         }
     }
 
