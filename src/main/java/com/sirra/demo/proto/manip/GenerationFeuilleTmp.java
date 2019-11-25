@@ -15,7 +15,7 @@ public class GenerationFeuilleTmp {
 
     public static void main(String[] args) {
         Entreprise entreprise = initialiserLentreprise(07,18,3,"0011110");
-        System.out.println(entreprise+"ENNNNNNNTTTTTTREEEEEEPRISEEEEEEEE");
+        System.out.println(entreprise);
         genererParNombreSemPrFDT(1,entreprise);
         System.out.println("\n*\n*\n*\n*\n*\n**********************"+tabTempEmp);
         entreprise.setListDeFDT(tabTempEmp);

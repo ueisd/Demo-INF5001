@@ -160,7 +160,7 @@ public class Entreprise {
                 "dernierIdDispo=" + dernierIdDispo +
                 ", heureOuverture=" + heureOuverture +
                 ", heureFermeture=" + heureFermeture + "\n"+
-                ", employeProtos=" + employeProtos +
+                ", employeProtos=" + employeProtos.size() +
                 ", journesOuvert=" + Arrays.toString(journesOuvert) +
                 '}';
     }
