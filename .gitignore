@@ -1,5 +1,5 @@
 HELP.md
-target/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -19,6 +19,9 @@ target/
 *.iml
 *.ipr
 
+/backend/target/
+/demo-ui/target/
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -29,3 +32,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### serveur contenu ###
+/backend/src/main/resources/static/
+/demo-ui/dist/
+/demo-ui/node_modules/
+/demo-ui/node/
+
+/target/*

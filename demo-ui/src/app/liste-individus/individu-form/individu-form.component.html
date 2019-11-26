@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <h2>Enregistrer un nouvel individu</h2>
+        <form [formGroup]="individuForm" (ngSubmit)="onSaveIndividu()">
+            <div class="form-group">
+                <label for="prenom">Pénom</label>
+                <input type="text" class="form-control" id="prenom" formControlName="prenom">
+            </div>
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" id="nom" formControlName="nom">
+            </div>
+            <div class="form-group">
+                <label for="ville">Ville</label>
+                <input type="text" class="form-control" id="ville" formControlName="ville">
+            </div>
+            <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Annuler </button>
+            <button class="btn btn-success" [disabled]="individuForm.invalid" type="submit">Enregistrer </button>
+        </form> 
+    </div>
+</div>
