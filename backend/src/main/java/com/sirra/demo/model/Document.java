@@ -10,7 +10,7 @@ public class Document {
     @Column(name = "id")
     private int id;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Individu", referencedColumnName = "id")
+    @JoinColumn(name = "id_Individu", referencedColumnName = "Individu_Id")
     private Individu individu;
     @Column(name = "noReference")
     @Length(min=3, message = "Veillez entrer un numero de réference vailde")

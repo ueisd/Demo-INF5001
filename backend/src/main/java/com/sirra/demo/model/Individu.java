@@ -18,7 +18,7 @@ public class Individu {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "Individu_Id")
     private int id;
 
     @JsonBackReference

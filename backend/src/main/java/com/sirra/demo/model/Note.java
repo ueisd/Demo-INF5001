@@ -14,7 +14,7 @@ public class Note {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Individu", referencedColumnName = "id")
+    @JoinColumn(name = "id_Individu", referencedColumnName = "Individu_Id")
     private Individu individu;
 
 
