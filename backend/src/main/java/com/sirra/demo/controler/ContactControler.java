@@ -37,8 +37,17 @@ public class ContactControler {
         return contact;
     }
 
+    @GetMapping(value = "Contacts/pour/{idIndividu}")
+    public List<Object[]> testDeRequete(@PathVariable int idIndividu){
+
+        return contactDao.chercherLesContactsDunIndividu(idIndividu);
+    }
+
+
     @PostMapping(value = "Contacts")
     public ResponseEntity<Void> ajouterContact(@Valid @RequestBody Contact contact) {
+
+
         Contact contact1 = contactDao.save(contact);
 
         if(contact1 == null) {
@@ -48,9 +57,8 @@ public class ContactControler {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(contact1.getId())
+                .buildAndExpand(contact1.getContactId())
                 .toUri();
-
 
         return ResponseEntity.created(location).build();
     }

@@ -57,7 +57,7 @@ public class IndividuControler {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(individu1.getId())
+                .buildAndExpand(individu1.getIndividuId())
                 .toUri();
 
 

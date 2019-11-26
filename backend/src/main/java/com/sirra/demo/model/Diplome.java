@@ -12,8 +12,8 @@ import java.util.Date;
         @Column(name = "id")
         private int id;
 
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "id_Individu", referencedColumnName = "id")
+        @ManyToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "id_Individu", referencedColumnName = "Individu_Id")
         private Individu individu;
 
         @Column(name = "statut_Diplome")
@@ -34,18 +34,23 @@ import java.util.Date;
         @Column(name = "etablissement_Diplome")
         private String etablissementObtention;
 
-        @Column(name = "date_Obtention")
-        private Date dateObtention;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_Obtention")
+    private Date dateObtention;
 
         @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
         private String creationPar;
 
-        private Date creerLe;
+
+    @Temporal(TemporalType.DATE)
+    private Date creerLe;
 
         @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
         private String modificationPar;
 
-        private Date modifierLe;
+    @Temporal(TemporalType.DATE)
+    private Date modifierLe;
 
         public int getId() {
             return id;

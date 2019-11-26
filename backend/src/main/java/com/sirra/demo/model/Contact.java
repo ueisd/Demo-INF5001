@@ -3,6 +3,8 @@ package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -59,11 +61,13 @@ public class Contact {
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date creerLe;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
 
@@ -172,6 +176,22 @@ public class Contact {
 
     public void setModifierLe(Date modifierLe) {
         this.modifierLe = modifierLe;
+    }
+
+    public int getContactId() {
+        return id;
+    }
+
+    public void setContactId(int contactId) {
+        this.id = contactId;
+    }
+
+    public Individu getIndividu() {
+        return individu;
+    }
+
+    public void setIndividu(Individu individu) {
+        this.individu = individu;
     }
 
     @Override

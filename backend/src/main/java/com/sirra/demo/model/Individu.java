@@ -1,14 +1,11 @@
 package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +38,19 @@ public class Individu {
             orphanRemoval = true
     )
     private List<Contact> contact;
+
+   @JsonBackReference
+   @OneToMany
+   @JoinColumn(name = "note", nullable = true)
+   @ApiModelProperty(notes = "Property containing the notes of the individu")
+   private List<Note> note;
+
+    @JsonBackReference
+    @OneToMany
+    @JoinColumn(name = "diplome", nullable = true)
+    @ApiModelProperty(notes = "Property containing the diplomes of the individu")
+    private List<Diplome> diplomes;
+
 
     @Column(name = "prenom")
     @Length(min=3, max=20, message="Nom trop long ou trop court")
@@ -84,6 +94,7 @@ public class Individu {
     @Column (name = "handicap")
     private String handicap;// aucun ou description
 
+    @Temporal(TemporalType.DATE)
     @Column (name = "date_de_naissance")
     private Date dateNaissance;
 
@@ -93,11 +104,13 @@ public class Individu {
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date creerLe;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
+    @Temporal(TemporalType.DATE)
     private Date modifierLe;
 
     public List<Contact> getContact() {
@@ -112,8 +125,28 @@ public class Individu {
         return id;
     }
 
+    public int getIndividuId() {
+        return id;
+    }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Note> getNote() {
+        return note;
+    }
+
+    public void setNote(List<Note> note) {
+        this.note = note;
+    }
+
+    public List<Diplome> getDiplomes() {
+        return diplomes;
+    }
+
+    public void setDiplomes(List<Diplome> diplomes) {
+        this.diplomes = diplomes;
     }
 
     public String getPrenom() {
@@ -286,4 +319,15 @@ public class Individu {
                 ", modifierLe=" + modifierLe +
                 '}';
     }
+
+
+    public Employe getEmploye() {
+        return employe;
+    }
+
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
+    }
+
+
 }

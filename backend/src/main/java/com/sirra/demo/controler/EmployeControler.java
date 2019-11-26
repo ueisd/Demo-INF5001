@@ -54,7 +54,7 @@ public class EmployeControler {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(employe1.getId())
+                .buildAndExpand(employe1.getEmployeId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
@@ -72,7 +72,7 @@ public class EmployeControler {
         employeDao.deleteById(id);
     }
 
-    @GetMapping(value = "test/Employe/{id}")
+  @GetMapping(value = "test/Employe/{id}")
     public List<Employe> testDeRequete(@PathVariable int id) {
         return employeDao.findByidGreaterThan(id);
     }
