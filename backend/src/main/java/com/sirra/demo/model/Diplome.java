@@ -13,7 +13,7 @@ import java.util.Date;
         private int id;
 
         @ManyToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "id_Individu", referencedColumnName = "Individu_Id")
+        @JoinColumn(name = "id_Individu", referencedColumnName = "Id")
         private Individu individu;
 
         @Column(name = "statut_Diplome")

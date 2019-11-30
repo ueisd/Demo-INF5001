@@ -16,22 +16,23 @@ public class Individu {
 
     }
 
+
     @Id
     @GeneratedValue
-    @Column(name = "Individu_Id")
+    @Column(name = "Id")
     private int id;
 
-    @JsonBackReference
+    @JsonBackReference(value="employe")
     @OneToOne(
             fetch = FetchType.EAGER,
             cascade=CascadeType.ALL,
-            optional = false
+            optional = true
     )
-    @JoinColumn(name = "employe_id", nullable = false)
+    @JoinColumn(name = "employe_id", nullable = true)
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
     private Employe employe;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "individu")
     @OneToMany(
             mappedBy = "individu",
             cascade = CascadeType.ALL,
@@ -39,13 +40,13 @@ public class Individu {
     )
     private List<Contact> contact;
 
-   @JsonBackReference
+   @JsonBackReference(value = "note")
    @OneToMany
    @JoinColumn(name = "note", nullable = true)
    @ApiModelProperty(notes = "Property containing the notes of the individu")
    private List<Note> note;
 
-    @JsonBackReference
+    @JsonBackReference(value = "diplomes")
     @OneToMany
     @JoinColumn(name = "diplome", nullable = true)
     @ApiModelProperty(notes = "Property containing the diplomes of the individu")
