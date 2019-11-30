@@ -20,7 +20,7 @@ public class Contact {
     @Column(name = "id")
     private int id;
 
-    @JsonBackReference
+    @JsonBackReference(value = "individu")
     @ManyToOne
     @JoinColumn(name = "individu_id")
     private Individu individu;
