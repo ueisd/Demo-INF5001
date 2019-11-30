@@ -41,14 +41,20 @@ public class Individu {
     private List<Contact> contact;
 
    @JsonBackReference(value = "note")
-   @OneToMany
-   @JoinColumn(name = "note", nullable = true)
+   @OneToMany(
+           mappedBy = "individu",
+           cascade = CascadeType.ALL,
+           orphanRemoval = true
+   )
    @ApiModelProperty(notes = "Property containing the notes of the individu")
    private List<Note> note;
 
     @JsonBackReference(value = "diplomes")
-    @OneToMany
-    @JoinColumn(name = "diplome", nullable = true)
+    @OneToMany(
+            mappedBy = "individu",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @ApiModelProperty(notes = "Property containing the diplomes of the individu")
     private List<Diplome> diplomes;
 
@@ -133,6 +139,7 @@ public class Individu {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public List<Note> getNote() {
         return note;

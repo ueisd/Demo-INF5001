@@ -13,8 +13,8 @@ public class Note {
     @Column(name = "id")
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Individu", referencedColumnName = "Id")
+    @ManyToOne
+    @JoinColumn(name = "id_Individu")
     private Individu individu;
 
 
