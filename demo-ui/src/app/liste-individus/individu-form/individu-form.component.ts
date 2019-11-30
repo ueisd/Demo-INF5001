@@ -14,12 +14,13 @@ export class IndividuFormComponent implements OnInit {
 
   individu : Individu; 
   individuForm: FormGroup;
+  contactForm: FormGroup;
   
 
   constructor(private fb: FormBuilder,private employeService: EmployesServiceService,
     private router: Router) {
-      this.individu = new Individu("", "", {}, [], "");
-     }
+      this.individu = new Individu("", "", {}, [new Contact("aa", "aa", "aaaaa")], "");
+  }
 
   ngOnInit() {
     this.initForm();
@@ -38,11 +39,9 @@ export class IndividuFormComponent implements OnInit {
   setContact() {
     let control = <FormArray>this.individuForm.controls.contact;
     this.individu.contact.forEach(x => {
-      control.push(this.fb.group({ 
-        nom: x.nom, 
-        prenom: x.prenom, 
-        ville: x.ville
-      }))
+      let contactForm = this.getContactForm();
+      contactForm.setValue(x);
+      control.push(contactForm);
     })
   }
 
@@ -51,15 +50,18 @@ export class IndividuFormComponent implements OnInit {
     control.removeAt(index)
   }
 
+  getContactForm() : FormGroup {
+    return this.fb.group({
+      nom: ['', [Validators.required, Validators.minLength(2)]],
+      prenom: ['', [Validators.required,  Validators.minLength(2)]],
+      ville: ['', [Validators.required, Validators.minLength(5)]]
+    });
+  }
+
   addNewContact() {
     let control = <FormArray>this.individuForm.controls.contact;
-    control.push(
-      this.fb.group({
-        nom: ['', [Validators.required, Validators.minLength(2)]],
-        prenom: ['', [Validators.required,  Validators.minLength(2)]],
-        ville: ['', [Validators.required, Validators.minLength(5)]]
-      })
-    )
+    let contactForm = this.getContactForm();
+    control.push(contactForm)
   }
 
   onSaveIndividu() {
