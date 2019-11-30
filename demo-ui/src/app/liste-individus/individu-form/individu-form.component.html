@@ -14,8 +14,42 @@
                 <label for="ville">Ville</label>
                 <input type="text" class="form-control" id="ville" formControlName="ville">
             </div>
+
+            <div formArrayName="contact">
+                <button style="margin-top:5px; margin-bottom:5px;" type="button" class="btn btn-primary btn-sm" (click)="addNewContact()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un Contact
+                </button>
+                <div style="margin-top:5px; margin-bottom:5px;" *ngFor="let contac of individuForm.get('contact').controls; let i=index">
+                    <legend><h4>Contact {{i+1}}:
+                        <button style="margin-left:35px;" type="button" class="btn btn-danger" (click)="deleteContact(i)">
+                            <span class="glyphicon glyphicon-minus"aria-hidden="true"></span> Enlever Contact
+                        </button>
+                    </h4></legend>
+                    <div [formGroupName]="i">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="col-form-label" for="prenom">Prenom</label>
+                                <input type="text" class="form-control" id="prenom" placeholder="Prenom" name="type"
+                                    formControlName="prenom" required>
+
+                                <label class="col-form-label" for="nom">Nom</label>
+                                <input type="text" class="form-control" id="nom" placeholder="Nom" name="type"
+                                    formControlName="nom" required>
+                                <label class="col-form-label" for="ville">Ville</label>
+                                <input type="text" class="form-control" id="ville" placeholder="Ville" name="type"
+                                    formControlName="ville" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Annuler </button>
             <button class="btn btn-success" [disabled]="individuForm.invalid" type="submit">Enregistrer </button>
         </form> 
     </div>
 </div>
+
+
+<pre>{{individuForm.value | json}}</pre>
