@@ -16,18 +16,19 @@ public class Individu {
 
     }
 
+
     @Id
     @GeneratedValue
-    @Column(name = "Individu_Id")
+    @Column(name = "Id")
     private int id;
 
     @JsonBackReference
     @OneToOne(
             fetch = FetchType.EAGER,
             cascade=CascadeType.ALL,
-            optional = false
+            optional = true
     )
-    @JoinColumn(name = "employe_id", nullable = false)
+    @JoinColumn(name = "employe_id", nullable = true)
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
     private Employe employe;
 
