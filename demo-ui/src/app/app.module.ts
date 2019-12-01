@@ -36,11 +36,12 @@ import {
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
-  { path: 'appareils/:id', canActivate: [AuthGuard], component: SingleAppareilComponent },
+  { path: 'appareils/:id', component: SingleAppareilComponent },
   { path: 'users', canActivate: [AuthGuard], component: UserListComponent },
   { path: 'individus', canActivate: [AuthGuard], component: ListeIndividusComponent },
   { path: 'formtest', canActivate: [AuthGuard], component: FormtestComponent },
   { path: 'new/individu', canActivate: [AuthGuard], component: IndividuFormComponent },
+  { path: 'edit/individu/:id', canActivate: [AuthGuard], component: IndividuFormComponent },
   { path: 'new-user', canActivate: [AuthGuard], component: NewUserComponent },
   { path: 'auth/signin',  component: SigninComponent },
   { path: '', component: AppareilViewComponent },

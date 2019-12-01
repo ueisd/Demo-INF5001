@@ -44,7 +44,7 @@ public class Individu {
    @OneToMany(
            mappedBy = "individu",
            cascade = CascadeType.ALL,
-           orphanRemoval = true
+           orphanRemoval = false
    )
    @ApiModelProperty(notes = "Property containing the notes of the individu")
    private List<Note> note;
@@ -53,7 +53,7 @@ public class Individu {
     @OneToMany(
             mappedBy = "individu",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = false
     )
     @ApiModelProperty(notes = "Property containing the diplomes of the individu")
     private List<Diplome> diplomes;

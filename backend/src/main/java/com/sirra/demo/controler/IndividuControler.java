@@ -64,9 +64,22 @@ public class IndividuControler {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping (value = "Individus/modifier")
-    public void updateIndividu(@RequestBody Individu individu) {
-        individuDao.save(individu);
+
+    @PutMapping(path="/Individus/modifier")
+    public ResponseEntity<Void> updateUser(@Valid @RequestBody Individu individu) {
+        Individu individu1 = individuDao.save(individu);
+        if(individu1 == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(individu1.getIndividuId())
+                .toUri();
+
+
+        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping (value = "Individus/Delete/{id}")

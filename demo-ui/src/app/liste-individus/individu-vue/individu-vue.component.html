@@ -2,6 +2,7 @@
     <div class="panel-heading">{{ individuPrenom }}, {{ individuNom }}  -- (Prénom, nom)</div>
     <div class="panel-body">
         <p>Ville: {{ individuVille }}</p>
+        <a [routerLink]="['/edit/individu', individuId]">Éditer</a>   
         <button class="btn btn-danger" (click)="onDelete()">Supprimer</button>
     </div>
 </div>

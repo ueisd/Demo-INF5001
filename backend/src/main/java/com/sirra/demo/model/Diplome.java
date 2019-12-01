@@ -8,11 +8,11 @@ import java.util.Date;
     public class Diplome {
 
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "id")
         private int id;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne
         @JoinColumn(name = "id_Individu")
         private Individu individu;
 

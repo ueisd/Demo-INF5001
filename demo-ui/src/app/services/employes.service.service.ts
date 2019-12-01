@@ -17,6 +17,7 @@ const httpOptions = {
 export class EmployesServiceService {
 
   private postIndividuUrl: string;
+  private putIndividuUrl: string;
   private deleteIndividuUrl: string;
   private baseUrl: string;
   private getIndividusUrl: string;
@@ -24,6 +25,7 @@ export class EmployesServiceService {
   constructor(private httpClient: HttpClient, private baseUrlService: BaseUrlService) {
     this.baseUrl = baseUrlService.baseUrl;
     this.postIndividuUrl = this.baseUrl + '/Individus';
+    this.putIndividuUrl = this.baseUrl + '/Individus/modifier';
     this.getIndividusUrl = this.baseUrl + '/Individus';
     this.deleteIndividuUrl = this.baseUrl + '/Individus/Delete/'
   }
@@ -37,6 +39,10 @@ export class EmployesServiceService {
 
   addIndividu (individu: Individu): Observable<Individu> {
     return this.httpClient.post<Individu>(this.postIndividuUrl, individu, httpOptions);
+  }
+
+  putIndividu (individu: Individu): Observable<Individu> {
+    return this.httpClient.put<Individu>(this.putIndividuUrl, individu, httpOptions);
   }
 
   public deleteIndividu(id: number) {
@@ -56,6 +62,11 @@ export class EmployesServiceService {
         console.log('Erreur de supression !' + error);
       }
     );
+  }
+
+  public getIndividuFormList(id: number) : Individu {
+    let obj = this.individus.find(o => o.id === id);
+    return obj;
   }
 
   getIndividusFromServer() {

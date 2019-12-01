@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Individu } from 'src/app/models/Individu.model';
 import { EmployesServiceService } from 'src/app/services/employes.service.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from 'src/app/models/Contact.model';
 
 @Component({
@@ -15,18 +15,37 @@ export class IndividuFormComponent implements OnInit {
   individu : Individu; 
   individuForm: FormGroup;
   contactForm: FormGroup;
+  isEdit = false;
 
   validation_messages = Individu.getValidationMessages();
   validation_contact_messages = Contact.getValidationMessages();
   
 
   constructor(private fb: FormBuilder,private employeService: EmployesServiceService,
-    private router: Router) {
-      this.individu = new Individu("", "", {}, [new Contact("aa", "aa", "aaaaa")], "");
+    private router: Router, private activatedRoute: ActivatedRoute) {
+      this.individu = new Individu("", "", {}, [], "");
+      this.activatedRoute.paramMap.subscribe(params => {
+        const individuId = params['id'];
+        console.log("individuId" + JSON.stringify(params));
+      });
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.initForm();
+    this.activatedRoute.paramMap.subscribe( paramMap => {
+      if(paramMap.get('id') != null) {
+        this.isEdit = true;
+        let nbr = parseInt(paramMap.get('id'));
+        let ind = this.employeService.getIndividuFormList(nbr);
+        let tabl = [];
+        for (let contactJson of ind.contact) {
+          tabl.push( new Contact(contactJson.nom, contactJson.prenom, contactJson.ville) );
+        }
+        this.individu = new Individu(ind.nom, ind.prenom, ind.employe, tabl, ind.ville);
+        this.individu.id = ind.id;
+        this.initForm();
+      }
+    });
   }
 
   getErrorMessage() {
@@ -37,15 +56,16 @@ export class IndividuFormComponent implements OnInit {
 
   initForm() {
     this.individuForm = this.fb.group({
-      nom: ['', Validators.compose([
+      id: [this.individu.id],
+      nom: [this.individu.nom, Validators.compose([
         Validators.minLength(5),
         Validators.required,    
       ])],
-      prenom: ['', Validators.compose([
+      prenom: [this.individu.prenom, Validators.compose([
         Validators.required, 
         Validators.minLength(3)
       ])],
-      ville: ['', Validators.compose([
+      ville: [this.individu.ville, Validators.compose([
         Validators.required, 
         Validators.minLength(5)
       ])],
@@ -87,14 +107,25 @@ export class IndividuFormComponent implements OnInit {
     this.individu.prenom = this.individuForm.get('prenom').value;
     this.individu.ville = this.individuForm.get('ville').value;
     this.individu.contact = this.individuForm.get('contact').value;
-    this.employeService.addIndividu(this.individu).subscribe(
-      (individu) => { 
-        this.router.navigate(['/individus']);
-      },
-      (error) => {
-        console.log('Erreur de sauvegarde !' + error);
-      }
-    );
+    if(!this.isEdit) {
+      this.employeService.addIndividu(this.individu).subscribe(
+        (individu) => { 
+          this.router.navigate(['/individus']);
+        },
+        (error) => {
+          console.log('Erreur de sauvegarde !' + error);
+        }
+      );
+    }else {
+      this.employeService.putIndividu(this.individu).subscribe(
+        (individu) => { 
+          this.router.navigate(['/individus']);
+        },
+        (error) => {
+          console.log('Erreur de sauvegarde !' + error);
+        }
+      );
+    }
   }
 
   onAnnuler() {
