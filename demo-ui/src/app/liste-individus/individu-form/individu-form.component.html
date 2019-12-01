@@ -2,42 +2,87 @@
     <div class="col-sm-8 col-sm-offset-2">
         <h2>Enregistrer un nouvel individu</h2>
         <form [formGroup]="individuForm" (ngSubmit)="onSaveIndividu()">
-            <div class="form-group">
-                <label for="prenom">Pénom</label>
-                <input type="text" class="form-control" id="prenom" formControlName="prenom">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Prénom" formControlName="prenom" required>
+                        <mat-error *ngFor="let validation of validation_messages.prenom">
+                            <mat-error class="error-message" *ngIf="individuForm.get('prenom').hasError(validation.type) && 
+                            (individuForm.get('prenom').dirty || individuForm.get('prenom').touched)">{{validation.message}}</mat-error>
+                        </mat-error>   
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Nom de famille" formControlName="nom" required>
+                        <mat-error *ngFor="let validation of validation_messages.nom">
+                            <mat-error class="error-message" *ngIf="individuForm.get('nom').hasError(validation.type) && 
+                            (individuForm.get('nom').dirty || individuForm.get('nom').touched)">{{validation.message}}</mat-error>
+                        </mat-error>   
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="nom">Nom</label>
-                <input type="text" class="form-control" id="nom" formControlName="nom">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Ville" formControlName="ville" required>
+                        <mat-error *ngFor="let validation of validation_messages.ville">
+                            <mat-error class="error-message" *ngIf="individuForm.get('ville').hasError(validation.type) && 
+                            (individuForm.get('ville').dirty || individuForm.get('ville').touched)">{{validation.message}}</mat-error>
+                        </mat-error>   
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="ville">Ville</label>
-                <input type="text" class="form-control" id="ville" formControlName="ville">
-            </div>
+
+
 
             <div formArrayName="contact">
                 <button style="margin-top:5px; margin-bottom:5px;" type="button" class="btn btn-primary btn-sm" (click)="addNewContact()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un Contact
                 </button>
                 <div style="margin-top:5px; margin-bottom:5px;" *ngFor="let contac of individuForm.get('contact').controls; let i=index">
-                    <legend><h4>Contact {{i+1}}:
-                        <button style="margin-left:35px;" type="button" class="btn btn-danger" (click)="deleteContact(i)">
-                            <span class="glyphicon glyphicon-minus"aria-hidden="true"></span> Enlever Contact
-                        </button>
-                    </h4></legend>
+                    <div class="row">
+                        
+                        <div class="col-sm-8">
+                            <h3 class="text-center">Contact {{i+1}}:</h3>
+                        </div>
+                        <div class="col-sm-4">
+                                <button type="button" class="btn btn-danger pull-right" (click)="deleteContact(i)">
+                                    <span class="glyphicon glyphicon-minus"aria-hidden="true"></span> Enlever Contact
+                                </button>
+                            </div>
+                    </div>
+                    
                     <div [formGroupName]="i">
                         <div class="form-inline">
-                            <div class="form-group">
-                                <label class="col-form-label" for="prenom">Prenom</label>
-                                <input type="text" class="form-control" id="prenom" placeholder="Prenom" name="type"
-                                    formControlName="prenom" required>
-
-                                <label class="col-form-label" for="nom">Nom</label>
-                                <input type="text" class="form-control" id="nom" placeholder="Nom" name="type"
-                                    formControlName="nom" required>
-                                <label class="col-form-label" for="ville">Ville</label>
-                                <input type="text" class="form-control" id="ville" placeholder="Ville" name="type"
-                                    formControlName="ville" required>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Prénom" formControlName="prenom" required>
+                                        <mat-error *ngFor="let validation of validation_contact_messages.prenom">
+                                            <mat-error class="error-message" *ngIf="contac.get('prenom').hasError(validation.type) && 
+                                            (contac.get('prenom').dirty || contac.get('prenom').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>   
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 col-md-4">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Nom" formControlName="nom" required>
+                                        <mat-error *ngFor="let validation of validation_contact_messages.nom">
+                                            <mat-error class="error-message" *ngIf="contac.get('nom').hasError(validation.type) && 
+                                            (contac.get('nom').dirty || contac.get('nom').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>   
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 col-md-4">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Ville" formControlName="ville" required>
+                                        <mat-error *ngFor="let validation of validation_contact_messages.ville">
+                                            <mat-error class="error-message" *ngIf="contac.get('ville').hasError(validation.type) && 
+                                            (contac.get('ville').dirty || contac.get('ville').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>   
+                                    </mat-form-field>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -45,11 +90,12 @@
 
             </div>
 
-            <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Annuler </button>
-            <button class="btn btn-success" [disabled]="individuForm.invalid" type="submit">Enregistrer </button>
+            <pre>{{individuForm.value | json}}</pre>
+
+            <div class="btn-toolbar">
+                <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Annuler </button>
+                <button class="btn btn-success" [disabled]="individuForm.invalid" type="submit">Enregistrer </button>
+            </div>
         </form> 
     </div>
 </div>
-
-
-<pre>{{individuForm.value | json}}</pre>

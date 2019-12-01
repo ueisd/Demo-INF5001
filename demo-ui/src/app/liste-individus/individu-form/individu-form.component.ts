@@ -15,6 +15,9 @@ export class IndividuFormComponent implements OnInit {
   individu : Individu; 
   individuForm: FormGroup;
   contactForm: FormGroup;
+
+  validation_messages = Individu.getValidationMessages();
+  validation_contact_messages = Contact.getValidationMessages();
   
 
   constructor(private fb: FormBuilder,private employeService: EmployesServiceService,
@@ -26,11 +29,26 @@ export class IndividuFormComponent implements OnInit {
     this.initForm();
   }
 
+  getErrorMessage() {
+    return this.individuForm.hasError('required') ? 'You must enter a value' :
+        this.individuForm.hasError('nom') ? 'Not a valid email' :
+            '';
+  }
+
   initForm() {
     this.individuForm = this.fb.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
-      ville: ['', Validators.required],
+      nom: ['', Validators.compose([
+        Validators.minLength(5),
+        Validators.required,    
+      ])],
+      prenom: ['', Validators.compose([
+        Validators.required, 
+        Validators.minLength(3)
+      ])],
+      ville: ['', Validators.compose([
+        Validators.required, 
+        Validators.minLength(5)
+      ])],
       contact: this.fb.array([])
     });
     this.setContact();
