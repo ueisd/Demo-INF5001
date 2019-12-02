@@ -1,8 +1,23 @@
-<div class="panel-group col-sm-8 col-sm-offset-2">
-    <app-individu-vue *ngFor="let individu of individus; let i = index"
-    [individuNom]="individu.nom"
-    [individuPrenom]="individu.prenom"
-    [individuVille]="individu.ville"
-    [individuId]="individu.id"></app-individu-vue>
-    <button class="btn btn-success" (click)="onAjouterIndividu()">Ajouter un individu</button>
+<div class="row">
+    <div class="panel-group col-sm-8 col-sm-offset-2" *ngIf="doisPaginer">
+        <mat-paginator [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="pageEvent = getServerData($event)">
+        </mat-paginator>
+    </div>
 </div>
+<div class="row">
+    <div class="panel-group col-sm-8 col-sm-offset-2">
+        <app-individu-vue *ngFor="let individu of individusAfficher; let i = index"
+        [individuNom]="individu.nom"
+        [individuPrenom]="individu.prenom"
+        [individuVille]="individu.ville"
+        [individuId]="individu.id"></app-individu-vue>
+        <button class="btn btn-success" (click)="onAjouterIndividu()">Ajouter un individu</button>
+    </div>
+</div>
+
+
+
+

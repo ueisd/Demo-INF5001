@@ -31,8 +31,10 @@ import {
   MatInputModule,
   MatSelectModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatPaginatorModule
  } from '@angular/material';
+
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
@@ -75,7 +77,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatSliderModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   providers: [
     AppareilService,
