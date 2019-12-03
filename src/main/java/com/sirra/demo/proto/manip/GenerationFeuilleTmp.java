@@ -14,6 +14,7 @@ public class GenerationFeuilleTmp {
 
 
     public static void main(String[] args) {
+
         Entreprise entreprise = initialiserLentreprise(07,18,3,"0011110");
         System.out.println(entreprise);
         genererParNombreSemPrFDT(1,entreprise);
@@ -23,7 +24,7 @@ public class GenerationFeuilleTmp {
 
 
 
-    public static  Entreprise initialiserLentreprise(int hrOuvert,int hrFerme, int nbrEmploye,String journeOuvertEnBinaire){
+    public static  Entreprise  initialiserLentreprise(int hrOuvert,int hrFerme, int nbrEmploye,String journeOuvertEnBinaire){
         Entreprise entreprise = new Entreprise(hrOuvert, hrFerme);
         entreprise.initiliaserLesJr(journeOuvertEnBinaire);
         entreprise.peuplerEntreprise(nbrEmploye);
@@ -43,20 +44,20 @@ public class GenerationFeuilleTmp {
         dateSortie = cleanHeureA0(dateSortie);
 
        // System.out.println("\n*\n*\n*\n*\n*\n*"+dateOuverture +"....."+ dateSortie + "tracksa");
-         phase2GererLeshoraireDesEmploye(temporals,emp,entreprise,dateOuverture,dateSortie);
+        attributerUneFDT (temporals, dateOuverture, dateSortie);
 
 
     }
     
-    public static void phase2GererLeshoraireDesEmploye(ArrayList<Temporal> temporals,EmployeProto emp,Entreprise entreprise,Date ouverture, Date fermeture) {
-            Calendar c = Calendar.getInstance();
-            c.setTime(ouverture);
+   /* public static void phase2GererLeshoraireDesEmploye(ArrayList<Temporal> temporals,EmployeProto emp,Entreprise entreprise,Date ouverture, Date fermeture) {
+          //  Calendar c = Calendar.getInstance();
+            //c.setTime(ouverture);
 
             attributerUneFDT (temporals, ouverture, fermeture);
 
 
-
-    }
+}
+    */
 
     public static Date trouveUneHrIdeal8(Date ouverture, Date fermeture) {
         int value = 0;

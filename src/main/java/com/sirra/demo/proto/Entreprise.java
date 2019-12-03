@@ -37,7 +37,7 @@ public class Entreprise {
         employeProtos.add((new EmployeProto(dernierIdDispo,"gustavo",15.50,40,new EtatEmploye())));
         dernierIdDispo++;
         while(nbrEmploye > 0){
-            employeProtos.add(new EmployeProto(dernierIdDispo,"mike"+ random.nextInt() ,14.50,25,new EtatEmploye()));
+            employeProtos.add(new EmployeProto(dernierIdDispo,"mike"+ random.nextInt() ,14.50,38,new EtatEmploye()));
             dernierIdDispo++;
             nbrEmploye--;
         }

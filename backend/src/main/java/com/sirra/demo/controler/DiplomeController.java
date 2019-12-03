@@ -55,4 +55,6 @@ public class DiplomeController {
     public List<Diplome> testDeRequete(@PathVariable int id) {
         return diplomeDao.findByidGreaterThan(id);
     }
+
+
 }

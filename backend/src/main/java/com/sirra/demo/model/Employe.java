@@ -90,9 +90,9 @@ public class Employe {
         return individu;
     }
 
-    public void setIndividu(Individu individu) {
-        this.individu = individu;
-    }
+    //public void setIndividu(Individu individu) {
+      //  this.individu = individu;
+    //}
 
     public String getTitrePoste() {
         return titrePoste;
