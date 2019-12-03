@@ -11,6 +11,7 @@ public class Entreprise {
 
     private int dernierIdDispo = 1;
 
+    private int id;
     private int heureOuverture;
 
     private int heureFermeture;
@@ -127,6 +128,14 @@ public class Entreprise {
                 return "Dimanche";
         }
         return null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getHeureOuverture() {
