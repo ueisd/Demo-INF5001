@@ -7,13 +7,12 @@ import com.sirra.demo.model.Diplome;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @Api("Gestion pour departement")
 @RestController
@@ -37,5 +36,26 @@ public class DepartementController  {
         return ResponseEntity.created(location).build();
 
     }
+
+    @GetMapping(value = "Departement")
+    public List<Departement> listeDepartement() {
+        return departementDao.findAll();
+    }
+    @GetMapping(value = "Departement/{id}")
+    public Departement afficherDepartement(@PathVariable int id){
+        Departement departement = departementDao.findById(id);
+        return departement;
+    }
+
+    @DeleteMapping(value = "Departement/Delete/{id}")
+    public void supprimerDepartement(@PathVariable int id) {
+        departementDao.deleteById(id);
+    }
+
+    @PutMapping (value = "Departement/modifier")
+    public void updateDepartement(@RequestBody Departement departement) {
+        departementDao.save(departement);
+    }
+
 
 }
