@@ -25,10 +25,10 @@ public class Departement {
     )
     private List<Employe> employes;
 
-    @Length(min = 1, max = 2, message = "Heure doit se trouver entre 00 et 23")
+
     private int heure_Ouverture;
 
-    @Length(min = 1, max = 2, message = "Heure doit se trouver entre 00 et 23")
+
     private int heure_Fermeture;
 
     @Length(min = 7, max = 7, message = "Binaire ne fait pas longueur 7")

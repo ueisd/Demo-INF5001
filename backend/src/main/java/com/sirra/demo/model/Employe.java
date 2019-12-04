@@ -45,34 +45,55 @@ public class Employe {
     @ApiModelProperty(notes = "Variable linking the user with his user profile")
     private Individu individu;
 
+    @Column(nullable = true)
     @Length(min = 2, max = 30, message = "Nom de poste trop long ou trop court")
     private String titrePoste;
 
+    @Column(nullable = true)
     private double tauxHoraire;
 
+    @Column(nullable = true)
     @Length(min = 2, max = 40, message = "Nom de superieur est trop long ou trop court")
     private String superieurImediat;
+    @Column(nullable = true)
     @Length(min = 5, max = 60, message = "Nom de programme trop long ou trop court")
     private String programme;
+    @Column(nullable = true)
     private int jourSemaine;
+    @Column(nullable = true)
     @Length(min = 1, max = 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
     private String horaire;
+
     private int heureSemaine;
+
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date dateSalaire;
+
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date dateFinProbation;
+
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date dateFinPoste;
+
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date dateDebutPoste;
+
+    @Column(nullable = true)
     @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
+
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date creerLe;
     @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    @Column(nullable = true)
     private String modificationPar;
     @Temporal(TemporalType.DATE)
+    @Column(nullable = true)
     private Date modifierLe;
 
     public int getId() {
