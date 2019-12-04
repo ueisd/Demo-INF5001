@@ -1,5 +1,6 @@
 package com.sirra.demo.controler;
 import com.sirra.demo.dao.PosteDao;
+import com.sirra.demo.exceptions.PosteIntrouvableException;
 import com.sirra.demo.model.Poste;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,21 @@ import java.util.List;
 public class PosteController {
         @Autowired
         private PosteDao posteDao;
+
         @GetMapping(value = "Postes")
         public List<Poste> listePoste() {
             return posteDao.findAll();
         }
+
         @GetMapping(value = "Poste/{id}")
         public Poste afficherPoste(@PathVariable int id){
             Poste poste = posteDao.findById(id);
+            if (poste == null){
+                throw new PosteIntrouvableException("Le poste avec l'id " +id+ " est INTROUVABLE");
+            }
             return poste;
         }
+
         @PostMapping(value = "Poste")
         public ResponseEntity<Void> ajouterPoste(@Valid @RequestBody Poste poste){
             Poste poste1 = posteDao.save(poste);
@@ -39,6 +46,7 @@ public class PosteController {
             return ResponseEntity.created(location).build();
 
         }
+
         @PutMapping (value = "Postes/modifier")
         public void updatePoste(@RequestBody Poste diplome) {
             posteDao.save(diplome);

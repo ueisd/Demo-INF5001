@@ -15,18 +15,24 @@ public class Poste {
     @Column(name = "id")
         private int id;
     @Column(name = "codePoste")
+    @Length(min = 2,max = 30, message = "Caractère insuffisants ou trop longs" )
         private int codePoste;
     @Column(name = "codeDepartement")
+    @Length(min = 2,max = 30, message = "Caractère insuffisants ou trop longs" )
         private int codeDepartement;
     @Column(name = "dateExpiration")
         private Date dateExpiration;
     @Column(name = "descriptionPoste")
+    @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
         private String descriptionPoste;
     @Column(name = "codeClassification")
+    @Length(min = 2,max = 30, message = "Caractère insuffisants ou trop longs" )
         private String codeClassification;
     @Column(name = "postePermanent")
+    @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
         private int postePermanent;
     @Column(name = "tempsComplet")
+    @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
         private int tempsComplet;
     @Column(name = "horairePoste")
         private String horairePoste;
