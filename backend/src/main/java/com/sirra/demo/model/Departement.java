@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -103,6 +104,18 @@ public class Departement {
 
     public void setJrBinaire(String jrBinaire) {
         this.jrBinaire = jrBinaire;
+    }
+
+    @Override
+    public String toString() {
+        return "Departement{" +
+                "id=" + id +
+                ", employes=" + employes +
+                ", heure_Ouverture=" + heure_Ouverture +
+                ", heure_Fermeture=" + heure_Fermeture +
+                ", jrBinaire='" + jrBinaire + '\'' +
+                ", journesOuvert=" + Arrays.toString(journesOuvert) +
+                '}';
     }
 }
 
