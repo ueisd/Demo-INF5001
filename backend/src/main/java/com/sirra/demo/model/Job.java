@@ -53,11 +53,11 @@ public class Job {
 
     private Date modifierLe;
 
-    public int getJobId() {
+    public int getId() {
         return id;
     }
 
-    public void setJobId(int jobId) {
+    public void setId(int jobId) {
         this.id = jobId;
     }
 
