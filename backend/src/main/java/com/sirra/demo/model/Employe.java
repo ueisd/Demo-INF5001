@@ -1,5 +1,6 @@
 package com.sirra.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,6 +19,23 @@ public class Employe {
     @Column(name = "employe_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
+
+    @JsonBackReference(value = "departement")
+    @ManyToOne
+    @JoinColumn(name = "departemnet_id")
+    private Departement departement;
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
+    public void setIndividu(Individu individu) {
+        this.individu = individu;
+    }
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
@@ -39,7 +57,7 @@ public class Employe {
     private int jourSemaine;
     @Length(min = 1, max = 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
     private String horaire;
-    private double heureSemaine;
+    private int heureSemaine;
     @Temporal(TemporalType.DATE)
     private Date dateSalaire;
     @Temporal(TemporalType.DATE)
@@ -142,11 +160,11 @@ public class Employe {
         this.horaire = horaire;
     }
 
-    public double getHeureSemaine() {
+    public int getHeureSemaine() {
         return heureSemaine;
     }
 
-    public void setHeureSemaine(double heureSemaine) {
+    public void setHeureSemaine(int heureSemaine) {
         this.heureSemaine = heureSemaine;
     }
 
