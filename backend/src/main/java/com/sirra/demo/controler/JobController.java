@@ -20,7 +20,7 @@ public class JobController {
     @Autowired
     private JobDao jobDao;
 
-    @GetMapping(value = "Notes")
+    @GetMapping(value = "Jobs")
     public List<Job> listeJob(){
         return jobDao.findAll();
     }
