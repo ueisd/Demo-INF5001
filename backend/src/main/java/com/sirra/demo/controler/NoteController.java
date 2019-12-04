@@ -1,5 +1,6 @@
 package com.sirra.demo.controler;
 import com.sirra.demo.dao.NoteDao;
+import com.sirra.demo.exceptions.NoteIntrouvableException;
 import com.sirra.demo.model.Note;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,21 @@ import java.util.List;
 public class NoteController {
     @Autowired
     private NoteDao noteDao;
+
     @GetMapping(value = "Notes")
     public List<Note> listeNote(){
         return noteDao.findAll();
     }
+
     @GetMapping(value = "Note/{id}")
     public Note afficherNote(@PathVariable int id){
         Note note = noteDao.findById(id);
+        if (note == null){
+            throw new NoteIntrouvableException("La note avec l'id " +id+ " est INTROUVABLE");
+        }
         return note;
     }
+
     @PostMapping(value = "Notes")
     public ResponseEntity<Void> ajouterNote(@Valid @RequestBody Note note){
         Note note1 = noteDao.save(note);
@@ -38,6 +45,7 @@ public class NoteController {
 
         return ResponseEntity.created(location).build();
     }
+
     @PutMapping (value = "Note/modifier")
     public void updateNote(@RequestBody Note note) {
         noteDao.save(note);

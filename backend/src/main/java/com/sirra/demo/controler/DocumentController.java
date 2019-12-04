@@ -1,4 +1,5 @@
 package com.sirra.demo.controler;
+import com.sirra.demo.exceptions.DocumentIntrouvableException;
 import com.sirra.demo.model.Document;
 import com.sirra.demo.dao.DocumentDao;
 import io.swagger.annotations.Api;
@@ -15,14 +16,21 @@ import java.util.List;
 public class DocumentController {
     @Autowired
     private  DocumentDao documentDao;
+
     @GetMapping(value = "Documents")
     public List<Document> listeDocument() {
        return  documentDao.findAll();
     }
+
     @GetMapping(value = "Document/{id}")
     public Document afficherDoc(@PathVariable int id){
-        return documentDao.findById(id);
+        Document document= documentDao.findById(id);
+        if (document == null){
+            throw new DocumentIntrouvableException("Le document avec l'id " +id +" est INTROUVABLE");
+        }
+        return document;
     }
+
     @PostMapping(value = "Document")
     public ResponseEntity<Void> ajouterDocument(@Valid @RequestBody Document document){
         Document document1 = documentDao.save(document);
@@ -37,6 +45,7 @@ public class DocumentController {
 
         return ResponseEntity.created(location).build();
     }
+
     @PutMapping (value = "Document/modifier")
     public void updateDocument(@RequestBody Document document) {
         documentDao.save(document);
