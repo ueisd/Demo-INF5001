@@ -1,5 +1,4 @@
 package com.sirra.demo.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
+
 
 @Entity
 public class Departement {

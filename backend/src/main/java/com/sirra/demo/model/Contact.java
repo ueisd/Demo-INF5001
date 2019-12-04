@@ -61,13 +61,13 @@ public class Contact {
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
 
-    @Temporal(TemporalType.DATE)
+
     private Date creerLe;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String modificationPar;
 
-    @Temporal(TemporalType.DATE)
+
     private Date modifierLe;
 
 

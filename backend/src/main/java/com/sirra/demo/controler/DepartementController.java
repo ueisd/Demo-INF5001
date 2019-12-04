@@ -55,7 +55,7 @@ public class DepartementController  {
             throw new  FdtException("Les semaines doivent etre superieur a 0");
         }
 
-        list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departementDao.findById(id),sem) ;
+        list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;
 
         return list;
     }

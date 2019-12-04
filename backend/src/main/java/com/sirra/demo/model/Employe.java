@@ -67,19 +67,18 @@ public class Employe {
     private int heureSemaine;
 
     @Column(nullable = true)
-    @Temporal(TemporalType.DATE)
+
     private Date dateSalaire;
 
     @Column(nullable = true)
-    @Temporal(TemporalType.DATE)
+
     private Date dateFinProbation;
 
     @Column(nullable = true)
-    @Temporal(TemporalType.DATE)
+
     private Date dateFinPoste;
 
     @Column(nullable = true)
-    @Temporal(TemporalType.DATE)
     private Date dateDebutPoste;
 
     @Column(nullable = true)
