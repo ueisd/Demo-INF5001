@@ -84,18 +84,22 @@ public class Individu {
     private String statutCivil;
 
     @Column (name = "nom_Banque")
+    @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
     private String succursalBanque;
 
     @Column (name = "sexe")
     private String sexe;
 
     @Column (name = "province")
+    @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
     private String province;
 
     @Column (name = "numero_ass_social")
+    @Length(min = 9,max = 11, message = "Le numéro d'assurance sociale incorrecte" )
     private String nas;
 
     @Column (name = "language")
+    @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
     private String languageCommunication;
 
     @Column (name = "handicap")
@@ -106,6 +110,7 @@ public class Individu {
     private Date dateNaissance;
 
     @Column (name = "code_Postal")
+    @Length(min = 6,max = 7, message = "Code postale trop courts ou trop longs" )
     private String codePostal;
 
     @Length(min=2,max=30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")

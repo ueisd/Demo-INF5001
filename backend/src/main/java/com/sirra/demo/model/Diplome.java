@@ -17,21 +17,27 @@ import java.util.Date;
         private Individu individu;
 
         @Column(name = "statut_Diplome")
+        @Length(min = 2, max = 30,message = "Caractère insuffisants ou trop longs")
         private String statutDiplome;
 
         @Column(name = "nom_Diplome")
+        @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
         private String nomDiplome;
 
         @Column(name = "code_Diplome")
+        @Length(min = 2,max = 30, message = "Caractère insuffisants ou trop longs" )
         private String codeStatutDiplome;
 
         @Column(name = "mention_Diplome")
+        @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
         private String mentionDiplome;
 
         @Column(name = "lieu_Diplome")
+        @Length(min = 2,max = 30, message = "Caractère insuffisants ou trop longs" )
         private String lieuObtention;
 
         @Column(name = "etablissement_Diplome")
+        @Length(min = 2,max = 50, message = "Caractère insuffisants ou trop longs" )
         private String etablissementObtention;
 
 
