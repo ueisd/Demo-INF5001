@@ -40,7 +40,7 @@ public class Departement {
 
 
     //1-7 = Dimanche a Samedi
-    private boolean[] journesOuvert = new boolean[7];
+    private boolean[] journesOuvert = {false,false,false,false,false,false,false};
 
     public boolean[] getJournesOuvert() {
         return journesOuvert;
@@ -58,7 +58,8 @@ public class Departement {
         this.id = id;
     }
 
-    public void initiliaserLesJr(String binaire7){
+    public void initiliaserLesJr(){
+        String binaire7 = getJrBinaire();
         if(binaire7.trim().length() == 7){
             for(int i = 0 ; i < binaire7.length()-1; i++){
                 if(binaire7.charAt(i) == '0'){

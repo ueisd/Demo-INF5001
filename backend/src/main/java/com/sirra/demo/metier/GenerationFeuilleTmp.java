@@ -17,9 +17,9 @@ public class GenerationFeuilleTmp {
 
 
     public static ArrayList<Object[]> declencherGeneartionAvecControleur(Departement departement, Integer sem){
-
+        System.out.println("\n\n\n\n"+departement.getJrBinaire());
+        departement.initiliaserLesJr();
        ArrayList<StockEmployeEtFDT> list = genererParNombreSemPrFDT(sem,departement);
-       departement.initiliaserLesJr(departement.getJrBinaire());
        ArrayList<Object[]> listAEnvoyer = casserDeTrioADuo(list);
 
        return listAEnvoyer;
