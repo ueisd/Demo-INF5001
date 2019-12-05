@@ -1,5 +1,6 @@
 package com.sirra.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,6 +20,23 @@ public class Employe {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
+    @JsonBackReference(value = "departement")
+    @ManyToOne
+    @JoinColumn(name = "departemnet_id")
+    private Departement departement;
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
+    public void setIndividu(Individu individu) {
+        this.individu = individu;
+    }
+
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "employe")
@@ -27,34 +45,54 @@ public class Employe {
     @ApiModelProperty(notes = "Variable linking the user with his user profile")
     private Individu individu;
 
+    @Column(nullable = true)
     @Length(min = 2, max = 30, message = "Nom de poste trop long ou trop court")
     private String titrePoste;
 
+    @Column(nullable = true)
     private double tauxHoraire;
 
+    @Column(nullable = true)
     @Length(min = 2, max = 40, message = "Nom de superieur est trop long ou trop court")
     private String superieurImediat;
+    @Column(nullable = true)
     @Length(min = 5, max = 60, message = "Nom de programme trop long ou trop court")
     private String programme;
+    @Column(nullable = true)
     private int jourSemaine;
+    @Column(nullable = true)
     @Length(min = 1, max = 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
     private String horaire;
-    private double heureSemaine;
-    @Temporal(TemporalType.DATE)
+
+    private int heureSemaine;
+
+    @Column(nullable = true)
+
     private Date dateSalaire;
-    @Temporal(TemporalType.DATE)
+
+    @Column(nullable = true)
+
     private Date dateFinProbation;
-    @Temporal(TemporalType.DATE)
+
+    @Column(nullable = true)
+
     private Date dateFinPoste;
-    @Temporal(TemporalType.DATE)
+
+    @Column(nullable = true)
     private Date dateDebutPoste;
+
+    @Column(nullable = true)
     @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
     private String creationPar;
+
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date creerLe;
     @Length(min = 2, max = 30, message = "Veuillez verifier que le nom est entre 2 et 30 charactere")
+    @Column(nullable = true)
     private String modificationPar;
     @Temporal(TemporalType.DATE)
+    @Column(nullable = true)
     private Date modifierLe;
 
     public int getId() {
@@ -90,9 +128,9 @@ public class Employe {
         return individu;
     }
 
-    public void setIndividu(Individu individu) {
-        this.individu = individu;
-    }
+    //public void setIndividu(Individu individu) {
+      //  this.individu = individu;
+    //}
 
     public String getTitrePoste() {
         return titrePoste;
@@ -142,11 +180,11 @@ public class Employe {
         this.horaire = horaire;
     }
 
-    public double getHeureSemaine() {
+    public int getHeureSemaine() {
         return heureSemaine;
     }
 
-    public void setHeureSemaine(double heureSemaine) {
+    public void setHeureSemaine(int heureSemaine) {
         this.heureSemaine = heureSemaine;
     }
 

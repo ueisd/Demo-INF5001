@@ -1,5 +1,6 @@
-package com.sirra.demo.proto;
+package com.sirra.demo.metier;
 
+import com.sirra.demo.model.Employe;
 
 import java.util.ArrayList;
 
@@ -7,11 +8,11 @@ public class StockEmployeEtFDT {
 
     private ArrayList<Temporal> temporals;
 
-    private EmployeProto employeProto;
+    private Employe employeProto;
 
     private double salaireDeCetteHoraire = 0;
 
-    public StockEmployeEtFDT(ArrayList<Temporal> temporals, EmployeProto employeProto) {
+    public StockEmployeEtFDT(ArrayList<Temporal> temporals, Employe employeProto) {
         this.temporals = temporals;
         this.employeProto = employeProto;
        // calculerSalaire();
@@ -28,11 +29,11 @@ public class StockEmployeEtFDT {
 */
 
 
-    public EmployeProto getEmployeProto() {
+    public Employe getEmployeProto() {
         return employeProto;
     }
 
-    public void setEmployeProto(EmployeProto employeProto) {
+    public void setEmployeProto(Employe employeProto) {
         this.employeProto = employeProto;
     }
 

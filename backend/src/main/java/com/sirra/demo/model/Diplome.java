@@ -70,9 +70,9 @@ import java.util.Date;
             return individu;
         }
 
-        public void setIndividu(Individu individu) {
-            this.individu = individu;
-        }
+    //    public void setIndividu(Individu individu) {
+      //      this.individu = individu;
+        //}
 
         public String getStatutDiplome() {
             return statutDiplome;

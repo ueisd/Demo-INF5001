@@ -1,63 +1,85 @@
-package com.sirra.demo.proto.manip;
+package com.sirra.demo.metier;
 
-import com.sirra.demo.proto.*;
+
+import com.sirra.demo.model.Departement;
+import com.sirra.demo.model.Employe;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class GenerationFeuilleTmp {
 
     private static int hrRestant;
 
-    private static  ArrayList<StockEmployeEtFDT> tabTempEmp = new ArrayList<>();
 
 
-    public static void main(String[] args) {
+    public static ArrayList<Object[]> declencherGeneartionAvecControleur(Departement departement, Integer sem){
+        System.out.println("\n\n\n\n"+departement.getJrBinaire());
+        departement.initiliaserLesJr();
+       ArrayList<StockEmployeEtFDT> list = genererParNombreSemPrFDT(sem,departement);
+       ArrayList<Object[]> listAEnvoyer = casserDeTrioADuo(list);
 
-        Entreprise entreprise = initialiserLentreprise(07,18,3,"0011110");
-        System.out.println(entreprise);
-        genererParNombreSemPrFDT(1,entreprise);
-        System.out.println("\n*\n*\n*\n*\n*\n**********************"+tabTempEmp);
-        entreprise.setListDeFDT(tabTempEmp);
+       return listAEnvoyer;
+    }
+
+    public static ArrayList<Object[]> casserDeTrioADuo(ArrayList<StockEmployeEtFDT> listVieu){
+        ArrayList<Object[]> listNew = new ArrayList<>();
+        for (StockEmployeEtFDT s:listVieu
+             ) {
+            for (Temporal t : s.getTemporals()
+                 ) {
+                Object[] obj = {s.getEmployeProto(), t.toString()};
+                listNew.add(obj);
+            }
+
+        }
+        return listNew;
     }
 
 
+    public static ArrayList<StockEmployeEtFDT> genererParNombreSemPrFDT(int nbrSemaine,Departement departement){
+        ArrayList<StockEmployeEtFDT> list = new ArrayList<>();
 
-    public static  Entreprise  initialiserLentreprise(int hrOuvert,int hrFerme, int nbrEmploye,String journeOuvertEnBinaire){
-        Entreprise entreprise = new Entreprise(hrOuvert, hrFerme);
-        entreprise.initiliaserLesJr(journeOuvertEnBinaire);
-        entreprise.peuplerEntreprise(nbrEmploye);
-        return entreprise;
+        for (Employe emp: departement.getEmployes()
+        ) {
+            if (emp.isActif() == true) {
+                hrRestant =  emp.getHeureSemaine();
+                ArrayList<Temporal> temporals = new ArrayList<>();
+                for (int i = 0; i < nbrSemaine * 7; i++) {
+                    if(i % 6 == 0) {
+                        System.out.println(i + "*\n*\n*\n*\n*");
+                        hrRestant = emp.getHeureSemaine();
+                    }
+                    if (hrRestant > 0) {
+                        Date dateeffectif = setLaJourner(i);
+                        if (departement.getJournesOuvert()[dateeffectif.getDay()] == true) {
+                            phase1GererLesHRouvertEtFermer(temporals, departement, dateeffectif);
+                        } } }
+                list.add(new StockEmployeEtFDT(temporals,emp));
+            }
+        }
+        return list;
     }
 
 
-
-
-    public static void phase1GererLesHRouvertEtFermer(ArrayList<Temporal> temporals,EmployeProto emp, Entreprise entreprise,Date date){
+    public static void phase1GererLesHRouvertEtFermer(ArrayList<Temporal> temporals, Departement departement,Date date){
         //Comparer que d est bien etre a et b exlcusiemvement sinon >= (date) a.compareTo(d) * d.compareTo(b) > 0;
         Date dateOuverture = (Date) date.clone();
         Date dateSortie = (Date) date.clone();
-        dateOuverture.setHours(entreprise.getHeureOuverture());
-        dateSortie.setHours(entreprise.getHeureFermeture());
+        dateOuverture.setHours(departement.getHeure_Ouverture());
+        dateSortie.setHours(departement.getHeure_Fermeture());
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
 
-       // System.out.println("\n*\n*\n*\n*\n*\n*"+dateOuverture +"....."+ dateSortie + "tracksa");
         attributerUneFDT (temporals, dateOuverture, dateSortie);
 
 
     }
-    
-   /* public static void phase2GererLeshoraireDesEmploye(ArrayList<Temporal> temporals,EmployeProto emp,Entreprise entreprise,Date ouverture, Date fermeture) {
-          //  Calendar c = Calendar.getInstance();
-            //c.setTime(ouverture);
-
-            attributerUneFDT (temporals, ouverture, fermeture);
 
 
-}
-    */
 
     public static Date trouveUneHrIdeal8(Date ouverture, Date fermeture) {
         int value = 0;
@@ -91,29 +113,34 @@ public class GenerationFeuilleTmp {
             sortie.setHours(entreee.getHours()+8);
             temporals.add(new Temporal(entreee,sortie));
             heureAttribuer = 8;
+            System.out.println(entreee + "" + sortie);
         } else if (hrRestant < 8){
             Date entreee =  trouverUneHrInferieurA8(ouverture,fermeture);
             Date sortie = (Date) entreee.clone();
             sortie.setHours(entreee.getHours() + hrRestant);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = hrRestant;
+            System.out.println(entreee + "" + sortie);
         }
+
        setHrRestant(hrRestant - heureAttribuer);
     }
+
 
     /*
     Met les minutes et secondes a 0
      */
+
     public static  Date cleanHeureA0(Date date){
         date.setMinutes(00);
         date.setSeconds(00);
         return date;
     }
-    
 
 
 
     //Premier 'jr' doit etre 0 du for
+
     public static Date setLaJourner(int jr){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -123,35 +150,9 @@ public class GenerationFeuilleTmp {
 
 
 
-    public static void genererParNombreSemPrFDT(int nbrSemaine,Entreprise entreprise){
-        for (EmployeProto emp: entreprise.getEmployeProtos()
-             ) {
-            if (emp.getEtatEmploye().isActif() == true) {
-                hrRestant = emp.getNbrHrMax();
-                ArrayList<Temporal> temporals = new ArrayList<>();
-                for (int i = 0; i < nbrSemaine * 7; i++) {
-                    if (hrRestant > 0) {
-                        Date dateeffectif = setLaJourner(i);
-                        if (entreprise.getJournesOuvert()[dateeffectif.getDay()] == true) {
-                            phase1GererLesHRouvertEtFermer(temporals, emp, entreprise, dateeffectif);
-                        }
-                    }
-                }
-                tabTempEmp.add(new StockEmployeEtFDT(temporals, emp));
-            }
-        }
-    }
-
-
-    public ArrayList<StockEmployeEtFDT> getTabTempEmp() {
-        return tabTempEmp;
-    }
 
 
 
-    public static void setSoirePrise(boolean soirePrise) {
-        soirePrise = soirePrise;
-    }
 
     public static int getHrRestant() {
         return hrRestant;

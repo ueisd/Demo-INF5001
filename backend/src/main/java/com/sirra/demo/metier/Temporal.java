@@ -1,15 +1,16 @@
-package com.sirra.demo.proto;
+package com.sirra.demo.metier;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class Temporal {
 
 
-
     private Date entre;
+
 
     private Date sortie;
 
@@ -24,11 +25,7 @@ public class Temporal {
         this.sortie = sortie;
 
         calendar.setTime(entre);
-
-
     }
-
-
 
     public int nombreHrExercer(){
         return sortie.getHours() - entre.getHours();
