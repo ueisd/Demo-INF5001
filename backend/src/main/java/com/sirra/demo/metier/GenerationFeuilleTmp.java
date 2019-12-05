@@ -31,7 +31,7 @@ public class GenerationFeuilleTmp {
              ) {
             for (Temporal t : s.getTemporals()
                  ) {
-                Object[] obj = {s.getEmployeProto(), t};
+                Object[] obj = {s.getEmployeProto(), t.toString()};
                 listNew.add(obj);
             }
 

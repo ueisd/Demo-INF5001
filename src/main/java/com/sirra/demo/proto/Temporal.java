@@ -24,7 +24,11 @@ public class Temporal {
         this.sortie = sortie;
 
         calendar.setTime(entre);
+
+
     }
+
+
 
     public int nombreHrExercer(){
         return sortie.getHours() - entre.getHours();
