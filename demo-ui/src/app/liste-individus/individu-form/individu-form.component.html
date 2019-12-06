@@ -34,7 +34,46 @@
                 </div>
             </div>
 
+            <button *ngIf="!individuForm.get('employe')" style="margin-top:5px; margin-bottom:5px;" type="button" class="btn btn-primary btn-sm" (click)="addEmployeForm()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Rendre l'individu employé
+            </button>
+            <button *ngIf="individuForm.get('employe')" style="margin-top:5px; margin-bottom:5px;" type="button" class="btn btn-primary btn-sm" (click)="removeEmployeForm()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Retirer le statut d'employé
+            </button>
+            <div *ngIf="individuForm.get('employe')" formGroupName="employe">
+                <mat-form-field>
+                    <input matInput placeholder="TitrePoste" formControlName="titrePoste" required>
+                    <mat-error *ngFor="let validation of validation_employe_messages.titrePoste">
+                        <mat-error class="error-message" *ngIf="individuForm.get('employe').get('titrePoste').hasError(validation.type) && 
+                        (individuForm.get('employe').get('titrePoste').dirty || individuForm.get('employe').get('titrePoste').touched)">{{validation.message}}</mat-error>
+                    </mat-error>   
+                </mat-form-field>
 
+                <mat-form-field>
+                    <input matInput placeholder="Horaire" formControlName="horaire" required>
+                    <mat-error *ngFor="let validation of validation_employe_messages.horaire">
+                        <mat-error class="error-message" *ngIf="individuForm.get('employe').get('horaire').hasError(validation.type) && 
+                        (individuForm.get('employe').get('horaire').dirty || individuForm.get('employe').get('horaire').touched)">{{validation.message}}</mat-error>
+                    </mat-error>   
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput type="number" placeholder="Heures semaine" formControlName="heureSemaine" required>
+                    <mat-error *ngFor="let validation of validation_employe_messages.heureSemaine">
+                        <mat-error class="error-message" *ngIf="individuForm.get('employe').get('heureSemaine').hasError(validation.type) && 
+                        (individuForm.get('employe').get('heureSemaine').dirty || individuForm.get('employe').get('heureSemaine').touched)">{{validation.message}}</mat-error>
+                    </mat-error>   
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput type="number" class="example-right-align" placeholder="Salaire horaire" formControlName="tauxHoraire" required>
+                    <span matSuffix>$&nbsp;</span>
+                    <mat-error *ngFor="let validation of validation_employe_messages.tauxHoraire">
+                        <mat-error class="error-message" *ngIf="individuForm.get('employe').get('tauxHoraire').hasError(validation.type) && 
+                        (individuForm.get('employe').get('tauxHoraire').dirty || individuForm.get('employe').get('tauxHoraire').touched)">{{validation.message}}</mat-error>
+                    </mat-error>   
+                </mat-form-field>
+            </div>
 
             <div formArrayName="contact">
                 <button style="margin-top:5px; margin-bottom:5px;" type="button" class="btn btn-primary btn-sm" (click)="addNewContact()">

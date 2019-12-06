@@ -4,6 +4,7 @@ import { Individu } from 'src/app/models/Individu.model';
 import { EmployesServiceService } from 'src/app/services/employes.service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from 'src/app/models/Contact.model';
+import { Employe } from 'src/app/models/Employe.model';
 
 @Component({
   selector: 'app-individu-form',
@@ -12,22 +13,19 @@ import { Contact } from 'src/app/models/Contact.model';
 })
 export class IndividuFormComponent implements OnInit {
 
-  individu : Individu; 
+  individu : Individu;
   individuForm: FormGroup;
   contactForm: FormGroup;
   isEdit = false;
 
   validation_messages = Individu.getValidationMessages();
   validation_contact_messages = Contact.getValidationMessages();
+  validation_employe_messages = Employe.getValidationMessages();
   
 
   constructor(private fb: FormBuilder,private employeService: EmployesServiceService,
     private router: Router, private activatedRoute: ActivatedRoute) {
-      this.individu = new Individu("", "", {}, [], "");
-      this.activatedRoute.paramMap.subscribe(params => {
-        const individuId = params['id'];
-        console.log("individuId" + JSON.stringify(params));
-      });
+      this.individu = new Individu("", "", null, [], "");
   }
 
   ngOnInit() { 
@@ -41,7 +39,13 @@ export class IndividuFormComponent implements OnInit {
         for (let contactJson of ind.contact) {
           tabl.push( new Contact(contactJson.nom, contactJson.prenom, contactJson.ville) );
         }
-        this.individu = new Individu(ind.nom, ind.prenom, ind.employe, tabl, ind.ville);
+        let employe = null;
+        if(ind.employe != null) {
+          employe = new Employe(ind.employe.horaire, ind.employe.tauxHoraire, ind.employe.heureSemaine, ind.employe.titrePoste);
+          employe.id = ind.employe.id;
+        }
+         
+        this.individu = new Individu(ind.nom, ind.prenom, employe, tabl, ind.ville);
         this.individu.id = ind.id;
         this.initForm();
       }
@@ -69,9 +73,36 @@ export class IndividuFormComponent implements OnInit {
         Validators.required, 
         Validators.minLength(5)
       ])],
-      contact: this.fb.array([])
+      contact: this.fb.array([]),
     });
     this.setContact();
+    this.setEmploye();
+  }
+
+  addEmployeForm() {
+    let employeForm = this.getEmployeForm();
+    this.individuForm.addControl('employe', employeForm);
+  }
+
+  removeEmployeForm() {
+    this.individuForm.removeControl('employe');
+  }
+
+  setEmploye() {
+    if(this.individu.employe && !(Object.keys(this.individu.employe).length === 0)) {
+      this.addEmployeForm();
+      this.individuForm.controls.employe.setValue(this.individu.employe);
+    }
+  }
+
+  getEmployeForm() : FormGroup {
+    return this.fb.group({
+      id: [],
+      titrePoste: ['', [Validators.required, Validators.minLength(2)]],
+      heureSemaine: ['', [Validators.required,  Validators.min(0)]],
+      tauxHoraire: ['', [Validators.required, Validators.min(0)]],
+      horaire: ['', [Validators.required, Validators.minLength(5)]]
+    });
   }
 
   setContact() {
@@ -107,6 +138,9 @@ export class IndividuFormComponent implements OnInit {
     this.individu.prenom = this.individuForm.get('prenom').value;
     this.individu.ville = this.individuForm.get('ville').value;
     this.individu.contact = this.individuForm.get('contact').value;
+    if(this.individuForm.get('employe')) {
+      this.individu.employe = this.individuForm.get('employe').value;
+    }
     if(!this.isEdit) {
       this.employeService.addIndividu(this.individu).subscribe(
         (individu) => { 

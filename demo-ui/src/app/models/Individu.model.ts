@@ -1,4 +1,5 @@
 import { Contact } from './Contact.model';
+import { Employe } from './Employe.model';
 
 export class Individu {
     
@@ -7,7 +8,7 @@ export class Individu {
     constructor(
         public nom: string,
         public prenom: string,
-        public employe: Object,
+        public employe: Employe,
         public contact: Contact[],
         public ville: string,
     ) {
