@@ -17,7 +17,6 @@ public class Employe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "employe_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
 
     @JsonBackReference(value = "departement")
@@ -37,11 +36,10 @@ public class Employe {
         this.individu = individu;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,
+    @OneToOne(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             mappedBy = "employe")
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonBackReference(value="individu")
     @ApiModelProperty(notes = "Variable linking the user with his user profile")
     private Individu individu;
 

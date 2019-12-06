@@ -1,6 +1,7 @@
 package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
@@ -22,7 +23,8 @@ public class Individu {
     @Column(name = "Id")
     private int id;
 
-    @JsonBackReference(value="employe")
+    @JsonManagedReference
+    @JsonIgnore
     @OneToOne(
             fetch = FetchType.EAGER,
             cascade=CascadeType.ALL,
