@@ -3,12 +3,10 @@ package com.sirra.demo.metier;
 
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.Employe;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class GenerationFeuilleTmp {
 
