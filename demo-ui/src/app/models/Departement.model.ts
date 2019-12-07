@@ -1,3 +1,5 @@
+import { Employe } from './Employe.model';
+
 export class Departement {
     
     public id: Number;
@@ -6,6 +8,7 @@ export class Departement {
     constructor(
         public heure_Ouverture: Number,
         public heure_Fermeture: Number,
+        public employes: Employe[]
     ) {
     }
 

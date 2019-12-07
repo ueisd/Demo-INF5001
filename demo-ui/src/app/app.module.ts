@@ -24,7 +24,8 @@ import { AccueilComponent } from './principal/accueil/accueil.component';
 import { FormtestComponent } from './liste-individus/formtest/formtest/formtest.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -87,6 +88,7 @@ const appRoutes: Routes = [
     MatSliderModule,
     MatFormFieldModule,
     MatInputModule,
+    NgSelectModule,
     MatPaginatorModule
   ],
   providers: [

@@ -20,6 +20,14 @@
                                 (departementForm.get('heure_Fermeture').dirty || departementForm.get('heure_Fermeture').touched)">{{validation.message}}</mat-error>
                             </mat-error>   
                         </mat-form-field>
+
+                        <ng-select [items]="items"
+                                bindLabel="titrePoste"
+                                placeholder="Select ite m"
+                                appendTo="body"
+                                multiple="true"
+                                formControlName="employes">
+                        </ng-select>
                     </div>
                 </div>
 

@@ -1,9 +1,6 @@
 package com.sirra.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
@@ -19,8 +16,9 @@ public class Employe {
     @Column(name = "employe_id")
     private int id;
 
-    @JsonBackReference(value = "departement")
-    @ManyToOne
+    @JsonIgnoreProperties(value = "employes", allowSetters = true)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "departemnet_id")
     private Departement departement;
 
@@ -32,14 +30,17 @@ public class Employe {
         this.departement = departement;
     }
 
+
     public void setIndividu(Individu individu) {
         this.individu = individu;
     }
 
-    @OneToOne(fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            mappedBy = "employe")
-    @JsonBackReference(value="individu")
+    public Individu getIndividu() {
+        return individu;
+    }
+
+    @OneToOne(mappedBy = "employe", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("contact")
     @ApiModelProperty(notes = "Variable linking the user with his user profile")
     private Individu individu;
 
@@ -114,6 +115,8 @@ public class Employe {
     public Employe() {
     }
 
+
+
     public int getEmployeId() {
         return id;
     }
@@ -121,14 +124,6 @@ public class Employe {
     public void setEmployeId(int employeId) {
         this.id = employeId;
     }
-
-    public Individu getIndividu() {
-        return individu;
-    }
-
-    //public void setIndividu(Individu individu) {
-      //  this.individu = individu;
-    //}
 
     public String getTitrePoste() {
         return titrePoste;
@@ -254,7 +249,6 @@ public class Employe {
     public String toString() {
         return "Employe{" +
                 "id=" + id +
-                ", individu=" + individu +
                 ", titrePoste='" + titrePoste + '\'' +
                 ", tauxHoraire=" + tauxHoraire +
                 ", superieurImediat='" + superieurImediat + '\'' +

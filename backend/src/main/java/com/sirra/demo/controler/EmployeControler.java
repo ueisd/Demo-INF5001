@@ -3,6 +3,7 @@ package com.sirra.demo.controler;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.EmployeIntrouvableException;
 import com.sirra.demo.model.Employe;
+import com.sirra.demo.model.Individu;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,6 @@ public class EmployeControler {
 
     @PostMapping(value = "Employes")
     public ResponseEntity<Void> ajouterEmploye(@Valid @RequestBody Employe employe) {
-    //public Employe ajouterEmploye(@RequestBody Employe employe) {
-
         Employe employe1 = employeDao.save(employe);
 
         if(employe1 == null) {
@@ -58,8 +57,6 @@ public class EmployeControler {
                 .toUri();
 
         return ResponseEntity.created(location).build();
-        //return  employeDao.save(employe);
-
     }
 
     @PutMapping (value = "Employes/modifier")

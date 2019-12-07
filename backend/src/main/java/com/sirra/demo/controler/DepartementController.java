@@ -2,10 +2,12 @@ package com.sirra.demo.controler;
 
 
 import com.sirra.demo.dao.DepartementDao;
+import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.metier.GenerationFeuilleTmp;
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.Diplome;
+import com.sirra.demo.model.Employe;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,27 @@ public class DepartementController  {
     @Autowired
     DepartementDao departementDao;
 
+    @Autowired
+    EmployeDao employeDao;
+
     @PostMapping(value = "Departement")
     public ResponseEntity<Void> ajouterDepartement(@Valid @RequestBody Departement departement){
+
+        List<Employe> listeEmployes = departement.getEmployes();
+        List<Employe> listEmpRet = new ArrayList<Employe>();
+
+        departement.setEmployes(listEmpRet);
+
         Departement d1= departementDao.save(departement);
+
+        for(int i =0; i < listeEmployes.size(); i++) {
+            Employe employe = listeEmployes.get(i);
+            if(employeDao.existsById(employe.getId())) {
+                employe.setDepartement(d1);
+                employeDao.save(employe);
+            }
+        }
+
         if(d1 == null){
             return ResponseEntity.noContent().build();
         }

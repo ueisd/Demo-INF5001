@@ -2,6 +2,7 @@ package com.sirra.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
@@ -23,14 +24,8 @@ public class Individu {
     @Column(name = "Id")
     private int id;
 
-    @JsonManagedReference
-    @JsonIgnore
-    @OneToOne(
-            fetch = FetchType.EAGER,
-            cascade=CascadeType.ALL,
-            optional = true
-    )
-    @JoinColumn(name = "employe_id", nullable = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "individu", allowSetters = true) //évite les infinites loop
     @ApiModelProperty(notes = "Property linking the userprofile with the user")
     private Employe employe;
 
@@ -45,8 +40,7 @@ public class Individu {
    @JsonBackReference(value = "note")
    @OneToMany(
            mappedBy = "individu",
-           cascade = CascadeType.ALL,
-           orphanRemoval = false
+           cascade = CascadeType.ALL
    )
    @ApiModelProperty(notes = "Property containing the notes of the individu")
    private List<Note> note;
@@ -54,8 +48,7 @@ public class Individu {
     @JsonBackReference(value = "diplomes")
     @OneToMany(
             mappedBy = "individu",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false
+            cascade = CascadeType.ALL
     )
     @ApiModelProperty(notes = "Property containing the diplomes of the individu")
     private List<Diplome> diplomes;

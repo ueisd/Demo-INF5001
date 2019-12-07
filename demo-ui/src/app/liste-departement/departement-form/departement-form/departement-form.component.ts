@@ -1,10 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Individu } from 'src/app/models/Individu.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Departement } from 'src/app/models/Departement.model';
 import { DepartementsService } from 'src/app/services/departements.service';
+import { Employe } from 'src/app/models/Employe.model';
 
 @Component({
   selector: 'app-departement-form',
@@ -12,6 +12,18 @@ import { DepartementsService } from 'src/app/services/departements.service';
   styleUrls: ['./departement-form.component.scss']
 })
 export class DepartementFormComponent implements OnInit {
+
+
+
+  items = [
+    new Employe("ggjjjj", 6.8, 9, "Responsable"),
+    new Employe("ggjjjj", 6.8, 9, "Responsable6"),
+    new Employe("ggjjjj", 6.8, 9, "Responsable3"),
+  ];
+  selected = [
+    {id: 2, name: 'Node Js'},
+    {id: 8, name: 'ReactJs'}
+  ];
 
   departement : Departement;
   departementForm: FormGroup;
@@ -22,7 +34,7 @@ export class DepartementFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private departementService: DepartementsService,
     private router: Router, private activatedRoute: ActivatedRoute) {
-      this.departement = new Departement(0, 0);
+      this.departement = new Departement(0, 0, []);
   }
 
   ngOnInit() { 
@@ -33,7 +45,7 @@ export class DepartementFormComponent implements OnInit {
         let nbr = parseInt(paramMap.get('id'));
         let ind = this.departementService.getDepartementsFormList(nbr);
          
-        this.departement = new Departement(ind.heure_Ouverture, ind.heure_Fermeture);
+        this.departement = new Departement(ind.heure_Ouverture, ind.heure_Fermeture, ind.employes);
         this.departement.id = ind.id;
         this.initForm();
       }
@@ -58,6 +70,9 @@ export class DepartementFormComponent implements OnInit {
         Validators.required, 
         Validators.min(0), 
         Validators.max(24)
+      ])],
+      employes: [this.departement.employes, Validators.compose([
+        Validators.required, 
       ])],
     });
   }

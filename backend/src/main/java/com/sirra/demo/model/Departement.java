@@ -1,5 +1,6 @@
 package com.sirra.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
@@ -18,10 +19,11 @@ public class Departement {
     @Column(name = "Id")
     private int id;
 
-    @JsonManagedReference(value = "departement")
+    @JsonIgnoreProperties(value = {"departement"}, allowSetters = true)
     @OneToMany(
             mappedBy = "departement",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.REFRESH,
+            fetch = FetchType.EAGER
     )
     private List<Employe> employes;
 
@@ -78,6 +80,8 @@ public class Departement {
         }
 
     }
+
+
 
     public void setEmployes(List<Employe> employes) {
         this.employes = employes;
