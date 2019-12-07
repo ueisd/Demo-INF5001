@@ -34,6 +34,9 @@ import {
   MatNativeDateModule,
   MatPaginatorModule
  } from '@angular/material';
+import { ListeDepartementComponent } from './liste-departement/liste-departement.component';
+import { DepartementVueComponent } from './liste-departement/departement-vue/departement-vue/departement-vue.component';
+import { DepartementFormComponent } from './liste-departement/departement-form/departement-form/departement-form.component';
 
 
 const appRoutes: Routes = [
@@ -41,7 +44,10 @@ const appRoutes: Routes = [
   { path: 'appareils/:id', component: SingleAppareilComponent },
   { path: 'users', canActivate: [AuthGuard], component: UserListComponent },
   { path: 'individus', canActivate: [AuthGuard], component: ListeIndividusComponent },
+  { path: 'departements', component: ListeDepartementComponent},
   { path: 'formtest', canActivate: [AuthGuard], component: FormtestComponent },
+  { path: 'new/departement', canActivate: [AuthGuard], component: DepartementFormComponent },
+  { path: 'edit/departement/:id', canActivate: [AuthGuard], component: DepartementFormComponent },
   { path: 'new/individu', canActivate: [AuthGuard], component: IndividuFormComponent },
   { path: 'edit/individu/:id', canActivate: [AuthGuard], component: IndividuFormComponent },
   { path: 'new-user', canActivate: [AuthGuard], component: NewUserComponent },
@@ -66,7 +72,10 @@ const appRoutes: Routes = [
     HeaderComponent,
     SigninComponent,
     AccueilComponent,
-    FormtestComponent
+    FormtestComponent,
+    ListeDepartementComponent,
+    DepartementVueComponent,
+    DepartementFormComponent
   ],
   imports: [
     BrowserModule,

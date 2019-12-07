@@ -20,6 +20,7 @@ import java.util.List;
 
 @Api("Gestion pour departement")
 @RestController
+@CrossOrigin
 public class DepartementController  {
 
     @Autowired
