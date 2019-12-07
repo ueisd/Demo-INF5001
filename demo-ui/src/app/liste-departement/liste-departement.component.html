@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="panel-group col-sm-8 col-sm-offset-2" *ngIf="doisPaginer">
+        <mat-paginator [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="pageEvent = getServerData($event)">
+        </mat-paginator>
+    </div>
+</div>
+<div class="row">
+    <div class="panel-group col-sm-8 col-sm-offset-2">
+        <app-departement-vue *ngFor="let departement of departementsAfficher; let i = index"
+        [heure_Ouverture]="departement.heure_Ouverture" 
+        [heure_Fermeture]="departement.heure_Fermeture"
+        [departementId]="departement.id"></app-departement-vue>
+        <button class="btn btn-success" (click)="onAjouterDepartement()">Ajouter un Départmeent</button>
+    </div>
+</div>

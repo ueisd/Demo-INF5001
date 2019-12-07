@@ -1,0 +1,36 @@
+<div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h2>Enregistrer un nouveau département</h2>
+            <form [formGroup]="departementForm" (ngSubmit)="onSaveIndividu()">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4">
+                        <mat-form-field class="full-width">
+                            <input matInput type="number" class="example-right-align" placeholder="Heure d'ouverture" 
+                            formControlName="heure_Ouverture" required>
+                            <mat-error *ngFor="let validation of validation_messages.heure_Ouverture">
+                                <mat-error class="error-message" *ngIf="departementForm.get('heure_Ouverture').hasError(validation.type) && 
+                                (departementForm.get('heure_Ouverture').dirty || departementForm.get('heure_Ouverture').touched)">{{validation.message}}</mat-error>
+                            </mat-error>   
+                        </mat-form-field>
+                        <mat-form-field class="full-width">
+                            <input matInput type="number" class="example-right-align" placeholder="Heure de fermeture" 
+                            formControlName="heure_Fermeture" required>
+                            <mat-error *ngFor="let validation of validation_messages.heure_Fermeture">
+                                <mat-error class="error-message" *ngIf="departementForm.get('heure_Fermeture').hasError(validation.type) && 
+                                (departementForm.get('heure_Fermeture').dirty || departementForm.get('heure_Fermeture').touched)">{{validation.message}}</mat-error>
+                            </mat-error>   
+                        </mat-form-field>
+                    </div>
+                </div>
+
+    
+                <pre>{{departementForm.value | json}}</pre>
+    
+                <div class="btn-toolbar">
+                    <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Annuler </button>
+                    <button class="btn btn-success" [disabled]="departementForm.invalid" type="submit">Enregistrer </button>
+                </div>
+            </form> 
+        </div>
+    </div>
+    
