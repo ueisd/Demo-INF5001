@@ -45,6 +45,17 @@
           </configuration>
         </execution>
         <execution>
+          <id>ngselect</id>
+          <goals>
+            <goal>npm</goal>
+          </goals>
+          <phase>generate-resources</phase>
+          <configuration>
+            <arguments>install --save @ng-select/ng-select</arguments>
+          </configuration>
+        </execution>
+
+        <execution>
           <id>npm run-script build-prod</id>
           <phase>prepare-package</phase>
           <goals>
