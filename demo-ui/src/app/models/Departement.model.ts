@@ -3,6 +3,7 @@ import { Employe } from './Employe.model';
 export class Departement {
     
     public id: Number;
+    public journesOuvert: boolean[];
 
 
     constructor(
@@ -25,5 +26,17 @@ export class Departement {
                 { type: 'min', message: 'Minimum 0' }
             ]
         };
+    }
+
+    public static getJoursSemaine() {
+        return [
+            {formControlName: "dimancheOuvert", label: "Dimanche"},
+            {formControlName: "lundiOuvert",    label: "Lundi"},
+            {formControlName: "mardiOuvert",    label: "Mardi"},
+            {formControlName: "mercrediOuvert", label: "Mercredi"},
+            {formControlName: "jeudiOuvert",    label: "Jeudi"},
+            {formControlName: "vendrediOuvert", label: "Vendredi"},
+            {formControlName: "samediOuvert",   label: "Samedi"},
+        ];
     }
 }

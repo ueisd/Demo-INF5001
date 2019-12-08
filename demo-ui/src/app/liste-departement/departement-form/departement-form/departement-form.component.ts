@@ -16,6 +16,8 @@ import { EmployesService } from 'src/app/services/employes.service';
 export class DepartementFormComponent implements OnInit {
 
 
+  couleurSlider = 'accent';
+  joursSemaine = Departement.getJoursSemaine();
 
   items = [
     new Employe("ggjjjj", 6.8, 9, "Responsable"),
@@ -35,6 +37,7 @@ export class DepartementFormComponent implements OnInit {
   constructor(private fb: FormBuilder,private departementService: DepartementsService, private employeService: EmployesService,
     private router: Router, private activatedRoute: ActivatedRoute) {
       this.departement = new Departement(0, 0, []);
+      this.departement.journesOuvert = [false, false, false, false, false, false, false];
   }
 
   ngOnInit() { 
@@ -48,9 +51,7 @@ export class DepartementFormComponent implements OnInit {
         
         let employes: Employe[] = this.filterEmployesPropety(ind.employes);
         this.departement = new Departement(ind.heure_Ouverture, ind.heure_Fermeture, employes);
-        //this.selected = ind.employes;
-
-
+        this.departement.journesOuvert = ind.journesOuvert;
         this.departement.id = ind.id;
         this.initForm();
       }
@@ -66,8 +67,6 @@ export class DepartementFormComponent implements OnInit {
     });
     return employes;
   }
-
-
 
 
   obtenirEmployes() {
@@ -104,12 +103,33 @@ export class DepartementFormComponent implements OnInit {
       ])],
       employes: [this.departement.employes, Validators.compose([])],
     });
+    this.setJoursOuverts();
+  }
+
+  setJoursOuverts() {
+    this.departementForm.addControl('joursOuverts', this.getJoursOuvertsForm());
+  }
+
+  getJoursOuvertsForm() : FormGroup {
+    return this.fb.group({
+      dimancheOuvert  : [this.departement.journesOuvert[0], [Validators.required]],
+      lundiOuvert     : [this.departement.journesOuvert[1], [Validators.required]],
+      mardiOuvert     : [this.departement.journesOuvert[2], [Validators.required]],
+      mercrediOuvert  : [this.departement.journesOuvert[3], [Validators.required]],
+      jeudiOuvert     : [this.departement.journesOuvert[4], [Validators.required]],
+      vendrediOuvert  : [this.departement.journesOuvert[5], [Validators.required]],
+      samediOuvert    : [this.departement.journesOuvert[6], [Validators.required]],
+    });
   }
 
   onSaveIndividu() {
     this.departement.heure_Fermeture = this.departementForm.get('heure_Fermeture').value;
     this.departement.heure_Ouverture = this.departementForm.get('heure_Ouverture').value;
     this.departement.employes = this.departementForm.get('employes').value;
+    this.departement.journesOuvert = [];
+    this.joursSemaine.forEach(element => {
+      this.departement.journesOuvert.push(this.departementForm.get('joursOuverts').get( element.formControlName ).value);
+    });
 
     if(!this.isEdit) {
       this.departementService.addDepartement(this.departement).subscribe(

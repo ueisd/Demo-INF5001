@@ -28,6 +28,15 @@
                                 multiple="true"
                                 formControlName="employes">
                         </ng-select>
+
+                        <div formGroupName="joursOuverts">
+                            <h4>Jours ouverts</h4>
+                            <div *ngFor="let jour of joursSemaine">
+                                <mat-slide-toggle [color]="couleurSlider" [formControlName]="jour.formControlName">
+                                    {{ jour.label }}
+                                </mat-slide-toggle>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

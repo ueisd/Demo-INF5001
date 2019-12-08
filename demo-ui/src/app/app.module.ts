@@ -33,6 +33,7 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatSlideToggleModule,
   MatPaginatorModule
  } from '@angular/material';
 import { ListeDepartementComponent } from './liste-departement/liste-departement.component';
@@ -89,6 +90,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     NgSelectModule,
+    MatSlideToggleModule,
     MatPaginatorModule
   ],
   providers: [
