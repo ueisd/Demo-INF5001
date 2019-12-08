@@ -34,20 +34,11 @@ public class DepartementController  {
     @PostMapping(value = "Departement")
     public ResponseEntity<Void> ajouterDepartement(@Valid @RequestBody Departement departement){
 
-        List<Employe> listeEmployes = departement.getEmployes();
-        List<Employe> listEmpRet = new ArrayList<Employe>();
-
-        departement.setEmployes(listEmpRet);
-
+        ArrayList<Integer> ids = departement.getDepartementsIds();
+        departement.setEmployes(null);
         Departement d1= departementDao.save(departement);
 
-        for(int i =0; i < listeEmployes.size(); i++) {
-            Employe employe = listeEmployes.get(i);
-            if(employeDao.existsById(employe.getId())) {
-                employe.setDepartement(d1);
-                employeDao.save(employe);
-            }
-        }
+        if(!ids.isEmpty()) employeDao.addDepartementForEmployes(ids, departement);
 
         if(d1 == null){
             return ResponseEntity.noContent().build();
@@ -66,7 +57,6 @@ public class DepartementController  {
     @GetMapping(value = "Departement/{id}/Semaine/{sem}")
     public ArrayList<Object[]> GenererFDT(@PathVariable int id, @PathVariable int sem) throws FdtException {
         ArrayList<Object[]> list = new ArrayList<>();
-
 
         Departement departement = departementDao.findById(id);
         if(departement==null) {
@@ -101,26 +91,12 @@ public class DepartementController  {
     @PutMapping (value = "Departement/modifier")
     public void updateDepartement(@RequestBody Departement departement) {
 
-
-        List<Employe> listeEmployes = departement.getEmployes();
-        List<Employe> listEmpRet = new ArrayList<Employe>();
-
-        departement.setEmployes(listEmpRet);
+        ArrayList<Integer> ids = departement.getDepartementsIds();
+        departement.setEmployes(null);
 
         employeDao.removeDepartementForEmployes(departement);
-
         Departement d1= departementDao.save(departement);
-
-        for(int i =0; i < listeEmployes.size(); i++) {
-            Employe employe = listeEmployes.get(i);
-            if(employeDao.existsById(employe.getId())) {
-                employe.setDepartement(d1);
-                employeDao.save(employe);
-            }
-        }
-
-
-        //departementDao.save(departement);
+        if(!ids.isEmpty()) employeDao.addDepartementForEmployes(ids, departement);
     }
 
 

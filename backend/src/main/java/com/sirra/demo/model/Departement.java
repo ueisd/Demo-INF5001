@@ -1,12 +1,9 @@
 package com.sirra.demo.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +34,15 @@ public class Departement {
 
     public List<Employe> getEmployes() {
         return employes;
+    }
+
+    public ArrayList<Integer> getDepartementsIds() {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        for(int i = 0; i < this.employes.size(); i++) {
+            Employe employe = this.employes.get(i);
+            ids.add(employe.getId());
+        }
+        return ids;
     }
 
 

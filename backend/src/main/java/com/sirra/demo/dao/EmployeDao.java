@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -23,5 +24,17 @@ public interface EmployeDao  extends JpaRepository<Employe, Integer> {
     @Query(
             value = "UPDATE Employe e set e.departement = null WHERE e.departement = :depId")
     void removeDepartementForEmployes(@Param("depId") Departement depId);
+
+    @Modifying
+    @Transactional
+    @Query(
+            value = "UPDATE Employe e set e.departement = :dep WHERE e.id = :empId")
+    void addDepartementForEmploye(@Param("empId") Integer empId, @Param("dep") Departement dep);
+
+    @Modifying
+    @Transactional
+    @Query(
+            value = "UPDATE Employe e set e.departement = :dep WHERE e.id IN :empId")
+    void addDepartementForEmployes(@Param("empId") ArrayList<Integer> empId, @Param("dep") Departement dep);
 
 }
