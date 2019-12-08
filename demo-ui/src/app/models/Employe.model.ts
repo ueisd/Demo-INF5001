@@ -1,6 +1,10 @@
+import { Individu } from './Individu.model';
+
 export class Employe {
     
     public id:number;
+    public nom: string;
+    public individu: Individu;
 
 
     constructor(

@@ -22,7 +22,6 @@ public class Departement {
     @JsonIgnoreProperties(value = {"departement"}, allowSetters = true)
     @OneToMany(
             mappedBy = "departement",
-            cascade = CascadeType.REFRESH,
             fetch = FetchType.EAGER
     )
     private List<Employe> employes;

@@ -22,6 +22,9 @@ export class EmployesServiceService {
   private baseUrl: string;
   private getIndividusUrl: string;
 
+  individus: Individu[] = [];
+  individuSubject = new Subject<Individu[]>();
+
   constructor(private httpClient: HttpClient, private baseUrlService: BaseUrlService) {
     this.baseUrl = baseUrlService.baseUrl;
     this.postIndividuUrl = this.baseUrl + '/Individus';
@@ -29,9 +32,6 @@ export class EmployesServiceService {
     this.getIndividusUrl = this.baseUrl + '/Individus';
     this.deleteIndividuUrl = this.baseUrl + '/Individus/Delete/'
   }
-
-  individus: Individu[] = [];
-  individuSubject = new Subject<Individu[]>();
 
   emitIndividusSubject() {
     this.individuSubject.next(this.individus.slice());

@@ -93,12 +93,34 @@ public class DepartementController  {
 
     @DeleteMapping(value = "Departement/Delete/{id}")
     public void supprimerDepartement(@PathVariable int id) {
-        departementDao.deleteById(id);
+        Departement departement = departementDao.findById(id);
+        employeDao.removeDepartementForEmployes(departement);
+        departementDao.deleteDepartmentS(id);
     }
 
     @PutMapping (value = "Departement/modifier")
     public void updateDepartement(@RequestBody Departement departement) {
-        departementDao.save(departement);
+
+
+        List<Employe> listeEmployes = departement.getEmployes();
+        List<Employe> listEmpRet = new ArrayList<Employe>();
+
+        departement.setEmployes(listEmpRet);
+
+        employeDao.removeDepartementForEmployes(departement);
+
+        Departement d1= departementDao.save(departement);
+
+        for(int i =0; i < listeEmployes.size(); i++) {
+            Employe employe = listeEmployes.get(i);
+            if(employeDao.existsById(employe.getId())) {
+                employe.setDepartement(d1);
+                employeDao.save(employe);
+            }
+        }
+
+
+        //departementDao.save(departement);
     }
 
 

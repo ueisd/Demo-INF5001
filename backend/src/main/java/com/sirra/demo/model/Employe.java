@@ -17,8 +17,7 @@ public class Employe {
     private int id;
 
     @JsonIgnoreProperties(value = "employes", allowSetters = true)
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST, })
     @JoinColumn(name = "departemnet_id")
     private Departement departement;
 
@@ -60,7 +59,7 @@ public class Employe {
     @Column(nullable = true)
     private int jourSemaine;
     @Column(nullable = true)
-    @Length(min = 1, max = 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
+    @Length(max = 80, message = "Veuillez vérifier votre format d'horaire (1-80)")
     private String horaire;
 
     private int heureSemaine;

@@ -3,7 +3,6 @@ package com.sirra.demo.controler;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.EmployeIntrouvableException;
 import com.sirra.demo.model.Employe;
-import com.sirra.demo.model.Individu;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import java.util.List;
 
 @Api(description = "Gestion des Employes")
 @RestController
+@CrossOrigin
 public class EmployeControler {
 
     @Autowired
