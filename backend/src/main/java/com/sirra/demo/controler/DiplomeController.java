@@ -1,7 +1,6 @@
 package com.sirra.demo.controler;
 
 import com.sirra.demo.dao.DiplomeDao;
-import com.sirra.demo.exceptions.DiplomeIntrouvableException;
 import com.sirra.demo.model.Diplome;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class DiplomeController {
     }
 
     @GetMapping(value = "Dimplome/{id}")
-    public Diplome afficherDiplome(@PathVariable int id){
+    public Diplome afficherDiplome(@PathVariable int id) throws DiplomeIntrouvableException {
         Diplome diplome = diplomeDao.findById(id);
         if (diplome == null){
             throw new DiplomeIntrouvableException("Diplome avec l'id " + id + " est introuvable");
