@@ -6,6 +6,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from 'src/app/models/Contact.model';
 import { Employe } from 'src/app/models/Employe.model';
 
+export interface StatutActif {
+  value: boolean;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-individu-form',
   templateUrl: './individu-form.component.html',
@@ -17,6 +22,11 @@ export class IndividuFormComponent implements OnInit {
   individuForm: FormGroup;
   contactForm: FormGroup;
   isEdit = false;
+
+  statuts: StatutActif[] = [
+    {value: true, viewValue: 'Actif'},
+    {value: false, viewValue: 'Inactif'},
+  ];
 
   validation_messages = Individu.getValidationMessages();
   validation_contact_messages = Contact.getValidationMessages();
@@ -43,6 +53,7 @@ export class IndividuFormComponent implements OnInit {
         if(ind.employe != null) {
           employe = new Employe(ind.employe.horaire, ind.employe.tauxHoraire, ind.employe.heureSemaine, ind.employe.titrePoste);
           employe.id = ind.employe.id;
+          employe.actif = ind.employe.actif;
         }
          
         this.individu = new Individu(ind.nom, ind.prenom, employe, tabl, ind.ville);
@@ -91,6 +102,7 @@ export class IndividuFormComponent implements OnInit {
   setEmploye() {
     if(this.individu.employe && !(Object.keys(this.individu.employe).length === 0)) {
       this.addEmployeForm();
+      console.log(JSON.stringify(this.individu.employe));
       this.individuForm.controls.employe.setValue(this.individu.employe);
     }
   }
@@ -101,7 +113,8 @@ export class IndividuFormComponent implements OnInit {
       titrePoste: ['', [Validators.required, Validators.minLength(2)]],
       heureSemaine: ['', [Validators.required,  Validators.min(0)]],
       tauxHoraire: ['', [Validators.required, Validators.min(0)]],
-      horaire: ['', [Validators.required, Validators.minLength(5)]]
+      horaire: ['', [Validators.required, Validators.minLength(5)]],
+      actif: ['', [Validators.required]]
     });
   }
 

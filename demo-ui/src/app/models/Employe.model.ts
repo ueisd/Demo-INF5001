@@ -5,6 +5,7 @@ export class Employe {
     public id:number;
     public nom: string;
     public individu: Individu;
+    public actif: boolean;
 
 
     constructor(

@@ -91,7 +91,8 @@ const appRoutes: Routes = [
     MatInputModule,
     NgSelectModule,
     MatSlideToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   providers: [
     AppareilService,

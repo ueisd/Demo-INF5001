@@ -50,6 +50,15 @@
                 </mat-form-field>
 
                 <mat-form-field>
+                    <mat-label>Activité de l'employé</mat-label>
+                    <mat-select formControlName="actif">
+                        <mat-option *ngFor="let statut of statuts" [value]="statut.value">
+                        {{statut.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
                     <input matInput placeholder="Horaire" formControlName="horaire" required>
                     <mat-error *ngFor="let validation of validation_employe_messages.horaire">
                         <mat-error class="error-message" *ngIf="individuForm.get('employe').get('horaire').hasError(validation.type) && 
