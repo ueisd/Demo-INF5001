@@ -8,6 +8,7 @@ import com.sirra.demo.metier.GenerationFeuilleTmp;
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.Diplome;
 import com.sirra.demo.model.Employe;
+import com.sirra.demo.model.LigneDeTemps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,8 @@ public class DepartementController  {
 
     @ApiOperation(value = "Genere une Feuille de temps avec Id et NbrSemaine")
     @GetMapping(value = "Departement/{id}/Semaine/{sem}")
-    public ArrayList<Object[]> GenererFDT(@PathVariable int id, @PathVariable int sem) throws FdtException {
-        ArrayList<Object[]> list = new ArrayList<>();
+    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem) throws FdtException {
+        ArrayList<LigneDeTemps> list = new ArrayList<>();
 
         Departement departement = departementDao.findById(id);
         if(departement==null) {

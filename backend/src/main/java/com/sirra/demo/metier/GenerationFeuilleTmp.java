@@ -3,6 +3,7 @@ package com.sirra.demo.metier;
 
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.Employe;
+import com.sirra.demo.model.LigneDeTemps;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,27 +15,28 @@ public class GenerationFeuilleTmp {
 
 
 
-    public static ArrayList<Object[]> declencherGeneartionAvecControleur(com.sirra.demo.model.Departement departement, Integer sem){
+    public static ArrayList<LigneDeTemps> declencherGeneartionAvecControleur(com.sirra.demo.model.Departement departement, Integer sem){
         //System.out.println("\n\n\n\n"+departement.getJrBinaire());
         //departement.initiliaserLesJr();
        ArrayList<StockEmployeEtFDT> list = genererParNombreSemPrFDT(sem,departement);
-       ArrayList<Object[]> listAEnvoyer = casserDeTrioADuo(list);
+       ArrayList<LigneDeTemps> listAEnvoyer = casserDeTrioADuo(list);
 
        return listAEnvoyer;
     }
 
-    public static ArrayList<Object[]> casserDeTrioADuo(ArrayList<StockEmployeEtFDT> listVieu){
-        ArrayList<Object[]> listNew = new ArrayList<>();
+    public static ArrayList<LigneDeTemps> casserDeTrioADuo(ArrayList<StockEmployeEtFDT> listVieu){
+        ArrayList<LigneDeTemps> listeLigneDeTemps = new ArrayList<>();
         for (StockEmployeEtFDT s:listVieu
              ) {
             for (Temporal t : s.getTemporals()
                  ) {
-                Object[] obj = {s.getEmployeProto(), t.toString()};
-                listNew.add(obj);
+                LigneDeTemps ligneDeTemps;
+                ligneDeTemps = new LigneDeTemps(s.getEmployeProto(), t.getEntre(), t.getSortie());
+                listeLigneDeTemps.add(ligneDeTemps);
             }
 
         }
-        return listNew;
+        return listeLigneDeTemps;
     }
 
 

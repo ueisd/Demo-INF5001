@@ -39,6 +39,7 @@ import {
 import { ListeDepartementComponent } from './liste-departement/liste-departement.component';
 import { DepartementVueComponent } from './liste-departement/departement-vue/departement-vue/departement-vue.component';
 import { DepartementFormComponent } from './liste-departement/departement-form/departement-form/departement-form.component';
+import { FeuilleDeTempsDepComponent } from './feuille-de-temps/departement/feuille-de-temps-dep/feuille-de-temps-dep.component';
 
 
 const appRoutes: Routes = [
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'edit/individu/:id', canActivate: [AuthGuard], component: IndividuFormComponent },
   { path: 'new-user', canActivate: [AuthGuard], component: NewUserComponent },
   { path: 'auth/signin',  component: SigninComponent },
+  { path: 'feuilleDeTemps/departement/:id', canActivate: [AuthGuard],  component: FeuilleDeTempsDepComponent },
   { path: '', component: AppareilViewComponent },
   { path: 'not-found', component: FourOhFourComponent },
   { path: '**', redirectTo: '/not-found' }
@@ -77,7 +79,8 @@ const appRoutes: Routes = [
     FormtestComponent,
     ListeDepartementComponent,
     DepartementVueComponent,
-    DepartementFormComponent
+    DepartementFormComponent,
+    FeuilleDeTempsDepComponent
   ],
   imports: [
     BrowserModule,
