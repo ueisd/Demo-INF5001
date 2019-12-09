@@ -68,27 +68,6 @@ public class Departement {
         this.id = id;
     }
 
-    public void initiliaserLesJr() {
-        String binaire7 = getJrBinaire();
-        if (binaire7.trim().length() == 7) {
-            for (int i = 0; i < binaire7.length() - 1; i++) {
-                if (binaire7.charAt(i) == '0') {
-                    journesOuvert[i] = false;
-                } else if (binaire7.charAt(i) == '1') {
-                    journesOuvert[i] = true;
-                } else {
-                    System.out.println("Votre binaire7 contient un charactere different de 0 ou 1");
-                    System.exit(1);
-                }
-            }
-
-        } else {
-            System.out.println("Le binaire7 n'est pas de 7");
-            System.exit(1);
-        }
-
-    }
-
     public int getHeure_Ouverture() {
         return heure_Ouverture;
     }

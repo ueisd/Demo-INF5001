@@ -25,6 +25,7 @@ import { FormtestComponent } from './liste-individus/formtest/formtest/formtest.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTableModule} from '@angular/material/table';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {
   MatButtonModule,
@@ -40,6 +41,12 @@ import { ListeDepartementComponent } from './liste-departement/liste-departement
 import { DepartementVueComponent } from './liste-departement/departement-vue/departement-vue/departement-vue.component';
 import { DepartementFormComponent } from './liste-departement/departement-form/departement-form/departement-form.component';
 import { FeuilleDeTempsDepComponent } from './feuille-de-temps/departement/feuille-de-temps-dep/feuille-de-temps-dep.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import {MatSortModule} from '@angular/material/sort';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
 
 
 const appRoutes: Routes = [
@@ -95,13 +102,16 @@ const appRoutes: Routes = [
     NgSelectModule,
     MatSlideToggleModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [
     AppareilService,
     AuthService,
     AuthGuard,
-    UserService
+    UserService,
+    {provide: localeFr, useValue: 'fr' }
   ],
   bootstrap: [AppComponent]
 })

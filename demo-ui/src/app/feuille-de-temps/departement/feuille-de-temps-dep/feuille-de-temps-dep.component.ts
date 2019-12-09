@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Departement } from 'src/app/models/Departement.model';
 import { DepartementsService } from 'src/app/services/departements.service';
@@ -8,6 +8,8 @@ import { FeuilleDeTempsRequeteGenererService } from 'src/app/services/feuille-de
 import { Subscription } from 'rxjs';
 import { Employe } from 'src/app/models/Employe.model';
 import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
+import { MatSort, MatTableDataSource } from '@angular/material';
+
 
 @Component({
   selector: 'app-feuille-de-temps-dep',
@@ -16,11 +18,17 @@ import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
 })
 export class FeuilleDeTempsDepComponent implements OnInit {
 
+  displayedColumns: string[] = ['nom', 'jourDebut', 'heureDebut', 'heureFin'];
+
   public departement: Departement;
   public depIsLoaded = false;
   requeteForm: FormGroup;
   public validationRequeteMessages = FeuilleDeTemps.getValidationMessagesRequete();
   private generationLignesDeTempsSubsription: Subscription;
+  timezone = "+0" + new Date().getTimezoneOffset();
+  datasourceElements: MatTableDataSource<LigneDeTemps>;
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   lignesDeTempsSuggestion: LigneDeTemps[] = [];
 
@@ -29,6 +37,7 @@ export class FeuilleDeTempsDepComponent implements OnInit {
     private genFeuilleTempsService: FeuilleDeTempsRequeteGenererService) { }
 
   ngOnInit() {
+    console.log(this.timezone);
     this.initForm();
     this.activatedRoute.paramMap.subscribe( paramMap => {
       if(paramMap.get('id') != null) {
@@ -59,6 +68,8 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         let lignesDeTempsRet: LigneDeTemps[];
         lignesDeTempsRet = this.filterFeuillesDeTempsPropety(requete);
         this.lignesDeTempsSuggestion = lignesDeTempsRet;
+        this.datasourceElements = new MatTableDataSource(lignesDeTempsRet);
+        this.datasourceElements.sort = this.sort;
       }
     );
     let idDep = this.requeteForm.controls.idDep.value;

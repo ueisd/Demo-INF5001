@@ -16,8 +16,6 @@ public class GenerationFeuilleTmp {
 
 
     public static ArrayList<LigneDeTemps> declencherGeneartionAvecControleur(com.sirra.demo.model.Departement departement, Integer sem){
-        //System.out.println("\n\n\n\n"+departement.getJrBinaire());
-        //departement.initiliaserLesJr();
        ArrayList<StockEmployeEtFDT> list = genererParNombreSemPrFDT(sem,departement);
        ArrayList<LigneDeTemps> listAEnvoyer = casserDeTrioADuo(list);
 
