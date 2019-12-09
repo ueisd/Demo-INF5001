@@ -38,7 +38,6 @@ export class DepartementsService {
   }
 
   addDepartement (departement: Departement): Observable<Departement> {
-    console.log(JSON.stringify(departement));
     return this.httpClient.post<Departement>(this.postDepartementUrl, departement, httpOptions);
   }
 

@@ -20,33 +20,36 @@
     <pre>{{requeteForm.value | json}}</pre>
 
     <div class="row">
-        <table mat-table [dataSource]="datasourceElements" matSort class="mat-elevation-z8">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <table mat-table [dataSource]="datasourceElements" class="mat-elevation-z8">
 
             <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
             
             <!-- Position Column -->
             <ng-container matColumnDef="nom">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employe </th>
-                <td mat-cell *matCellDef="let element"> {{element.employe.nom}} </td>
+                <th mat-header-cell *matHeaderCellDef> Employe </th>
+                <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
             </ng-container>
             
             <!-- Name Column -->
             <ng-container matColumnDef="jourDebut">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Jour </th>
-                <td mat-cell *matCellDef="let element"> {{element.dateEntre | date: 'EEEE le d MMMM y ':timezone:'fr'}} </td>
+                <th mat-header-cell *matHeaderCellDef> Jour </th>
+                <td mat-cell *matCellDef="let element"> {{element.jour | date: 'EEEE le d MMMM y ':timezone:'fr'}} </td>
             </ng-container>
             
             <!-- Weight Column -->
             <ng-container matColumnDef="heureDebut">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Heure Début </th>
-                <td mat-cell *matCellDef="let element"> {{element.dateEntre | date: 'HH:mm'}} </td>
+                <th mat-header-cell *matHeaderCellDef> Heure Début </th>
+                <td mat-cell *matCellDef="let element"> {{element.heureDebut | date: 'HH:mm'}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="heureFin">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Heure Fin </th>
-                <td mat-cell *matCellDef="let element"> {{element.dateSortie | date: 'HH:mm'}} </td>
+                <th mat-header-cell *matHeaderCellDef> Heure Fin </th>
+                <td mat-cell *matCellDef="let element"> {{element.heureFin | date: 'HH:mm'}} </td>
             </ng-container>
             
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
