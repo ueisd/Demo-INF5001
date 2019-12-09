@@ -1,4 +1,5 @@
 package com.sirra.demo.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Length;
 
@@ -31,23 +32,25 @@ public class Departement {
 
     @Length(min = 7, max = 7, message = "Binaire ne fait pas longueur 7")
     private String jrBinaire;
+    //1-7 = Dimanche a Samedi
+    private boolean[] journesOuvert = {false, false, false, false, false, false, false};
 
     public List<Employe> getEmployes() {
         return employes;
     }
 
+    public void setEmployes(List<Employe> employes) {
+        this.employes = employes;
+    }
+
     public ArrayList<Integer> getDepartementsIds() {
         ArrayList<Integer> ids = new ArrayList<Integer>();
-        for(int i = 0; i < this.employes.size(); i++) {
+        for (int i = 0; i < this.employes.size(); i++) {
             Employe employe = this.employes.get(i);
             ids.add(employe.getId());
         }
         return ids;
     }
-
-
-    //1-7 = Dimanche a Samedi
-    private boolean[] journesOuvert = {false,false,false,false,false,false,false};
 
     public boolean[] getJournesOuvert() {
         return journesOuvert;
@@ -65,11 +68,11 @@ public class Departement {
         this.id = id;
     }
 
-    public void initiliaserLesJr(){
+    public void initiliaserLesJr() {
         String binaire7 = getJrBinaire();
-        if(binaire7.trim().length() == 7){
-            for(int i = 0 ; i < binaire7.length()-1; i++){
-                if(binaire7.charAt(i) == '0'){
+        if (binaire7.trim().length() == 7) {
+            for (int i = 0; i < binaire7.length() - 1; i++) {
+                if (binaire7.charAt(i) == '0') {
                     journesOuvert[i] = false;
                 } else if (binaire7.charAt(i) == '1') {
                     journesOuvert[i] = true;
@@ -84,12 +87,6 @@ public class Departement {
             System.exit(1);
         }
 
-    }
-
-
-
-    public void setEmployes(List<Employe> employes) {
-        this.employes = employes;
     }
 
     public int getHeure_Ouverture() {

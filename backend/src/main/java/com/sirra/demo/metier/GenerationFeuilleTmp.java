@@ -14,7 +14,7 @@ public class GenerationFeuilleTmp {
 
 
 
-    public static ArrayList<Object[]> declencherGeneartionAvecControleur(Departement departement, Integer sem){
+    public static ArrayList<Object[]> declencherGeneartionAvecControleur(com.sirra.demo.model.Departement departement, Integer sem){
         //System.out.println("\n\n\n\n"+departement.getJrBinaire());
         //departement.initiliaserLesJr();
        ArrayList<StockEmployeEtFDT> list = genererParNombreSemPrFDT(sem,departement);

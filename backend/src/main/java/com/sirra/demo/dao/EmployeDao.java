@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public interface EmployeDao  extends JpaRepository<Employe, Integer> {
+public interface EmployeDao extends JpaRepository<Employe, Integer> {
 
-    public Employe findById(int id);
+    Employe findById(int id);
 
     List<Employe> findByidGreaterThan(int noteLimit);
 
