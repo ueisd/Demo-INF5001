@@ -26,6 +26,23 @@ class GenerationFeuilleTmpTest {
 
     @Test
     void trouveUneHrIdeal8() {
+        int hrEntre = 06;
+        int hrSortie = 20;
+
+        Date d1 = new Date();
+        Date d2 = new Date();
+        GenerationFeuilleTmp.cleanHeureA0(d1);
+        GenerationFeuilleTmp.cleanHeureA0(d2);
+        d1.setHours(hrEntre);
+        d2.setHours(hrSortie);
+        Date heureATest = GenerationFeuilleTmp.trouveUneHrIdeal8(d1,d2);
+
+        boolean bonneHr = false;
+        if(hrSortie >= hrEntre && heureATest.getHours() + 8 <= hrSortie ){bonneHr = true;}
+        assertEquals(true,bonneHr);
+
+
+
     }
 
     @Test
