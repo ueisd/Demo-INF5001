@@ -1,0 +1,27 @@
+<div class="col-sm-8 col-sm-offset-2">
+    <p>feuille-de-temps-dep works!</p>
+    <div *ngIf="depIsLoaded">
+    idDep: {{ departement.id }}
+    <form [formGroup]="requeteForm" (ngSubmit)="onSendRequest()">
+        <mat-form-field class="full-width">
+            <input matInput type="number" class="example-right-align" placeholder="Nombre de semaines" 
+            formControlName="nbrSemaines" required>
+            <mat-error *ngFor="let validation of validationRequeteMessages.nbrSemaines">
+                <mat-error class="error-message" *ngIf="requeteForm.get('nbrSemaines').hasError(validation.type) && 
+                (requeteForm.get('nbrSemaines').dirty || requeteForm.get('nbrSemaines').touched)">{{validation.message}}</mat-error>
+            </mat-error>   
+        </mat-form-field>
+        <div class="btn-toolbar">
+            <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Retour </button>
+            <button class="btn btn-success" [disabled]="requeteForm.invalid" type="submit">Envoyer requête </button>
+        </div>
+    </form>
+    <h3>Requête contenu</h3>
+    <pre>{{requeteForm.value | json}}</pre>
+
+    <h3>Retour de la requête</h3>
+    <pre>{{lignesDeTempsSuggestion | json}}</pre>
+    </div>
+</div>
+
+
