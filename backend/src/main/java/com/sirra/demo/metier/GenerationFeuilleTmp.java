@@ -151,7 +151,6 @@ public class GenerationFeuilleTmp {
 
 
 
-
     public static int getHrRestant() {
         return hrRestant;
     }
