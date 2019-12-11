@@ -1,7 +1,10 @@
 package com.sirra.demo.metier;
 
+import com.sirra.demo.model.Employe;
+import com.sirra.demo.model.LigneDeTemps;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +17,38 @@ class GenerationFeuilleTmpTest {
 
     @Test
     void casserDeTrioADuo() {
+        ArrayList<Temporal> arrayTemp = new ArrayList<>();
+        Date entre1 = new Date();
+        Date sortie1 = new Date();
+        Date entre2 = new Date();
+        Date sortie2 = new Date();
+        entre1.setHours(07);
+        sortie1.setHours(15);
+        entre1 = GenerationFeuilleTmp.cleanHeureA0(entre1);
+        sortie1 = GenerationFeuilleTmp.cleanHeureA0(sortie1);
+        entre2.setHours(07);
+        sortie2.setHours(14);
+        entre2 = GenerationFeuilleTmp.cleanHeureA0(entre2);
+        sortie2 = GenerationFeuilleTmp.cleanHeureA0(sortie2);
+
+        Temporal temporal1 = new Temporal(entre1,sortie1);
+        Temporal temporal2 = new Temporal(entre2,sortie2);
+
+        arrayTemp.add(temporal1);
+        arrayTemp.add(temporal2);
+
+        Employe emp1 = new Employe();
+        emp1.setActif(true);
+        emp1.setHeureSemaine(15);
+
+        StockEmployeEtFDT stockEmployeEtFDT = new StockEmployeEtFDT(arrayTemp,emp1);
+
+        ArrayList<StockEmployeEtFDT>  arrayAbriser = new ArrayList<>();
+
+        arrayAbriser.add(stockEmployeEtFDT);
+        ArrayList<LigneDeTemps> arrayLDT=  GenerationFeuilleTmp.casserDeTrioADuo(arrayAbriser);
+        assertEquals(arrayLDT.size(),2);
+
     }
 
     @Test
