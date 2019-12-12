@@ -7,8 +7,8 @@ export class Departement {
 
 
     constructor(
-        public heure_Ouverture: Number,
-        public heure_Fermeture: Number,
+        public heure_Ouverture: Date,
+        public heure_Fermeture: Date,
         public employes: Employe[]
     ) {
     }

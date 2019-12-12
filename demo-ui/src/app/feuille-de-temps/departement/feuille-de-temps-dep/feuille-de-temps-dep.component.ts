@@ -26,11 +26,9 @@ export class LigneTempsAfficher {
 })
 export class FeuilleDeTempsDepComponent implements OnInit {
 
-  name = 'Angular 5';
-  test = new Date();
 
-  public dateTime: Date;
-  public dateTimeRange: Date[];
+  public dateTimeRange1: Date;
+  public dateTimeRange2: Date;
 
   displayedColumns: string[] = ['nom', 'jourDebut', 'heureDebut', 'heureFin'];
 
@@ -78,6 +76,9 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         Validators.min(0), 
         Validators.max(14), 
       ])],
+      duree: [0, Validators.compose([
+        Validators.required
+      ])]
     })
   }
 
@@ -92,7 +93,11 @@ export class FeuilleDeTempsDepComponent implements OnInit {
     );
     let idDep = this.requeteForm.controls.idDep.value;
     let nbrSem = this.requeteForm.controls.nbrSemaines.value;
-    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem);
+    let dateDebut = this.requeteForm.controls.duree.value[0];
+    let dateFin = this.requeteForm.controls.duree.value[1];
+    console.log(JSON.stringify(dateDebut));
+    console.log(JSON.stringify(dateFin));
+    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem, dateDebut, dateFin);
   }
 
   filterFeuillesDeTempsPropety(feuillTps: LigneDeTemps[]): LigneDeTemps[]{

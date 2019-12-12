@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +27,26 @@ public class Departement {
     private List<Employe> employes;
 
 
-    private int heure_Ouverture;
+    private LocalDateTime heure_Ouverture;
 
+    private LocalDateTime heure_Fermeture;
 
-    private int heure_Fermeture;
+    public LocalDateTime getHeure_Ouverture() {
+        return heure_Ouverture;
+    }
+
+    public void setHeure_Ouverture(LocalDateTime heure_Ouverture) {
+        this.heure_Ouverture = heure_Ouverture;
+    }
+
+    public LocalDateTime getHeure_Fermeture() {
+        return heure_Fermeture;
+    }
+
+    public void setHeure_Fermeture(LocalDateTime heure_Fermeture) {
+        this.heure_Fermeture = heure_Fermeture;
+    }
+
 
     @Length(min = 7, max = 7, message = "Binaire ne fait pas longueur 7")
     private String jrBinaire;
@@ -66,22 +84,6 @@ public class Departement {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getHeure_Ouverture() {
-        return heure_Ouverture;
-    }
-
-    public void setHeure_Ouverture(int heure_Ouverture) {
-        this.heure_Ouverture = heure_Ouverture;
-    }
-
-    public int getHeure_Fermeture() {
-        return heure_Fermeture;
-    }
-
-    public void setHeure_Fermeture(int heure_Fermeture) {
-        this.heure_Fermeture = heure_Fermeture;
     }
 
     public String getJrBinaire() {

@@ -27,7 +27,7 @@ public class DataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
 
-        Departement departement1 = new Departement();
+        /*Departement departement1 = new Departement();
         departement1.setHeure_Ouverture(9);
         departement1.setHeure_Fermeture(19);
         departement1.setJournesOuvert(new boolean[]{false, true, true, true, true, true, false});
@@ -98,7 +98,7 @@ public class DataLoader implements ApplicationRunner {
         individu4.setNom("Lachance");
         individu4.setVille("Montréal");
         individu4.setEmploye(employe4);
-        individu4 = individuDao.save(individu4);
+        individu4 = individuDao.save(individu4);*/
 
     }
 }

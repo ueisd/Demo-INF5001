@@ -1,11 +1,13 @@
 <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
             <h2>Enregistrer un nouveau département</h2>
-            <form [formGroup]="departementForm" (ngSubmit)="onSaveIndividu()">
+
+            <form [formGroup]="departementForm" (ngSubmit)="onSaveDepartement()">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
+
                         <mat-form-field class="full-width">
-                            <input matInput type="number" class="example-right-align" placeholder="Heure d'ouverture" 
+                            <input matInput type="time" class="example-right-align" placeholder="Heure d'ouverture" 
                             formControlName="heure_Ouverture" required>
                             <mat-error *ngFor="let validation of validation_messages.heure_Ouverture">
                                 <mat-error class="error-message" *ngIf="departementForm.get('heure_Ouverture').hasError(validation.type) && 
@@ -13,7 +15,7 @@
                             </mat-error>   
                         </mat-form-field>
                         <mat-form-field class="full-width">
-                            <input matInput type="number" class="example-right-align" placeholder="Heure de fermeture" 
+                            <input matInput type="time" class="example-right-align" placeholder="Heure de fermeture" 
                             formControlName="heure_Fermeture" required>
                             <mat-error *ngFor="let validation of validation_messages.heure_Fermeture">
                                 <mat-error class="error-message" *ngIf="departementForm.get('heure_Fermeture').hasError(validation.type) && 

@@ -36,7 +36,7 @@ export class DepartementFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private departementService: DepartementsService, private employeService: EmployesService,
     private router: Router, private activatedRoute: ActivatedRoute) {
-      this.departement = new Departement(0, 0, []);
+      this.departement = new Departement(new Date(), new Date(), []);
       this.departement.journesOuvert = [false, false, false, false, false, false, false];
   }
 
@@ -91,15 +91,14 @@ export class DepartementFormComponent implements OnInit {
   initForm() {
     this.departementForm = this.fb.group({
       id: [this.departement.id],
+      duree: [this.departement.heure_Ouverture, Validators.compose([
+        Validators.required
+      ])],
       heure_Ouverture: [this.departement.heure_Ouverture, Validators.compose([
-        Validators.required, 
-        Validators.min(0), 
-        Validators.max(24), 
+        Validators.required
       ])],
       heure_Fermeture: [this.departement.heure_Fermeture, Validators.compose([
-        Validators.required, 
-        Validators.min(0), 
-        Validators.max(24)
+        Validators.required,
       ])],
       employes: [this.departement.employes, Validators.compose([])],
     });
@@ -122,9 +121,30 @@ export class DepartementFormComponent implements OnInit {
     });
   }
 
-  onSaveIndividu() {
-    this.departement.heure_Fermeture = this.departementForm.get('heure_Fermeture').value;
-    this.departement.heure_Ouverture = this.departementForm.get('heure_Ouverture').value;
+  transformStringToDate(chaine: String): Date {
+    let heureDebut = Number.parseInt(chaine.substring(0, 2));
+    let minutesDebut = Number.parseInt(chaine.substring(3, 5));
+    let dateDebut = new Date();
+    dateDebut.setMinutes(minutesDebut);
+    dateDebut.setHours(heureDebut);
+    return dateDebut;
+  }
+
+  onSaveDepartement() {
+    let dateDebutStr = this.departementForm.get('heure_Ouverture').value;
+    let dateDebut = this.transformStringToDate(dateDebutStr)
+
+    let dateFinStr = this.departementForm.get('heure_Fermeture').value;
+    let dateFin = this.transformStringToDate(dateFinStr);
+
+    console.log(dateDebut + " Fin: " + dateFin + " timexzzone " + dateFin.getTimezoneOffset());
+    console.log(" heure Fin: " + dateFin.getUTCMilliseconds() + " ");
+
+    this.departement.heure_Ouverture = dateDebut;
+    this.departement.heure_Fermeture = dateFin;
+
+    
+    
     this.departement.employes = this.departementForm.get('employes').value;
     this.departement.journesOuvert = [];
     this.joursSemaine.forEach(element => {

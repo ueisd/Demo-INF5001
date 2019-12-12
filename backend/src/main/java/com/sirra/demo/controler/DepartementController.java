@@ -18,8 +18,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Api("Gestion pour departement")
 @RestController
@@ -55,9 +58,14 @@ public class DepartementController  {
     }
 
     @ApiOperation(value = "Genere une Feuille de temps avec Id et NbrSemaine")
-    @GetMapping(value = "Departement/{id}/Semaine/{sem}")
-    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem) throws FdtException {
+    @GetMapping(value = "Departement/{id}/Semaine/{sem}/debut/{dateDebut}")
+    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem, @PathVariable String dateDebut) throws FdtException {
         ArrayList<LigneDeTemps> list = new ArrayList<>();
+
+        Instant instant = Instant.parse(dateDebut);
+
+        TimeZone timezone = TimeZone.getTimeZone("America/Montreal");
+
 
         Departement departement = departementDao.findById(id);
         if(departement==null) {

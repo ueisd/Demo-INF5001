@@ -49,8 +49,8 @@ public class GenerationFeuilleTmp {
         //Comparer que d est bien etre a et b exlcusiemvement sinon >= (date) a.compareTo(d) * d.compareTo(b) > 0;
         Date dateOuverture = (Date) date.clone();
         Date dateSortie = (Date) date.clone();
-        dateOuverture.setHours(departement.getHeure_Ouverture());
-        dateSortie.setHours(departement.getHeure_Fermeture());
+        //dateOuverture.setHours(departement.getHeure_Ouverture());
+        //dateSortie.setHours(departement.getHeure_Fermeture());
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
         return attributerUneFDT (employe, dateOuverture, dateSortie);
