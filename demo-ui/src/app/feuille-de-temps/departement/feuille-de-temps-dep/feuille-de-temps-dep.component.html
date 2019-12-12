@@ -2,7 +2,43 @@
     <p>feuille-de-temps-dep works!</p>
     <div *ngIf="depIsLoaded">
     idDep: {{ departement.id }}
+
+
+
+
+
+    <div class="example-wrapper">
+        <h2>RangeFrom & RangeTo Selection</h2>
+    
+        <label class="example-input-wrapper">
+            Date Time Range From:
+            <input placeholder="Date Time Range From:"
+                    [(ngModel)]="dateTimeRange"
+                    [selectMode]="'rangeFrom'"
+                    [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
+            <owl-date-time #dtRange2></owl-date-time>
+        </label>
+    
+        <label class="example-input-wrapper">
+            Date Time Range To:
+            <input placeholder="Date Time Range To:"
+                    [(ngModel)]="dateTimeRange"
+                    [selectMode]="'rangeTo'"
+                    [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
+            <owl-date-time #dtRange3></owl-date-time>
+        </label>
+    
+        <h4>Value From Picker: {{dateTimeRange}}</h4>
+    </div>
+
+
+
     <form [formGroup]="requeteForm" (ngSubmit)="onSendRequest()">
+
+
+
+             
+
         <mat-form-field class="full-width">
             <input matInput type="number" class="example-right-align" placeholder="Nombre de semaines" 
             formControlName="nbrSemaines" required>

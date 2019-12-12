@@ -26,6 +26,12 @@ export class LigneTempsAfficher {
 })
 export class FeuilleDeTempsDepComponent implements OnInit {
 
+  name = 'Angular 5';
+  test = new Date();
+
+  public dateTime: Date;
+  public dateTimeRange: Date[];
+
   displayedColumns: string[] = ['nom', 'jourDebut', 'heureDebut', 'heureFin'];
 
   public departement: Departement;

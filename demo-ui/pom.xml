@@ -54,6 +54,16 @@
             <arguments>install --save @ng-select/ng-select</arguments>
           </configuration>
         </execution>
+        <execution>
+          <id>ngdateTime</id>
+          <goals>
+            <goal>npm</goal>
+          </goals>
+          <phase>generate-resources</phase>
+          <configuration>
+            <arguments>install ng-pick-datetime --save</arguments>
+          </configuration>
+        </execution>
 
         <execution>
           <id>npm run-script build-prod</id>
