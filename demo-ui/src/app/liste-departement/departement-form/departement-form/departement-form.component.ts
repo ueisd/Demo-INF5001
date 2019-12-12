@@ -7,6 +7,7 @@ import { DepartementsService } from 'src/app/services/departements.service';
 import { Employe } from 'src/app/models/Employe.model';
 import { Subscription } from 'rxjs';
 import { EmployesService } from 'src/app/services/employes.service';
+import {sprintf} from "sprintf-js";
 
 @Component({
   selector: 'app-departement-form',
@@ -36,7 +37,7 @@ export class DepartementFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private departementService: DepartementsService, private employeService: EmployesService,
     private router: Router, private activatedRoute: ActivatedRoute) {
-      this.departement = new Departement(new Date(), new Date(), []);
+      this.departement = new Departement(0, 0, []);
       this.departement.journesOuvert = [false, false, false, false, false, false, false];
   }
 
@@ -88,16 +89,17 @@ export class DepartementFormComponent implements OnInit {
             '';
   }
 
+
+
   initForm() {
+    let heureOuvertureStr = this.formatMilisecondesVersHeures(this.departement.heure_Ouverture);
+    let heuresFermetureStr = this.formatMilisecondesVersHeures(this.departement.heure_Fermeture);
     this.departementForm = this.fb.group({
       id: [this.departement.id],
-      duree: [this.departement.heure_Ouverture, Validators.compose([
+      heure_Ouverture: [heureOuvertureStr, Validators.compose([
         Validators.required
       ])],
-      heure_Ouverture: [this.departement.heure_Ouverture, Validators.compose([
-        Validators.required
-      ])],
-      heure_Fermeture: [this.departement.heure_Fermeture, Validators.compose([
+      heure_Fermeture: [heuresFermetureStr, Validators.compose([
         Validators.required,
       ])],
       employes: [this.departement.employes, Validators.compose([])],
@@ -121,10 +123,22 @@ export class DepartementFormComponent implements OnInit {
     });
   }
 
+  formatHeuresVersMilisecondes(temps: String) {
+    var partieTemps = temps.split(":");
+    return (+partieTemps[0] * (60000 * 60)) + (+partieTemps[1] * 60000)
+  }
+
+  formatMilisecondesVersHeures(nombre: number): String {
+    let heure = Math.floor(nombre / (60000 * 60));
+    let milisecobdesRest = (nombre % (60000 * 60));
+    let minutes = Math.floor(milisecobdesRest / 60000);
+    return sprintf("%02d:%02d", heure, minutes);
+  }
+
   transformStringToDate(chaine: String): Date {
     let heureDebut = Number.parseInt(chaine.substring(0, 2));
     let minutesDebut = Number.parseInt(chaine.substring(3, 5));
-    let dateDebut = new Date();
+    let dateDebut = new Date(0);
     dateDebut.setMinutes(minutesDebut);
     dateDebut.setHours(heureDebut);
     return dateDebut;
@@ -132,18 +146,15 @@ export class DepartementFormComponent implements OnInit {
 
   onSaveDepartement() {
     let dateDebutStr = this.departementForm.get('heure_Ouverture').value;
-    let dateDebut = this.transformStringToDate(dateDebutStr)
+    let miliDebut = this.formatHeuresVersMilisecondes(dateDebutStr);
 
-    let dateFinStr = this.departementForm.get('heure_Fermeture').value;
-    let dateFin = this.transformStringToDate(dateFinStr);
+    let dateFinStr = this.departementForm.get('heure_Fermeture').value; 
+    let miliFin = this.formatHeuresVersMilisecondes(dateFinStr);
 
-    console.log(dateDebut + " Fin: " + dateFin + " timexzzone " + dateFin.getTimezoneOffset());
-    console.log(" heure Fin: " + dateFin.getUTCMilliseconds() + " ");
+    this.departement.heure_Ouverture = miliDebut;
+    this.departement.heure_Fermeture = miliFin;
 
-    this.departement.heure_Ouverture = dateDebut;
-    this.departement.heure_Fermeture = dateFin;
-
-    
+    let chaine = this.formatMilisecondesVersHeures(miliDebut);
     
     this.departement.employes = this.departementForm.get('employes').value;
     this.departement.journesOuvert = [];

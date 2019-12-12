@@ -64,6 +64,16 @@
             <arguments>install ng-pick-datetime --save</arguments>
           </configuration>
         </execution>
+        <execution>
+          <id>sprintf</id>
+          <goals>
+            <goal>npm</goal>
+          </goals>
+          <phase>generate-resources</phase>
+          <configuration>
+            <arguments>install sprintf-js --save</arguments>
+          </configuration>
+        </execution>
 
         <execution>
           <id>npm run-script build-prod</id>

@@ -27,23 +27,23 @@ public class Departement {
     private List<Employe> employes;
 
 
-    private LocalDateTime heure_Ouverture;
+    private Integer heure_Ouverture;
 
-    private LocalDateTime heure_Fermeture;
+    private Integer heure_Fermeture;
 
-    public LocalDateTime getHeure_Ouverture() {
+    public Integer getHeure_Ouverture() {
         return heure_Ouverture;
     }
 
-    public void setHeure_Ouverture(LocalDateTime heure_Ouverture) {
+    public void setHeure_Ouverture(Integer heure_Ouverture) {
         this.heure_Ouverture = heure_Ouverture;
     }
 
-    public LocalDateTime getHeure_Fermeture() {
+    public Integer getHeure_Fermeture() {
         return heure_Fermeture;
     }
 
-    public void setHeure_Fermeture(LocalDateTime heure_Fermeture) {
+    public void setHeure_Fermeture(Integer heure_Fermeture) {
         this.heure_Fermeture = heure_Fermeture;
     }
 
