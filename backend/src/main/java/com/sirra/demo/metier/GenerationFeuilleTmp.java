@@ -16,30 +16,12 @@ public class GenerationFeuilleTmp {
 
 
     public static ArrayList<LigneDeTemps> declencherGeneartionAvecControleur(com.sirra.demo.model.Departement departement, Integer sem){
-       ArrayList<StockEmployeEtFDT> list = genererParNombreSemPrFDT(sem,departement);
-       ArrayList<LigneDeTemps> listAEnvoyer = casserDeTrioADuo(list);
-
-       return listAEnvoyer;
-    }
-
-    public static ArrayList<LigneDeTemps> casserDeTrioADuo(ArrayList<StockEmployeEtFDT> listVieu){
-        ArrayList<LigneDeTemps> listeLigneDeTemps = new ArrayList<>();
-        for (StockEmployeEtFDT s:listVieu
-             ) {
-            for (Temporal t : s.getTemporals()
-                 ) {
-                LigneDeTemps ligneDeTemps;
-                ligneDeTemps = new LigneDeTemps(s.getEmployeProto(), t.getEntre(), t.getSortie());
-                listeLigneDeTemps.add(ligneDeTemps);
-            }
-
-        }
-        return listeLigneDeTemps;
+       return genererParNombreSemPrFDT(sem,departement);
     }
 
 
-    public static ArrayList<StockEmployeEtFDT> genererParNombreSemPrFDT(int nbrSemaine, Departement departement){
-        ArrayList<StockEmployeEtFDT> list = new ArrayList<>();
+    public static ArrayList<LigneDeTemps> genererParNombreSemPrFDT(int nbrSemaine, Departement departement){
+        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
 
         for (Employe emp: departement.getEmployes()
         ) {
@@ -54,31 +36,25 @@ public class GenerationFeuilleTmp {
                     if (hrRestant > 0) {
                         Date dateeffectif = setLaJourner(i);
                         if (departement.getJournesOuvert()[dateeffectif.getDay()] == true) {
-                            phase1GererLesHRouvertEtFermer(emp, temporals, departement, dateeffectif);
+                            lignesDeTemps.add(phase1GererLesHRouvertEtFermer(emp, temporals, departement, dateeffectif));
                         }
                     }
                 }
-                list.add(new StockEmployeEtFDT(temporals,emp));
             }
         }
-        return list;
+        return lignesDeTemps;
     }
 
 
-    public static void phase1GererLesHRouvertEtFermer(Employe employe, ArrayList<Temporal> temporals, Departement departement,Date date){
+    public static LigneDeTemps phase1GererLesHRouvertEtFermer(Employe employe, ArrayList<Temporal> temporals, Departement departement,Date date){
         //Comparer que d est bien etre a et b exlcusiemvement sinon >= (date) a.compareTo(d) * d.compareTo(b) > 0;
-        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
         Date dateOuverture = (Date) date.clone();
         Date dateSortie = (Date) date.clone();
         dateOuverture.setHours(departement.getHeure_Ouverture());
         dateSortie.setHours(departement.getHeure_Fermeture());
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
-        lignesDeTemps.add(new LigneDeTemps(employe, dateOuverture, dateSortie));
-
-        attributerUneFDT (employe, temporals, dateOuverture, dateSortie);
-
-
+        return attributerUneFDT (employe, temporals, dateOuverture, dateSortie);
     }
 
 
@@ -106,7 +82,7 @@ public class GenerationFeuilleTmp {
         return datecloner;
     }
 
-    public static void attributerUneFDT(Employe employe, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
+    public static LigneDeTemps attributerUneFDT(Employe employe, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
         int heureAttribuer = 0;
 
         Date entreee = null;
@@ -115,18 +91,16 @@ public class GenerationFeuilleTmp {
             entreee = trouveUneHrIdeal8(ouverture,fermeture);
             sortie = (Date) entreee.clone();
             sortie.setHours(entreee.getHours()+8);
-
             heureAttribuer = 8;
         } else {
             entreee =  trouverUneHrInferieurA8(ouverture,fermeture);
             sortie = (Date) entreee.clone();
             sortie.setHours(entreee.getHours() + hrRestant);
-            temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = hrRestant;
         }
+        setHrRestant(hrRestant - heureAttribuer);
         temporals.add(new Temporal(entreee,sortie));
-
-       setHrRestant(hrRestant - heureAttribuer);
+        return new LigneDeTemps(employe, entreee, sortie);
     }
 
 
