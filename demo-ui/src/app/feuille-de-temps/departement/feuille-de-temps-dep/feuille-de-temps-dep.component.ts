@@ -93,11 +93,9 @@ export class FeuilleDeTempsDepComponent implements OnInit {
     );
     let idDep = this.requeteForm.controls.idDep.value;
     let nbrSem = this.requeteForm.controls.nbrSemaines.value;
-    let dateDebut = this.requeteForm.controls.duree.value[0];
-    let dateFin = this.requeteForm.controls.duree.value[1];
-    console.log(JSON.stringify(dateDebut));
-    console.log(JSON.stringify(dateFin));
-    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem, dateDebut, dateFin);
+    let dateDebut = new Date(this.requeteForm.controls.duree.value[0]);
+    let dateFin = new Date(this.requeteForm.controls.duree.value[1]);
+    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem, dateDebut.toISOString(), dateFin.toISOString());
   }
 
   filterFeuillesDeTempsPropety(feuillTps: LigneDeTemps[]): LigneDeTemps[]{

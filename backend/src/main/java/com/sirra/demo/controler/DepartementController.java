@@ -1,6 +1,7 @@
 package com.sirra.demo.controler;
 
 
+import com.sirra.demo.configuration.AppConfig;
 import com.sirra.demo.dao.DepartementDao;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.FdtException;
@@ -18,8 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -58,23 +58,23 @@ public class DepartementController  {
     }
 
     @ApiOperation(value = "Genere une Feuille de temps avec Id et NbrSemaine")
-    @GetMapping(value = "Departement/{id}/Semaine/{sem}/debut/{dateDebut}")
-    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem, @PathVariable String dateDebut) throws FdtException {
-        ArrayList<LigneDeTemps> list = new ArrayList<>();
-
-        Instant instant = Instant.parse(dateDebut);
-
-        TimeZone timezone = TimeZone.getTimeZone("America/Montreal");
-
+    @GetMapping(value = "Departement/{id}/Semaine/{sem}/debut/{dateDebut}/dateFin/{dateFin}")
+    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem,
+                                              @PathVariable String dateDebut, @PathVariable String dateFin)
+            throws FdtException {
 
         Departement departement = departementDao.findById(id);
         if(departement==null) {
             throw new FdtException("Le departement avec l'id " + id + " est INTROUVABLE.");
         }
-        if(sem < 1 ){
-            throw new  FdtException("Les semaines doivent etre superieur a 0");
+        if(sem < 0 ){
+            throw new  FdtException("Les semaines doivent etre superieur ou éhgales a 0");
         }
 
+        ZonedDateTime dateLocaleDebut =  Instant.parse(dateDebut).atZone(AppConfig.ZONE_ID);
+        ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
+
+        ArrayList<LigneDeTemps> list = new ArrayList<>();
         list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;
 
         return list;
