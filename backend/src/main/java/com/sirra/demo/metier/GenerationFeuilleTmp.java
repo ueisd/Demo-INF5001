@@ -38,7 +38,7 @@ public class GenerationFeuilleTmp {
     }
 
 
-    public static ArrayList<StockEmployeEtFDT> genererParNombreSemPrFDT(int nbrSemaine,Departement departement){
+    public static ArrayList<StockEmployeEtFDT> genererParNombreSemPrFDT(int nbrSemaine, Departement departement){
         ArrayList<StockEmployeEtFDT> list = new ArrayList<>();
 
         for (Employe emp: departement.getEmployes()
@@ -54,8 +54,10 @@ public class GenerationFeuilleTmp {
                     if (hrRestant > 0) {
                         Date dateeffectif = setLaJourner(i);
                         if (departement.getJournesOuvert()[dateeffectif.getDay()] == true) {
-                            phase1GererLesHRouvertEtFermer(temporals, departement, dateeffectif);
-                        } } }
+                            phase1GererLesHRouvertEtFermer(emp, temporals, departement, dateeffectif);
+                        }
+                    }
+                }
                 list.add(new StockEmployeEtFDT(temporals,emp));
             }
         }
@@ -63,16 +65,18 @@ public class GenerationFeuilleTmp {
     }
 
 
-    public static void phase1GererLesHRouvertEtFermer(ArrayList<Temporal> temporals, Departement departement,Date date){
+    public static void phase1GererLesHRouvertEtFermer(Employe employe, ArrayList<Temporal> temporals, Departement departement,Date date){
         //Comparer que d est bien etre a et b exlcusiemvement sinon >= (date) a.compareTo(d) * d.compareTo(b) > 0;
+        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
         Date dateOuverture = (Date) date.clone();
         Date dateSortie = (Date) date.clone();
         dateOuverture.setHours(departement.getHeure_Ouverture());
         dateSortie.setHours(departement.getHeure_Fermeture());
         dateOuverture = cleanHeureA0(dateOuverture);
         dateSortie = cleanHeureA0(dateSortie);
+        lignesDeTemps.add(new LigneDeTemps(employe, dateOuverture, dateSortie));
 
-        attributerUneFDT (temporals, dateOuverture, dateSortie);
+        attributerUneFDT (employe, temporals, dateOuverture, dateSortie);
 
 
     }
@@ -102,24 +106,25 @@ public class GenerationFeuilleTmp {
         return datecloner;
     }
 
-    public static void attributerUneFDT(ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
+    public static void attributerUneFDT(Employe employe, ArrayList<Temporal> temporals,Date ouverture, Date fermeture){
         int heureAttribuer = 0;
 
+        Date entreee = null;
+        Date sortie = null;
         if(hrRestant >= 8){
-            Date entreee = trouveUneHrIdeal8(ouverture,fermeture);
-            Date sortie = (Date) entreee.clone();
+            entreee = trouveUneHrIdeal8(ouverture,fermeture);
+            sortie = (Date) entreee.clone();
             sortie.setHours(entreee.getHours()+8);
-            temporals.add(new Temporal(entreee,sortie));
+
             heureAttribuer = 8;
-            System.out.println(entreee + "" + sortie);
-        } else if (hrRestant < 8){
-            Date entreee =  trouverUneHrInferieurA8(ouverture,fermeture);
-            Date sortie = (Date) entreee.clone();
+        } else {
+            entreee =  trouverUneHrInferieurA8(ouverture,fermeture);
+            sortie = (Date) entreee.clone();
             sortie.setHours(entreee.getHours() + hrRestant);
             temporals.add(new Temporal(ouverture,sortie));
             heureAttribuer = hrRestant;
-            System.out.println(entreee + "" + sortie);
         }
+        temporals.add(new Temporal(entreee,sortie));
 
        setHrRestant(hrRestant - heureAttribuer);
     }

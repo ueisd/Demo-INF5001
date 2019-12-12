@@ -17,7 +17,7 @@ public class Employe {
     private int id;
 
     @JsonIgnoreProperties(value = "employes", allowSetters = true)
-    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST, })
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "departemnet_id")
     private Departement departement;
 
