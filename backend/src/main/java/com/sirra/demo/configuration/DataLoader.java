@@ -27,15 +27,15 @@ public class DataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
 
-        /*Departement departement1 = new Departement();
-        departement1.setHeure_Ouverture(9);
-        departement1.setHeure_Fermeture(19);
+        Departement departement1 = new Departement();
+        departement1.setHeure_Ouverture(30840000);
+        departement1.setHeure_Fermeture(36480000);
         departement1.setJournesOuvert(new boolean[]{false, true, true, true, true, true, false});
         departement1 = departementDao.save(departement1);
 
         Departement departement2 = new Departement();
-        departement2.setHeure_Ouverture(2);
-        departement2.setHeure_Fermeture(8);
+        departement2.setHeure_Ouverture(30900000);
+        departement2.setHeure_Fermeture(60420000);
         departement2.setJournesOuvert(new boolean[]{true, true, true, true, false, true, false});
         departement2 = departementDao.save(departement2);
 
@@ -98,7 +98,7 @@ public class DataLoader implements ApplicationRunner {
         individu4.setNom("Lachance");
         individu4.setVille("Montréal");
         individu4.setEmploye(employe4);
-        individu4 = individuDao.save(individu4);*/
+        individu4 = individuDao.save(individu4);
 
     }
 }
