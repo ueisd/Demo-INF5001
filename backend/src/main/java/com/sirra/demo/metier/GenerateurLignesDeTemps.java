@@ -3,7 +3,6 @@ package com.sirra.demo.metier;
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 public class GenerateurLignesDeTemps {
@@ -12,13 +11,18 @@ public class GenerateurLignesDeTemps {
     FillOptions fillOptions;
     GenerateurLignesDeTempsEmpSem genLnEmpSem;
 
-    public GenerateurLignesDeTemps(ArrayList<HoraireOuvertureSemaine> horaireSemaine, Departement departement) {
-        this.horaireSemaine = horaireSemaine;
-        this.departement = departement;
+    public GenerateurLignesDeTemps() {
         this.genLnEmpSem = new GenerateurLignesDeTempsEmpSemImp();
     }
 
+    public GenerateurLignesDeTemps(GenerateurLignesDeTempsEmpSem genLnEmpSem) {
+        this.genLnEmpSem = genLnEmpSem;
+    }
 
+    public void initialiserRequete(ArrayList<HoraireOuvertureSemaine> horaireSemaine, Departement departement) {
+        this.horaireSemaine = horaireSemaine;
+        this.departement = departement;
+    }
 
     public ArrayList<LigneDeTemps> generate(FillOptions fillOptions) {
         this.fillOptions = fillOptions;

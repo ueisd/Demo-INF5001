@@ -75,7 +75,9 @@ public class DepartementController  {
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
         GenerateurHoraire gen = new GenerateurHoraire(dateLocaleDebut, dateLocaleFin, departement);
         ArrayList<HoraireOuvertureSemaine> horaireDep = gen.generate();
-        GenerateurLignesDeTemps generateur = new GenerateurLignesDeTemps(horaireDep, departement);
+
+        GenerateurLignesDeTemps generateur = new GenerateurLignesDeTemps();
+        generateur.initialiserRequete(horaireDep, departement);
         generateur.generate(new FillOptions());
 
 
