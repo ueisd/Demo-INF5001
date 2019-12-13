@@ -1,10 +1,13 @@
 package com.sirra.demo.metier;
 
 
+import com.sirra.demo.configuration.AppConfig;
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.Employe;
 import com.sirra.demo.model.LigneDeTemps;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -98,7 +101,10 @@ public class GenerationFeuilleTmp {
             heureAttribuer = hrRestant;
         }
         setHrRestant(hrRestant - heureAttribuer);
-        return new LigneDeTemps(employe, entreee, sortie);
+
+        ZonedDateTime dateEntre = entreee.toInstant().atZone(AppConfig.ZONE_ID);
+        ZonedDateTime dateSortie = sortie.toInstant().atZone(AppConfig.ZONE_ID);
+        return new LigneDeTemps(employe, dateEntre, dateSortie);
     }
 
 

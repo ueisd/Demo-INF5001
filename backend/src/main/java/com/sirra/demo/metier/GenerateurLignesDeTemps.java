@@ -6,6 +6,7 @@ import com.sirra.demo.model.options.FillOptions;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 public class GenerateurLignesDeTemps {
@@ -45,7 +46,12 @@ public class GenerateurLignesDeTemps {
 
     protected ArrayList<LigneDeTemps> generateStartBottom(Employe employe, HoraireOuvertureSemaine horaire) {
         ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
-
+        Iterator<IntervalTempsZoneLocale> iterLigne = horaire.getIntervales().listIterator();
+        int minutesAjoutes = 0;
+        while(iterLigne.hasNext()) {
+            IntervalTempsZoneLocale interval = iterLigne.next();
+            new LigneDeTemps(employe, interval.getDateDebut(), interval.getDateFin());
+        }
         return lignesDeTemps;
     }
 }

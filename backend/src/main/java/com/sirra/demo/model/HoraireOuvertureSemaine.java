@@ -14,8 +14,9 @@ public class HoraireOuvertureSemaine {
     }
 
     public void addInterval(ZonedDateTime dateDebut, ZonedDateTime dateFin) {
-        this.dureeTotaleEnMinutes += ChronoUnit.MINUTES.between(dateDebut, dateFin);
-        this.intervales.add(new IntervalTempsZoneLocale(dateDebut, dateFin));
+        IntervalTempsZoneLocale interval = new IntervalTempsZoneLocale(dateDebut, dateFin);
+        this.dureeTotaleEnMinutes += interval.getDureeEnMinutes();
+        this.intervales.add(interval);
     }
 
     public ArrayList<IntervalTempsZoneLocale> getIntervales() {

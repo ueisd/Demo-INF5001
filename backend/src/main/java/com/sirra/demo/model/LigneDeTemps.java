@@ -1,14 +1,15 @@
 package com.sirra.demo.model;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class LigneDeTemps {
 
     private Employe employe;
-    private Date dateEntre;
-    private Date dateSortie;
+    private ZonedDateTime dateEntre;
+    private ZonedDateTime dateSortie;
 
-    public LigneDeTemps(Employe employe, Date dateEntre, Date dateSortie) {
+    public LigneDeTemps(Employe employe, ZonedDateTime dateEntre, ZonedDateTime dateSortie) {
         this.employe = employe;
         this.dateEntre = dateEntre;
         this.dateSortie = dateSortie;
@@ -22,19 +23,19 @@ public class LigneDeTemps {
         this.employe = employe;
     }
 
-    public Date getDateEntre() {
+    public ZonedDateTime getDateEntre() {
         return dateEntre;
     }
 
-    public void setDateEntre(Date dateEntre) {
+    public void setDateEntre(ZonedDateTime dateEntre) {
         this.dateEntre = dateEntre;
     }
 
-    public Date getDateSortie() {
+    public ZonedDateTime getDateSortie() {
         return dateSortie;
     }
 
-    public void setDateSortie(Date dateSortie) {
+    public void setDateSortie(ZonedDateTime dateSortie) {
         this.dateSortie = dateSortie;
     }
 }
