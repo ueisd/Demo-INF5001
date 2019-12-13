@@ -8,6 +8,7 @@ import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.metier.*;
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
+import com.sirra.demo.model.options.FillVerticalOptions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,8 @@ public class DepartementController  {
 
         FillOptions fillOpt = new FillOptions();
         fillOpt.setFillMax(8);
-        fillOpt.setFiilMinOnVoid(16);
+        fillOpt.setVerticalOption(FillVerticalOptions.FILL_RANDOM);
+        fillOpt.setFiilMinOnVoid(12);
         return this.generateurLignesDeTemps.generate(fillOpt);
     }
 

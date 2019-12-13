@@ -18,6 +18,10 @@ public class FillOptions {
                 (this.verticalOption == FillVerticalOptions.Fill_BOTTOM));
     }
 
+    public boolean isStart() {
+        return this.lateralOption == FillLateralOptions.Fill_START;
+    }
+
     public int getFillMax() {
         return fillMax;
     }
@@ -30,7 +34,19 @@ public class FillOptions {
         return fiilMinOnVoid;
     }
 
+    public void setVerticalOption(FillVerticalOptions verticalOption) {
+        this.verticalOption = verticalOption;
+    }
+
     public void setFiilMinOnVoid(int fiilMinOnVoid) {
         this.fiilMinOnVoid = fiilMinOnVoid;
+    }
+
+    public FillLateralOptions getLateralOption() {
+        return lateralOption;
+    }
+
+    public FillVerticalOptions getVerticalOption() {
+        return verticalOption;
     }
 }

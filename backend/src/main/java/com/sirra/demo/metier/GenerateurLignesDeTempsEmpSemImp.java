@@ -5,6 +5,7 @@ import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.model.IntervalTempsZoneLocale;
 import com.sirra.demo.model.LigneDeTemps;
 import com.sirra.demo.model.options.FillOptions;
+import com.sirra.demo.model.options.FillVerticalOptions;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -42,23 +43,33 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
     public ArrayList<LigneDeTemps> generatePourEmpSem(FillOptions fillOptions) {
         reinitLignesDeTemps();
         this.fillOptions = fillOptions;
-        if(fillOptions.ifIsStartBottom()) {
-            this.generateStartBottom();
+        switch (this.fillOptions.getLateralOption()) {
+            case Fill_START: this.generateLinesFromStart();
+            default: break;
         }
         return (ArrayList<LigneDeTemps>) this.lignesDeTemps.clone();
     }
 
-    protected void generateStartBottom() {
+    protected void generateLinesFromStart() {
         Iterator<IntervalTempsZoneLocale> iterLigne = this.horaireSemaine.getIntervales().listIterator();
         int minutesDeTravailMaxParSemaine = this.employe.getMinutesSemaine();
         while(iterLigne.hasNext() && this.minutesAjoutes < minutesDeTravailMaxParSemaine) {
             IntervalTempsZoneLocale interval = iterLigne.next();
-            int minimumHeure = this.fillOptions.getFiilMinOnVoid();
-            if(minimumHeure == 0 || interval.isMinLastHourOf(minimumHeure)) {
-                this.ajouterLigneDeTemps(generateBotomLine(employe, interval));
+            switch(this.fillOptions.getVerticalOption()){
+                case Fill_BOTTOM: this.generateBotomLineIfMinHeures(employe, interval);
+                case FILL_RANDOM: break;
+                default: break;
             }
+
         }
         trimAtEndOverAllocated(lignesDeTemps);
+    }
+
+    protected void generateBotomLineIfMinHeures(Employe emp, IntervalTempsZoneLocale interval) {
+        int minimumHeure = this.fillOptions.getFiilMinOnVoid();
+        if(minimumHeure == 0 || interval.isMinLastHourOf(minimumHeure)) {
+            this.ajouterLigneDeTemps(generateBotomLine(employe, interval));
+        }
     }
 
     protected LigneDeTemps generateBotomLine(Employe emp, IntervalTempsZoneLocale interval) {
