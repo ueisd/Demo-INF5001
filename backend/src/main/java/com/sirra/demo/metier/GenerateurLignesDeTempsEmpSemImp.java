@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTempsEmpSem {
     Employe employe;
@@ -56,18 +57,40 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         while(iterLigne.hasNext() && this.minutesAjoutes < minutesDeTravailMaxParSemaine) {
             IntervalTempsZoneLocale interval = iterLigne.next();
             switch(this.fillOptions.getVerticalOption()){
-                case Fill_BOTTOM: this.generateBotomLineIfMinHeures(employe, interval);
-                case FILL_RANDOM: break;
+                case Fill_BOTTOM: this.generateBotomLineIfMinHeures(interval);
+                case FILL_RANDOM: this.generateVRandomLineIfMinHeures(interval);
                 default: break;
             }
 
         }
-        trimAtEndOverAllocated(lignesDeTemps);
+        trimAtEndOverAllocatedAtEnd(lignesDeTemps);
     }
 
-    protected void generateBotomLineIfMinHeures(Employe emp, IntervalTempsZoneLocale interval) {
+    protected void generateVRandomLineIfMinHeures(IntervalTempsZoneLocale interval) {
         if(ifIntervalHaveSuffisentLast(interval)) {
-            this.ajouterLigneDeTemps(generateBotomLine(employe, interval));
+            this.ajouterLigneDeTemps(generateVRandomLine(interval));
+        }
+    }
+
+    protected LigneDeTemps generateVRandomLine(IntervalTempsZoneLocale interval) {
+        LigneDeTemps ligneDeTemps = new LigneDeTemps(this.employe, interval.getDateDebut(), interval.getDateFin());
+        ZonedDateTime dateFin = interval.getDateFin();
+        ZonedDateTime dateDebut = interval.getDateDebut();
+        ZonedDateTime dateMaxFill = ChronoUnit.HOURS.addTo(dateDebut, this.fillOptions.getFillMax());
+
+        if(dateDebut.isBefore(dateMaxFill) && dateMaxFill.isBefore(dateFin)) {
+            ligneDeTemps.setDateSortie(dateMaxFill);
+            int nbrSecPadding = (int) ChronoUnit.SECONDS.between(dateMaxFill, dateFin);
+            Random r = new Random();
+            int paddingMove = r.nextInt(nbrSecPadding);
+            ligneDeTemps.decalerADroiteDeSecondes(paddingMove);
+        }
+        return ligneDeTemps;
+    }
+
+    protected void generateBotomLineIfMinHeures(IntervalTempsZoneLocale interval) {
+        if(ifIntervalHaveSuffisentLast(interval)) {
+            this.ajouterLigneDeTemps(generateBotomLine(interval));
         }
     }
 
@@ -76,7 +99,7 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         return (minimumHeure == 0 || interval.isMinLastHourOf(minimumHeure));
     }
 
-    protected LigneDeTemps generateBotomLine(Employe emp, IntervalTempsZoneLocale interval) {
+    protected LigneDeTemps generateBotomLine(IntervalTempsZoneLocale interval) {
         LigneDeTemps ligneDeTemps = new LigneDeTemps(this.employe, interval.getDateDebut(), interval.getDateFin());
         ZonedDateTime dateFin = interval.getDateFin();
         ZonedDateTime dateDebut = interval.getDateDebut();
@@ -88,7 +111,7 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         return ligneDeTemps;
     }
 
-    protected void trimAtEndOverAllocated(ArrayList<LigneDeTemps> lignesDeTemps) {
+    protected void trimAtEndOverAllocatedAtEnd(ArrayList<LigneDeTemps> lignesDeTemps) {
         int minutesDeTravailMaxParSemaine = this.employe.getMinutesSemaine();
         if(this.minutesAjoutes > minutesDeTravailMaxParSemaine) {
             int minutesARetirer = this.minutesAjoutes - minutesDeTravailMaxParSemaine;
