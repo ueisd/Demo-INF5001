@@ -66,10 +66,14 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
     }
 
     protected void generateBotomLineIfMinHeures(Employe emp, IntervalTempsZoneLocale interval) {
-        int minimumHeure = this.fillOptions.getFiilMinOnVoid();
-        if(minimumHeure == 0 || interval.isMinLastHourOf(minimumHeure)) {
+        if(ifIntervalHaveSuffisentLast(interval)) {
             this.ajouterLigneDeTemps(generateBotomLine(employe, interval));
         }
+    }
+
+    protected boolean ifIntervalHaveSuffisentLast(IntervalTempsZoneLocale interval) {
+        int minimumHeure = this.fillOptions.getFiilMinOnVoid();
+        return (minimumHeure == 0 || interval.isMinLastHourOf(minimumHeure));
     }
 
     protected LigneDeTemps generateBotomLine(Employe emp, IntervalTempsZoneLocale interval) {
