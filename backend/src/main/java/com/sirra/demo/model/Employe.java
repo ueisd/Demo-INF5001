@@ -116,6 +116,7 @@ public class Employe {
 
 
 
+
     public int getEmployeId() {
         return id;
     }
@@ -174,6 +175,10 @@ public class Employe {
 
     public int getHeureSemaine() {
         return heureSemaine;
+    }
+
+    public int getMinutesSemaine() {
+        return heureSemaine * 60;
     }
 
     public void setHeureSemaine(int heureSemaine) {

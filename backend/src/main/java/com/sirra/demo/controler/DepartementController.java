@@ -6,6 +6,7 @@ import com.sirra.demo.dao.DepartementDao;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.metier.GenerateurHoraire;
+import com.sirra.demo.metier.GenerateurLignesDeTemps;
 import com.sirra.demo.metier.GenerationFeuilleTmp;
 import com.sirra.demo.model.*;
 import io.swagger.annotations.Api;
@@ -73,6 +74,9 @@ public class DepartementController  {
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
         GenerateurHoraire gen = new GenerateurHoraire(dateLocaleDebut, dateLocaleFin, departement);
         ArrayList<HoraireOuvertureSemaine> horaireDep = gen.generate();
+        GenerateurLignesDeTemps generateur = new GenerateurLignesDeTemps(horaireDep, departement);
+        generateur.generate();
+
 
 
         ArrayList<LigneDeTemps> list = new ArrayList<>();
