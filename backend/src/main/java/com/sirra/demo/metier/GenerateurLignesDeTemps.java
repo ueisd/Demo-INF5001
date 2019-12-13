@@ -10,15 +10,18 @@ public class GenerateurLignesDeTemps {
     ArrayList<HoraireOuvertureSemaine> horaireSemaine;
     Departement departement;
     FillOptions fillOptions;
+    GenerateurLignesDeTempsEmpSem genLnEmpSem;
 
     public GenerateurLignesDeTemps(ArrayList<HoraireOuvertureSemaine> horaireSemaine, Departement departement) {
         this.horaireSemaine = horaireSemaine;
         this.departement = departement;
-        this.fillOptions = new FillOptions();
-
+        this.genLnEmpSem = new GenerateurLignesDeTempsEmpSemImp();
     }
 
-    public ArrayList<LigneDeTemps> generate() {
+
+
+    public ArrayList<LigneDeTemps> generate(FillOptions fillOptions) {
+        this.fillOptions = fillOptions;
         ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
         ListIterator<Employe> iterEmpl = departement.getEmployes().listIterator();
         while(iterEmpl.hasNext()){
@@ -26,19 +29,10 @@ public class GenerateurLignesDeTemps {
             ListIterator<HoraireOuvertureSemaine> iterSemaine = horaireSemaine.listIterator();
             while(iterSemaine.hasNext()){
                 HoraireOuvertureSemaine horaireSemaine = iterSemaine.next();
-                GenerateurLignesDeTempsEmpSem genLnEmpSem = new GenerateurLignesDeTempsEmpSem(employe, horaireSemaine);
-                lignesDeTemps.addAll(genLnEmpSem.generatePourEmpSem(this.fillOptions));
+                this.genLnEmpSem.initialiseRequest(employe, horaireSemaine);
+                lignesDeTemps.addAll(this.genLnEmpSem.generatePourEmpSem(this.fillOptions));
             }
 
-        }
-        return lignesDeTemps;
-    }
-
-    protected ArrayList<LigneDeTemps> generatePourEmpSem(Employe employe, HoraireOuvertureSemaine horaire) {
-        GenerateurLignesDeTempsEmpSem genEmpSem = new GenerateurLignesDeTempsEmpSem(employe, horaire);
-        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
-        if(fillOptions.ifIsStartBottom()) {
-            lignesDeTemps.addAll(genEmpSem.generateStartBottom(employe, horaire));
         }
         return lignesDeTemps;
     }

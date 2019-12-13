@@ -9,6 +9,7 @@ import com.sirra.demo.metier.GenerateurHoraire;
 import com.sirra.demo.metier.GenerateurLignesDeTemps;
 import com.sirra.demo.metier.GenerationFeuilleTmp;
 import com.sirra.demo.model.*;
+import com.sirra.demo.model.options.FillOptions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class DepartementController  {
         GenerateurHoraire gen = new GenerateurHoraire(dateLocaleDebut, dateLocaleFin, departement);
         ArrayList<HoraireOuvertureSemaine> horaireDep = gen.generate();
         GenerateurLignesDeTemps generateur = new GenerateurLignesDeTemps(horaireDep, departement);
-        generateur.generate();
+        generateur.generate(new FillOptions());
 
 
 
