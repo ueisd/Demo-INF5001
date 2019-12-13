@@ -5,11 +5,9 @@ import com.sirra.demo.configuration.AppConfig;
 import com.sirra.demo.dao.DepartementDao;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.FdtException;
+import com.sirra.demo.metier.GenerateurHoraire;
 import com.sirra.demo.metier.GenerationFeuilleTmp;
-import com.sirra.demo.model.Departement;
-import com.sirra.demo.model.Diplome;
-import com.sirra.demo.model.Employe;
-import com.sirra.demo.model.LigneDeTemps;
+import com.sirra.demo.model.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +66,14 @@ public class DepartementController  {
             throw new FdtException("Le departement avec l'id " + id + " est INTROUVABLE.");
         }
         if(sem < 0 ){
-            throw new  FdtException("Les semaines doivent etre superieur ou éhgales a 0");
+            throw new  FdtException("Les semaines doivent être supérieures ou égales à 0");
         }
 
         ZonedDateTime dateLocaleDebut =  Instant.parse(dateDebut).atZone(AppConfig.ZONE_ID);
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
+        GenerateurHoraire gen = new GenerateurHoraire(dateLocaleDebut, dateLocaleFin, departement);
+        ArrayList<HoraireOuvertureSemaine> horaireDep = gen.generate();
+
 
         ArrayList<LigneDeTemps> list = new ArrayList<>();
         list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;

@@ -30,13 +30,13 @@ export class Departement {
 
     public static getJoursSemaine() {
         return [
-            {formControlName: "dimancheOuvert", label: "Dimanche"},
             {formControlName: "lundiOuvert",    label: "Lundi"},
             {formControlName: "mardiOuvert",    label: "Mardi"},
             {formControlName: "mercrediOuvert", label: "Mercredi"},
             {formControlName: "jeudiOuvert",    label: "Jeudi"},
             {formControlName: "vendrediOuvert", label: "Vendredi"},
             {formControlName: "samediOuvert",   label: "Samedi"},
+            {formControlName: "dimancheOuvert", label: "Dimanche"},
         ];
     }
 }

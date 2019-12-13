@@ -113,13 +113,13 @@ export class DepartementFormComponent implements OnInit {
 
   getJoursOuvertsForm() : FormGroup {
     return this.fb.group({
-      dimancheOuvert  : [this.departement.journesOuvert[0], [Validators.required]],
-      lundiOuvert     : [this.departement.journesOuvert[1], [Validators.required]],
-      mardiOuvert     : [this.departement.journesOuvert[2], [Validators.required]],
-      mercrediOuvert  : [this.departement.journesOuvert[3], [Validators.required]],
-      jeudiOuvert     : [this.departement.journesOuvert[4], [Validators.required]],
-      vendrediOuvert  : [this.departement.journesOuvert[5], [Validators.required]],
-      samediOuvert    : [this.departement.journesOuvert[6], [Validators.required]],
+      lundiOuvert     : [this.departement.journesOuvert[0], [Validators.required]],
+      mardiOuvert     : [this.departement.journesOuvert[1], [Validators.required]],
+      mercrediOuvert  : [this.departement.journesOuvert[2], [Validators.required]],
+      jeudiOuvert     : [this.departement.journesOuvert[3], [Validators.required]],
+      vendrediOuvert  : [this.departement.journesOuvert[4], [Validators.required]],
+      samediOuvert    : [this.departement.journesOuvert[5], [Validators.required]],
+      dimancheOuvert  : [this.departement.journesOuvert[6], [Validators.required]],
     });
   }
 
