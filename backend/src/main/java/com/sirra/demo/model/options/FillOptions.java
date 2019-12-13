@@ -25,4 +25,12 @@ public class FillOptions {
     public void setFillMax(int fillMax) {
         this.fillMax = fillMax;
     }
+
+    public int getFiilMinOnVoid() {
+        return fiilMinOnVoid;
+    }
+
+    public void setFiilMinOnVoid(int fiilMinOnVoid) {
+        this.fiilMinOnVoid = fiilMinOnVoid;
+    }
 }

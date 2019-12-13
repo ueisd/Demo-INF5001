@@ -91,6 +91,7 @@ public class DepartementController  {
 
         FillOptions fillOpt = new FillOptions();
         fillOpt.setFillMax(8);
+        fillOpt.setFiilMinOnVoid(16);
         return this.generateurLignesDeTemps.generate(fillOpt);
     }
 

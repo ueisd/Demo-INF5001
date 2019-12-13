@@ -31,4 +31,8 @@ public class IntervalTempsZoneLocale {
     public long getDureeEnMinutes() {
         return ChronoUnit.MINUTES.between(this.dateDebut, this.dateFin);
     }
+
+    public boolean isMinLastHourOf(int heure) {
+        return ChronoUnit.HOURS.between(this.dateDebut, this.dateFin) >= heure;
+    }
 }
