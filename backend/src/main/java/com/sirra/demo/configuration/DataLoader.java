@@ -27,7 +27,7 @@ public class DataLoader implements ApplicationRunner {
 
         Departement departement1 = new Departement();
         departement1.setHeure_Ouverture(30840000);
-        departement1.setHeure_Fermeture(36480000);
+        departement1.setHeure_Fermeture(78300000);
         departement1.setJournesOuvert(new boolean[]{false, true, true, true, true, true, false});
         departement1 = departementDao.save(departement1);
 

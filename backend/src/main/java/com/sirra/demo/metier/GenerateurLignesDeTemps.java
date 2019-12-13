@@ -2,9 +2,6 @@ package com.sirra.demo.metier;
 
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
-
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -48,9 +45,18 @@ public class GenerateurLignesDeTemps {
         ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
         Iterator<IntervalTempsZoneLocale> iterLigne = horaire.getIntervales().listIterator();
         int minutesAjoutes = 0;
-        while(iterLigne.hasNext()) {
+        int minutesDeTravailMaxParSemaine = employe.getMinutesSemaine();
+        while(iterLigne.hasNext() && minutesAjoutes < minutesDeTravailMaxParSemaine) {
             IntervalTempsZoneLocale interval = iterLigne.next();
-            new LigneDeTemps(employe, interval.getDateDebut(), interval.getDateFin());
+            LigneDeTemps ligneDeTemps = new LigneDeTemps(employe, interval.getDateDebut(), interval.getDateFin());
+            lignesDeTemps.add(ligneDeTemps);
+            minutesAjoutes += ligneDeTemps.getDureeEnMinutes();
+        }
+        if(minutesAjoutes > minutesDeTravailMaxParSemaine) {
+            int minutesARetirer = minutesAjoutes - minutesDeTravailMaxParSemaine;
+            LigneDeTemps ligneDeTemps = lignesDeTemps.get(lignesDeTemps.size()-1);
+            ligneDeTemps.retirerMinutesFin(minutesARetirer);
+            minutesAjoutes -= minutesARetirer;
         }
         return lignesDeTemps;
     }

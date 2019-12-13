@@ -1,6 +1,7 @@
 package com.sirra.demo.model;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class LigneDeTemps {
@@ -37,5 +38,13 @@ public class LigneDeTemps {
 
     public void setDateSortie(ZonedDateTime dateSortie) {
         this.dateSortie = dateSortie;
+    }
+
+    public long getDureeEnMinutes() {
+        return ChronoUnit.MINUTES.between(this.dateEntre, this.dateSortie);
+    }
+
+    public void retirerMinutesFin(int minutes) {
+        this.dateSortie = ChronoUnit.MINUTES.addTo(this.dateSortie, -minutes);
     }
 }
