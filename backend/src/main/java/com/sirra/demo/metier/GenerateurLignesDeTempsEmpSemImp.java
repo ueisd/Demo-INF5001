@@ -5,13 +5,8 @@ import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.model.IntervalTempsZoneLocale;
 import com.sirra.demo.model.LigneDeTemps;
 import com.sirra.demo.model.options.FillOptions;
-import com.sirra.demo.model.options.FillVerticalOptions;
-
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTempsEmpSem {
     Employe employe;
@@ -45,7 +40,7 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         reinitLignesDeTemps();
         this.fillOptions = fillOptions;
         switch (this.fillOptions.getLateralOption()) {
-            case Fill_START: this.generateLinesFromStart();
+            case Fill_START: this.generateLinesFromStart(); break;
             default: break;
         }
         return (ArrayList<LigneDeTemps>) this.lignesDeTemps.clone();
@@ -56,59 +51,18 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         int minutesDeTravailMaxParSemaine = this.employe.getMinutesSemaine();
         while(iterLigne.hasNext() && this.minutesAjoutes < minutesDeTravailMaxParSemaine) {
             IntervalTempsZoneLocale interval = iterLigne.next();
-            switch(this.fillOptions.getVerticalOption()){
-                case Fill_BOTTOM: this.generateBotomLineIfMinHeures(interval);
-                case FILL_RANDOM: this.generateVRandomLineIfMinHeures(interval);
-                default: break;
+            if(ifIntervalHaveSuffisentLast(interval)) {
+                AligneurVerticalImp vAlignGen = new AligneurVerticalImp();
+                vAlignGen.initialiserRequete(this.employe, this.fillOptions);
+                this.ajouterLigneDeTemps(vAlignGen.generateVLine(interval));
             }
-
         }
         trimAtEndOverAllocatedAtEnd(lignesDeTemps);
-    }
-
-    protected void generateVRandomLineIfMinHeures(IntervalTempsZoneLocale interval) {
-        if(ifIntervalHaveSuffisentLast(interval)) {
-            this.ajouterLigneDeTemps(generateVRandomLine(interval));
-        }
-    }
-
-    protected LigneDeTemps generateVRandomLine(IntervalTempsZoneLocale interval) {
-        LigneDeTemps ligneDeTemps = new LigneDeTemps(this.employe, interval.getDateDebut(), interval.getDateFin());
-        ZonedDateTime dateFin = interval.getDateFin();
-        ZonedDateTime dateDebut = interval.getDateDebut();
-        ZonedDateTime dateMaxFill = ChronoUnit.HOURS.addTo(dateDebut, this.fillOptions.getFillMax());
-
-        if(dateDebut.isBefore(dateMaxFill) && dateMaxFill.isBefore(dateFin)) {
-            ligneDeTemps.setDateSortie(dateMaxFill);
-            int nbrSecPadding = (int) ChronoUnit.SECONDS.between(dateMaxFill, dateFin);
-            Random r = new Random();
-            int paddingMove = r.nextInt(nbrSecPadding);
-            ligneDeTemps.decalerADroiteDeSecondes(paddingMove);
-        }
-        return ligneDeTemps;
-    }
-
-    protected void generateBotomLineIfMinHeures(IntervalTempsZoneLocale interval) {
-        if(ifIntervalHaveSuffisentLast(interval)) {
-            this.ajouterLigneDeTemps(generateBotomLine(interval));
-        }
     }
 
     protected boolean ifIntervalHaveSuffisentLast(IntervalTempsZoneLocale interval) {
         int minimumHeure = this.fillOptions.getFiilMinOnVoid();
         return (minimumHeure == 0 || interval.isMinLastHourOf(minimumHeure));
-    }
-
-    protected LigneDeTemps generateBotomLine(IntervalTempsZoneLocale interval) {
-        LigneDeTemps ligneDeTemps = new LigneDeTemps(this.employe, interval.getDateDebut(), interval.getDateFin());
-        ZonedDateTime dateFin = interval.getDateFin();
-        ZonedDateTime dateDebut = interval.getDateDebut();
-        ZonedDateTime dateMaxFill = ChronoUnit.HOURS.addTo(dateDebut, this.fillOptions.getFillMax());
-
-        if(dateDebut.isBefore(dateMaxFill) && dateMaxFill.isBefore(dateFin)) {
-            ligneDeTemps.setDateSortie(dateMaxFill);
-        }
-        return ligneDeTemps;
     }
 
     protected void trimAtEndOverAllocatedAtEnd(ArrayList<LigneDeTemps> lignesDeTemps) {
