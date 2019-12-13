@@ -89,7 +89,9 @@ public class DepartementController  {
         /*ArrayList<LigneDeTemps> list = new ArrayList<>();
         list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;*/
 
-        return this.generateurLignesDeTemps.generate(new FillOptions());
+        FillOptions fillOpt = new FillOptions();
+        fillOpt.setFillMax(8);
+        return this.generateurLignesDeTemps.generate(fillOpt);
     }
 
     @GetMapping(value = "Departement")
