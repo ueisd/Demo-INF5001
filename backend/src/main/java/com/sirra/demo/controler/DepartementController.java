@@ -84,13 +84,12 @@ public class DepartementController  {
         ArrayList<HoraireOuvertureSemaine> horaireDep = this.generateurHoraire.generate();
 
         this.generateurLignesDeTemps.initialiserRequete(horaireDep, departement);
-        this.generateurLignesDeTemps.generate(new FillOptions());
 
+        // comdamnation de l'ancien générateur afin de démontrer la fonctionnalité
+        /*ArrayList<LigneDeTemps> list = new ArrayList<>();
+        list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;*/
 
-        ArrayList<LigneDeTemps> list = new ArrayList<>();
-        list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;
-
-        return list;
+        return this.generateurLignesDeTemps.generate(new FillOptions());
     }
 
     @GetMapping(value = "Departement")
