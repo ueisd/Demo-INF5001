@@ -5,10 +5,7 @@ import com.sirra.demo.configuration.AppConfig;
 import com.sirra.demo.dao.DepartementDao;
 import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.FdtException;
-import com.sirra.demo.metier.GenerateurHoraire;
-import com.sirra.demo.metier.GenerateurLignesDeTemps;
-import com.sirra.demo.metier.GenerateurLignesDeTempsImp;
-import com.sirra.demo.metier.GenerationFeuilleTmp;
+import com.sirra.demo.metier.*;
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
 import io.swagger.annotations.Api;
@@ -36,13 +33,16 @@ public class DepartementController  {
     EmployeDao employeDao;
 
     GenerateurLignesDeTemps generateurLignesDeTemps;
+    GenerateurHoraire generateurHoraire;
 
     public DepartementController() {
         this.generateurLignesDeTemps = new GenerateurLignesDeTempsImp();
+        this.generateurHoraire = new GenerateurHoraireImp();
     }
 
-    public DepartementController(GenerateurLignesDeTemps generateurLignesDeTemps) {
-        this.generateurLignesDeTemps = generateurLignesDeTemps;
+    public DepartementController(GenerateurLignesDeTemps genLigneTemps, GenerateurHoraire genHoraire) {
+        this.generateurLignesDeTemps = genLigneTemps;
+        this.generateurHoraire = genHoraire;
     }
 
     @PostMapping(value = "Departement")
@@ -79,8 +79,9 @@ public class DepartementController  {
 
         ZonedDateTime dateLocaleDebut =  Instant.parse(dateDebut).atZone(AppConfig.ZONE_ID);
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
-        GenerateurHoraire gen = new GenerateurHoraire(dateLocaleDebut, dateLocaleFin, departement);
-        ArrayList<HoraireOuvertureSemaine> horaireDep = gen.generate();
+
+        this.generateurHoraire.initialiserRequete(dateLocaleDebut, dateLocaleFin, departement);
+        ArrayList<HoraireOuvertureSemaine> horaireDep = this.generateurHoraire.generate();
 
         this.generateurLignesDeTemps.initialiserRequete(horaireDep, departement);
         this.generateurLignesDeTemps.generate(new FillOptions());
