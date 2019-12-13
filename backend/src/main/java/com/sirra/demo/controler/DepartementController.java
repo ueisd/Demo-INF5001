@@ -7,6 +7,7 @@ import com.sirra.demo.dao.EmployeDao;
 import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.metier.GenerateurHoraire;
 import com.sirra.demo.metier.GenerateurLignesDeTemps;
+import com.sirra.demo.metier.GenerateurLignesDeTempsImp;
 import com.sirra.demo.metier.GenerationFeuilleTmp;
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
@@ -22,7 +23,6 @@ import java.net.URI;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 @Api("Gestion pour departement")
 @RestController
@@ -34,6 +34,16 @@ public class DepartementController  {
 
     @Autowired
     EmployeDao employeDao;
+
+    GenerateurLignesDeTemps generateurLignesDeTemps;
+
+    public DepartementController() {
+        this.generateurLignesDeTemps = new GenerateurLignesDeTempsImp();
+    }
+
+    public DepartementController(GenerateurLignesDeTemps generateurLignesDeTemps) {
+        this.generateurLignesDeTemps = generateurLignesDeTemps;
+    }
 
     @PostMapping(value = "Departement")
     public ResponseEntity<Void> ajouterDepartement(@Valid @RequestBody Departement departement){
@@ -64,22 +74,16 @@ public class DepartementController  {
             throws FdtException {
 
         Departement departement = departementDao.findById(id);
-        if(departement==null) {
-            throw new FdtException("Le departement avec l'id " + id + " est INTROUVABLE.");
-        }
-        if(sem < 0 ){
-            throw new  FdtException("Les semaines doivent être supérieures ou égales à 0");
-        }
+        if(departement == null) throw new FdtException("Le departement avec l'id " + id + " est INTROUVABLE.");
+        if(sem < 0 ) throw new  FdtException("Les semaines doivent être supérieures ou égales à 0");
 
         ZonedDateTime dateLocaleDebut =  Instant.parse(dateDebut).atZone(AppConfig.ZONE_ID);
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
         GenerateurHoraire gen = new GenerateurHoraire(dateLocaleDebut, dateLocaleFin, departement);
         ArrayList<HoraireOuvertureSemaine> horaireDep = gen.generate();
 
-        GenerateurLignesDeTemps generateur = new GenerateurLignesDeTemps();
-        generateur.initialiserRequete(horaireDep, departement);
-        generateur.generate(new FillOptions());
-
+        this.generateurLignesDeTemps.initialiserRequete(horaireDep, departement);
+        this.generateurLignesDeTemps.generate(new FillOptions());
 
 
         ArrayList<LigneDeTemps> list = new ArrayList<>();
