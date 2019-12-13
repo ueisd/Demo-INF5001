@@ -26,7 +26,8 @@ public class GenerateurLignesDeTemps {
             ListIterator<HoraireOuvertureSemaine> iterSemaine = horaireSemaine.listIterator();
             while(iterSemaine.hasNext()){
                 HoraireOuvertureSemaine horaireSemaine = iterSemaine.next();
-                lignesDeTemps.addAll(generatePourEmpSem(employe, horaireSemaine));
+                GenerateurLignesDeTempsEmpSem genLnEmpSem = new GenerateurLignesDeTempsEmpSem(employe, horaireSemaine);
+                lignesDeTemps.addAll(genLnEmpSem.generatePourEmpSem(this.fillOptions));
             }
 
         }
@@ -34,29 +35,10 @@ public class GenerateurLignesDeTemps {
     }
 
     protected ArrayList<LigneDeTemps> generatePourEmpSem(Employe employe, HoraireOuvertureSemaine horaire) {
+        GenerateurLignesDeTempsEmpSem genEmpSem = new GenerateurLignesDeTempsEmpSem(employe, horaire);
         ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
         if(fillOptions.ifIsStartBottom()) {
-            lignesDeTemps.addAll(generateStartBottom(employe, horaire));
-        }
-        return lignesDeTemps;
-    }
-
-    protected ArrayList<LigneDeTemps> generateStartBottom(Employe employe, HoraireOuvertureSemaine horaire) {
-        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
-        Iterator<IntervalTempsZoneLocale> iterLigne = horaire.getIntervales().listIterator();
-        int minutesAjoutes = 0;
-        int minutesDeTravailMaxParSemaine = employe.getMinutesSemaine();
-        while(iterLigne.hasNext() && minutesAjoutes < minutesDeTravailMaxParSemaine) {
-            IntervalTempsZoneLocale interval = iterLigne.next();
-            LigneDeTemps ligneDeTemps = new LigneDeTemps(employe, interval.getDateDebut(), interval.getDateFin());
-            lignesDeTemps.add(ligneDeTemps);
-            minutesAjoutes += ligneDeTemps.getDureeEnMinutes();
-        }
-        if(minutesAjoutes > minutesDeTravailMaxParSemaine) {
-            int minutesARetirer = minutesAjoutes - minutesDeTravailMaxParSemaine;
-            LigneDeTemps ligneDeTemps = lignesDeTemps.get(lignesDeTemps.size()-1);
-            ligneDeTemps.retirerMinutesFin(minutesARetirer);
-            minutesAjoutes -= minutesARetirer;
+            lignesDeTemps.addAll(genEmpSem.generateStartBottom(employe, horaire));
         }
         return lignesDeTemps;
     }
