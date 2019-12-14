@@ -14,10 +14,17 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
     int minutesAjoutes;
     FillOptions fillOptions;
     ArrayList<LigneDeTemps> lignesDeTemps;
+    AligneurVertical generateurVertical;
 
 
     public GenerateurLignesDeTempsEmpSemImp() {
         this.minutesAjoutes = 0;
+        this.generateurVertical = new AligneurVerticalImp();
+    }
+
+    public GenerateurLignesDeTempsEmpSemImp(AligneurVertical aligneurVertical) {
+        this.minutesAjoutes = 0;
+        this.generateurVertical = aligneurVertical;
     }
 
     protected void reinitLignesDeTemps() {
@@ -52,9 +59,8 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         while(iterLigne.hasNext() && this.minutesAjoutes < minutesDeTravailMaxParSemaine) {
             IntervalTempsZoneLocale interval = iterLigne.next();
             if(ifIntervalHaveSuffisentLast(interval)) {
-                AligneurVerticalImp vAlignGen = new AligneurVerticalImp();
-                vAlignGen.initialiserRequete(this.employe, this.fillOptions);
-                this.ajouterLigneDeTemps(vAlignGen.generateVLine(interval));
+                generateurVertical.initialiserRequete(this.employe, this.fillOptions);
+                this.ajouterLigneDeTemps(generateurVertical.generateVLine(interval));
             }
         }
         trimAtEndOverAllocatedAtEnd(lignesDeTemps);

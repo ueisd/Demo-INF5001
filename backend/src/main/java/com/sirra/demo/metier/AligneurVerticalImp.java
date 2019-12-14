@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
-public class AligneurVerticalImp {
+public class AligneurVerticalImp implements AligneurVertical {
 
     Employe employe;
     FillOptions fillOptions;
@@ -36,7 +36,7 @@ public class AligneurVerticalImp {
         this.interval = interval;
     }
 
-    protected LigneDeTemps generateVLine(IntervalTempsZoneLocale interval) {
+    public LigneDeTemps generateVLine(IntervalTempsZoneLocale interval) {
         reinitInferedDataForGenerate(interval);
         if(dateDebut.isBefore(dateMaxFill) && dateMaxFill.isBefore(dateFin)) {
             switch(this.fillOptions.getVerticalOption()) {
