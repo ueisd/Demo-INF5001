@@ -18,7 +18,7 @@
     <groupId>sirra.web</groupId>
     <artifactId>sirra-entreprise</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>AppName</name>
+    <name>Sirra app</name>
     <description>Générateur d'horaire automatiques</description>
 
     <properties>
