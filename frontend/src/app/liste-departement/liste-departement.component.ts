@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { DepartementsService } from '../services/departements.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-liste-departement',
@@ -25,8 +26,10 @@ export class ListeDepartementComponent implements OnInit {
   departementsSubscription: Subscription;
 
   constructor(private departementService: DepartementsService,
-    private router: Router) { 
-
+    private router: Router, title: Title) { 
+      router.events.subscribe((event)=>{ //fires on every URL change
+        title.setTitle("Sirra liste des départements");
+     });
   }
 
   ngOnInit() {
