@@ -9,10 +9,10 @@ Logiciel de gestion d'employés pour une entreprise de formation. Elle comprend 
 ##### Prérequises:
 * Java
 * Maven
-* une base de donnée posgresql
+* Base de donnée posgresql ex: [pgAdmin](https://www.pgadmin.org/download/)
 ##### Ajoutés par le programmes:
-* angular
-* npm
+* Angular
+* Npm
 #### Configuration des accès à la base de donnée: 
 Votre base de donnée doit avoir:
  * un `nomBaseDeDonnee` ex: sirraDB
@@ -53,5 +53,11 @@ Certains ide permettent d'installer sans que l'utilisateur voit l'utilisation de
 * Java
 * angular
 
+## exemple d'IDE
+* [IntelliJ](https://www.jetbrains.com/fr-fr/idea/) pour le backend et l'application root
+* [Visual Studio Code](https://code.visualstudio.com/) pour le frontend
+* [Git for Windows](https://gitforwindows.org/) pour certaines opérations
+
 ## Version
 1.0.0
+
