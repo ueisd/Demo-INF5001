@@ -1,5 +1,6 @@
 # Projet de sirraWEb
-sur https://github.com/pierrelucueisd/Demo-INF5001
+* [Dépôt central](https://github.com/pierrelucueisd/Demo-INF5001) sur GitHub
+* [Demo](https://inf5001-demo.herokuapp.com/) sur Heroku.
 ## Description
 Logiciel de gestion d'employés pour une entreprise de formation. Elle comprend un module 
  de générer des horaires de façon semi-automatisée.
