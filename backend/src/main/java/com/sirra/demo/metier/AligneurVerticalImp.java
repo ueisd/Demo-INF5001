@@ -40,8 +40,9 @@ public class AligneurVerticalImp {
         reinitInferedDataForGenerate(interval);
         if(dateDebut.isBefore(dateMaxFill) && dateMaxFill.isBefore(dateFin)) {
             switch(this.fillOptions.getVerticalOption()) {
-                case Fill_BOTTOM: generateVBottomLine(); break;
-                case FILL_RANDOM: generateVRandomLine(); break;
+                case Fill_BOTTOM:   generateVBottomLine(); break;
+                case FILL_RANDOM:   generateVRandomLine(); break;
+                case Fill_TOP:      generateVTopLine(); break;
                 default: break;
             }
         }
@@ -58,5 +59,10 @@ public class AligneurVerticalImp {
 
     protected void generateVBottomLine() {
         ligneDeTemps.setDateSortie(dateMaxFill);
+    }
+
+    protected void generateVTopLine() {
+        ZonedDateTime dateMinFill = ChronoUnit.HOURS.addTo(dateFin, -this.fillOptions.getFillMax());
+        ligneDeTemps.setDateEntre(dateMinFill);
     }
 }

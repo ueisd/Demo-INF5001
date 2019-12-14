@@ -92,7 +92,7 @@ public class DepartementController  {
 
         FillOptions fillOpt = new FillOptions();
         fillOpt.setFillMax(8);
-        fillOpt.setVerticalOption(FillVerticalOptions.FILL_RANDOM);
+        fillOpt.setVerticalOption(FillVerticalOptions.Fill_TOP);
         fillOpt.setFiilMinOnVoid(12);
         return this.generateurLignesDeTemps.generate(fillOpt);
     }
