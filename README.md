@@ -1,10 +1,8 @@
 # Projet de sirraWEb
-
+sur https://github.com/pierrelucueisd/Demo-INF5001
 ## Description
 Logiciel de gestion d'employés pour une entreprise de formation. Elle comprend un module 
  de générer des horaires de façon semi-automatisée.
-
-
 
 ## Installation
 #### Dépendances: 
@@ -41,6 +39,10 @@ mvn clean
 mvn package
 ```
 Certains ide permettent d'installer sans que l'utilisateur voit l'utilisation de ces commandes.
+
+##communauté
+### Tutoriels
+[![Nos tutoriels](https://i.imgur.com/vKb2F1B.png)](https://www.youtube.com/playlist?list=PLGN2Dvm8fzLdt1HE0D9ajoTfsN_DwecXf)
 
 ## Technologies
 * springBoot
