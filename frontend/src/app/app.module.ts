@@ -37,13 +37,14 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {MatSortModule} from '@angular/material/sort';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';  
+import { Title } from "@angular/platform-browser";
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
 
 
 const appRoutes: Routes = [
-  { path: 'individus', canActivate: [AuthGuard], component: ListeIndividusComponent },
+  { path: 'individus', canActivate: [AuthGuard], component: ListeIndividusComponent, },
   { path: 'departements', canActivate: [AuthGuard], component: ListeDepartementComponent},
   { path: 'new/departement', canActivate: [AuthGuard], component: DepartementFormComponent },
   { path: 'edit/departement/:id', canActivate: [AuthGuard], component: DepartementFormComponent },
@@ -88,11 +89,12 @@ const appRoutes: Routes = [
     MatTableModule,
     MatSortModule,
     OwlDateTimeModule, 
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
   ],
   providers: [
     AuthService,
     AuthGuard,
+    Title,
     {provide: localeFr, useValue: 'fr' }
   ],
   bootstrap: [AppComponent]

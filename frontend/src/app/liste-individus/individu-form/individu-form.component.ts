@@ -5,6 +5,7 @@ import { EmployesServiceService } from 'src/app/services/employes.service.servic
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from 'src/app/models/Contact.model';
 import { Employe } from 'src/app/models/Employe.model';
+import { Title } from '@angular/platform-browser';
 
 export interface StatutActif {
   value: boolean;
@@ -34,7 +35,10 @@ export class IndividuFormComponent implements OnInit {
   
 
   constructor(private fb: FormBuilder,private employeService: EmployesServiceService,
-    private router: Router, private activatedRoute: ActivatedRoute) {
+    private router: Router, private activatedRoute: ActivatedRoute, title: Title) {
+      router.events.subscribe((event)=>{ //fires on every URL change
+        title.setTitle("Sirra ajouter ou modifier un individu");
+     });
       this.individu = new Individu("", "", null, [], "");
   }
 

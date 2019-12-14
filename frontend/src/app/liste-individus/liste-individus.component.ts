@@ -3,6 +3,7 @@ import { EmployesServiceService } from '../services/employes.service.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-liste-individus',
@@ -24,8 +25,10 @@ export class ListeIndividusComponent implements OnInit {
   individusSubscription: Subscription;
 
   constructor(private employeService: EmployesServiceService,
-    private router: Router) { 
-
+    private router: Router, title:Title) { 
+      router.events.subscribe((event)=>{ //fires on every URL change
+        title.setTitle("Sirra liste des individus");
+     });
   }
 
   ngOnInit() {
