@@ -101,7 +101,8 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         Validators.required
       ])],
       duree: [0, Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.minLength(1)
       ])]
     })
   }
