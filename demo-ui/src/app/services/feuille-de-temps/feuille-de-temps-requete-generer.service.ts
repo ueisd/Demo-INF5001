@@ -24,9 +24,11 @@ export class FeuilleDeTempsRequeteGenererService {
     this.ligneDeTempsGenerationSubject.next(this.lignesDeTempsGeneration.slice());
   }
 
-  getLigneDeTempsGenerationFromServer(idDep: Number, nbrSemaines : Number, dateDebut:string, dateFin: string) {
+  getLigneDeTempsGenerationFromServer(idDep: Number, nbrSemaines : Number, dateDebut:string, dateFin: string,
+    setFillMax: Number, setFiilMinOnVoid: Number, vOpt: Number) {
+      let optGen = "/setFillMax/" + setFillMax + "/setFiilMinOnVoid/" + setFiilMinOnVoid + "/vOpt/" + vOpt;
     this.httpClient
-        .get<any[]>(this.getRequeteUrl + idDep + "/Semaine/" + nbrSemaines + "/debut/" + dateDebut + "/dateFin/" + dateFin)
+        .get<any[]>(this.getRequeteUrl + idDep + "/Semaine/" + nbrSemaines + "/debut/" + dateDebut + "/dateFin/" + dateFin + optGen)
         .subscribe(
             (response) => {
               this.lignesDeTempsGeneration = response;

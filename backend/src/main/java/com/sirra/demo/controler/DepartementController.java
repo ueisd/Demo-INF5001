@@ -69,10 +69,16 @@ public class DepartementController  {
     }
 
     @ApiOperation(value = "Genere une Feuille de temps avec Id et NbrSemaine")
-    @GetMapping(value = "Departement/{id}/Semaine/{sem}/debut/{dateDebut}/dateFin/{dateFin}")
+    @GetMapping(value = "Departement/{id}/Semaine/{sem}/debut/{dateDebut}/dateFin/{dateFin}"
+    + "/setFillMax/{setFillMax}/setFiilMinOnVoid/{setFiilMinOnVoid}/vOpt/{vOpt}")
     public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem,
-                                              @PathVariable String dateDebut, @PathVariable String dateFin)
-            throws FdtException {
+                                              @PathVariable String dateDebut, @PathVariable String dateFin,
+                                              @PathVariable int setFillMax, @PathVariable int setFiilMinOnVoid,
+                                              @PathVariable int vOpt) throws FdtException {
+        FillOptions fillOpt = new FillOptions();
+        fillOpt.setFillMax(setFillMax);
+        fillOpt.setVerticalOption(FillVerticalOptions.values()[vOpt]);
+        fillOpt.setFiilMinOnVoid(setFiilMinOnVoid);
 
         Departement departement = departementDao.findById(id);
         if(departement == null) throw new FdtException("Le departement avec l'id " + id + " est INTROUVABLE.");
@@ -90,10 +96,6 @@ public class DepartementController  {
         /*ArrayList<LigneDeTemps> list = new ArrayList<>();
         list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;*/
 
-        FillOptions fillOpt = new FillOptions();
-        fillOpt.setFillMax(8);
-        fillOpt.setVerticalOption(FillVerticalOptions.Fill_TOP);
-        fillOpt.setFiilMinOnVoid(12);
         return this.generateurLignesDeTemps.generate(fillOpt);
     }
 

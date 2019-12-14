@@ -19,6 +19,11 @@ export class LigneTempsAfficher {
   constructor() {}
 }
 
+export interface EnumOption {
+  value: number;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-feuille-de-temps-dep',
   templateUrl: './feuille-de-temps-dep.component.html',
@@ -26,6 +31,12 @@ export class LigneTempsAfficher {
 })
 export class FeuilleDeTempsDepComponent implements OnInit {
 
+  public alignementVOpt: EnumOption[] = [
+    {value: 0, viewValue: 'Fill_BOTTOM'},
+    {value: 1, viewValue: 'Fill_TOP'},
+    {value: 2, viewValue: 'FILL_MIDDLE'},
+    {value: 3, viewValue: 'FILL_RANDOM'}
+  ];
 
   public dateTimeRange1: Date;
   public dateTimeRange2: Date;
@@ -76,6 +87,19 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         Validators.min(0), 
         Validators.max(14), 
       ])],
+      setFillMax: [0, Validators.compose([
+        Validators.required, 
+        Validators.min(0), 
+        Validators.max(24), 
+      ])],
+      setFiilMinOnVoid: [0, Validators.compose([
+        Validators.required, 
+        Validators.min(0), 
+        Validators.max(24), 
+      ])],
+      vOpt: [0, Validators.compose([
+        Validators.required
+      ])],
       duree: [0, Validators.compose([
         Validators.required
       ])]
@@ -95,7 +119,11 @@ export class FeuilleDeTempsDepComponent implements OnInit {
     let nbrSem = this.requeteForm.controls.nbrSemaines.value;
     let dateDebut = new Date(this.requeteForm.controls.duree.value[0]);
     let dateFin = new Date(this.requeteForm.controls.duree.value[1]);
-    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem, dateDebut.toISOString(), dateFin.toISOString());
+    let setFillMax = this.requeteForm.controls.setFillMax.value;
+    let setFiilMinOnVoid = this.requeteForm.controls.setFiilMinOnVoid.value;
+    let vOpt = this.requeteForm.controls.vOpt.value;
+    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem, dateDebut.toISOString(), dateFin.toISOString(), 
+    setFillMax, setFiilMinOnVoid, vOpt);
   }
 
   filterFeuillesDeTempsPropety(feuillTps: LigneDeTemps[]): LigneDeTemps[]{

@@ -6,7 +6,7 @@
     <form [formGroup]="requeteForm" (ngSubmit)="onSendRequest()">   
 
         <mat-form-field class="full-width">
-            <input matInput type="text" placeholder="Début de le période"
+            <input matInput type="text" placeholder="Générer pour la période"
                     formControlName="duree"
                     required
                     [selectMode]="'range'"
@@ -14,6 +14,35 @@
                     [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
             <owl-date-time #dtRange2></owl-date-time>
         </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Generation Verticale</mat-label>
+            <mat-select formControlName="vOpt">
+              <mat-option *ngFor="let opt of alignementVOpt" [value]="opt.value">
+                {{opt.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input matInput type="number" placeholder="Nombre d'heures max par jours" 
+            formControlName="setFillMax" required>
+            <mat-error *ngFor="let validation of validationRequeteMessages.setFillMax">
+                <mat-error class="error-message" *ngIf="requeteForm.get('setFillMax').hasError(validation.type) && 
+                (requeteForm.get('setFillMax').dirty || requeteForm.get('setFillMax').touched)">{{validation.message}}</mat-error>
+            </mat-error>   
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input matInput type="number" placeholder="Nombre d'heures minimale pour génerer" 
+            formControlName="setFiilMinOnVoid" required>
+            <mat-error *ngFor="let validation of validationRequeteMessages.setFillMax">
+                <mat-error class="error-message" *ngIf="requeteForm.get('setFiilMinOnVoid').hasError(validation.type) && 
+                (requeteForm.get('setFiilMinOnVoid').dirty || requeteForm.get('setFiilMinOnVoid').touched)">{{validation.message}}</mat-error>
+            </mat-error>   
+        </mat-form-field>
+
+        
 
         <mat-form-field class="full-width">
             <input matInput type="number" placeholder="Nombre de semaines" 
