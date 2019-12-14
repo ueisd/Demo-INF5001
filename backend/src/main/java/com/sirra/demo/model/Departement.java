@@ -30,7 +30,7 @@ public class Departement {
     private Integer heure_Fermeture;
 
     public Integer getHeure_Ouverture() {
-        return heure_Ouverture;
+        return this.heure_Ouverture;
     }
 
     public void setHeure_Ouverture(Integer heure_Ouverture) {
@@ -38,7 +38,7 @@ public class Departement {
     }
 
     public Integer getHeure_Fermeture() {
-        return heure_Fermeture;
+        return this.heure_Fermeture;
     }
 
     public void setHeure_Fermeture(Integer heure_Fermeture) {

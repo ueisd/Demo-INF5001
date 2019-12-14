@@ -2,6 +2,7 @@ package com.sirra.demo.model;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class LigneDeTemps {
 
@@ -50,5 +51,20 @@ public class LigneDeTemps {
     public void decalerADroiteDeSecondes(int secondes) {
         this.dateEntre = ChronoUnit.SECONDS.addTo(this.dateEntre, secondes);
         this.dateSortie = ChronoUnit.SECONDS.addTo(this.dateSortie, secondes);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LigneDeTemps)) return false;
+        LigneDeTemps that = (LigneDeTemps) o;
+        return Objects.equals(getDateEntre(), that.getDateEntre()) &&
+                Objects.equals(getDateSortie(), that.getDateSortie()) &&
+                Objects.equals(getEmploye().getId(), that.getEmploye().getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDateEntre(), getDateSortie());
     }
 }

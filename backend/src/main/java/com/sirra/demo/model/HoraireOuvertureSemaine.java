@@ -2,6 +2,7 @@ package com.sirra.demo.model;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HoraireOuvertureSemaine {
     private ArrayList<IntervalTempsZoneLocale> intervales;
@@ -24,5 +25,19 @@ public class HoraireOuvertureSemaine {
 
     public int getDureeTotaleEnMinutes() {
         return dureeTotaleEnMinutes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof HoraireOuvertureSemaine)) return false;
+        HoraireOuvertureSemaine that = (HoraireOuvertureSemaine) o;
+        return getDureeTotaleEnMinutes() == that.getDureeTotaleEnMinutes() &&
+                getIntervales().equals(that.getIntervales());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIntervales(), getDureeTotaleEnMinutes());
     }
 }

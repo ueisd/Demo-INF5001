@@ -85,14 +85,14 @@ public class GenerateurHoraireImp implements GenerateurHoraire {
     }
 
 
-    protected HoraireOuvertureSemaine genererHoraireSemaineDep(ZonedDateTime jourSemaine, Departement dep) {
+    protected static HoraireOuvertureSemaine genererHoraireSemaineDep(ZonedDateTime jourSemaine, Departement dep) {
         HoraireOuvertureSemaine horaire = new HoraireOuvertureSemaine();
         ZonedDateTime dateSemaineProchaine = jourSemaine.plusWeeks(1);
         boolean[] joursOuverts = dep.getJournesOuvert();
         int i = 0;
         for (ZonedDateTime date = jourSemaine; date.isBefore(dateSemaineProchaine); date = date.plusDays(1)) {
-            ZonedDateTime dateOuverture = date.plus(departement.getHeure_Ouverture(), ChronoUnit.MILLIS);
-            ZonedDateTime dateFermeture = date.plus(departement.getHeure_Fermeture(), ChronoUnit.MILLIS);
+            ZonedDateTime dateOuverture = date.plus(dep.getHeure_Ouverture(), ChronoUnit.MILLIS);
+            ZonedDateTime dateFermeture = date.plus(dep.getHeure_Fermeture(), ChronoUnit.MILLIS);
             if(joursOuverts[i]) horaire.addInterval(dateOuverture, dateFermeture);
             i++;
         }
