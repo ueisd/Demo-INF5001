@@ -55,23 +55,13 @@
           </configuration>
         </execution>
         <execution>
-          <id>cdk</id>
-          <goals>
-            <goal>npm</goal>
-          </goals>
-          <phase>generate-resources</phase>
-          <configuration>
-            <arguments>i @angular/cdk</arguments>
-          </configuration>
-        </execution>
-        <execution>
         <id>ngdateTime</id>
         <goals>
           <goal>npm</goal>
         </goals>
         <phase>generate-resources</phase>
         <configuration>
-          <arguments>install ng-pick-datetime --save</arguments>
+          <arguments>install @busacca/ng-pick-datetime --save</arguments>
         </configuration>
       </execution>
         <execution>
