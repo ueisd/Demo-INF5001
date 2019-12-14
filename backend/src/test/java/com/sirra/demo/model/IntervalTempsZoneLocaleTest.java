@@ -4,15 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LigneDeTempsTest {
+class IntervalTempsZoneLocaleTest {
 
     @Test
-    void retirerMinutesFin() {
-
+    void getDureeEnMinutes() {
     }
 
     @Test
-    void decalerADroiteDeSecondes() {
-
+    void isMinLastHourOf() {
     }
 }
