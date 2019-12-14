@@ -82,11 +82,6 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   initForm() {
     this.requeteForm = this.fb.group({
       idDep: [0],
-      nbrSemaines: [0, Validators.compose([
-        Validators.required, 
-        Validators.min(0), 
-        Validators.max(14), 
-      ])],
       setFillMax: [0, Validators.compose([
         Validators.required, 
         Validators.min(0), 
@@ -117,13 +112,12 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       }
     );
     let idDep = this.requeteForm.controls.idDep.value;
-    let nbrSem = this.requeteForm.controls.nbrSemaines.value;
     let dateDebut = new Date(this.requeteForm.controls.duree.value[0]);
     let dateFin = new Date(this.requeteForm.controls.duree.value[1]);
     let setFillMax = this.requeteForm.controls.setFillMax.value;
     let setFiilMinOnVoid = this.requeteForm.controls.setFiilMinOnVoid.value;
     let vOpt = this.requeteForm.controls.vOpt.value;
-    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, nbrSem, dateDebut.toISOString(), dateFin.toISOString(), 
+    this.genFeuilleTempsService.getLigneDeTempsGenerationFromServer(idDep, dateDebut.toISOString(), dateFin.toISOString(), 
     setFillMax, setFiilMinOnVoid, vOpt);
   }
 

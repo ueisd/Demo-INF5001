@@ -42,17 +42,6 @@
             </mat-error>   
         </mat-form-field>
 
-        
-
-        <mat-form-field class="full-width">
-            <input matInput type="number" placeholder="Nombre de semaines" 
-            formControlName="nbrSemaines" required>
-            <mat-error *ngFor="let validation of validationRequeteMessages.nbrSemaines">
-                <mat-error class="error-message" *ngIf="requeteForm.get('nbrSemaines').hasError(validation.type) && 
-                (requeteForm.get('nbrSemaines').dirty || requeteForm.get('nbrSemaines').touched)">{{validation.message}}</mat-error>
-            </mat-error>   
-        </mat-form-field>
-
         <div class="btn-toolbar">
             <button class="btn btn-danger" type="submit" (click)="onAnnuler()">Retour </button>
             <button class="btn btn-success" [disabled]="requeteForm.invalid" type="submit">Envoyer requête </button>

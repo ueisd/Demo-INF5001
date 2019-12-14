@@ -69,9 +69,9 @@ public class DepartementController  {
     }
 
     @ApiOperation(value = "Genere une Feuille de temps avec Id et NbrSemaine")
-    @GetMapping(value = "Departement/{id}/Semaine/{sem}/debut/{dateDebut}/dateFin/{dateFin}"
+    @GetMapping(value = "Departement/{id}/debut/{dateDebut}/dateFin/{dateFin}"
     + "/setFillMax/{setFillMax}/setFiilMinOnVoid/{setFiilMinOnVoid}/vOpt/{vOpt}")
-    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id, @PathVariable int sem,
+    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int id,
                                               @PathVariable String dateDebut, @PathVariable String dateFin,
                                               @PathVariable int setFillMax, @PathVariable int setFiilMinOnVoid,
                                               @PathVariable int vOpt) throws FdtException {
@@ -82,7 +82,6 @@ public class DepartementController  {
 
         Departement departement = departementDao.findById(id);
         if(departement == null) throw new FdtException("Le departement avec l'id " + id + " est INTROUVABLE.");
-        if(sem < 0 ) throw new  FdtException("Les semaines doivent être supérieures ou égales à 0");
 
         ZonedDateTime dateLocaleDebut =  Instant.parse(dateDebut).atZone(AppConfig.ZONE_ID);
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
