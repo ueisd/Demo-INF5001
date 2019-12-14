@@ -36,7 +36,7 @@ import { FeuilleDeTempsDepComponent } from './feuille-de-temps/departement/feuil
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {MatSortModule} from '@angular/material/sort';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';  
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';  
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');

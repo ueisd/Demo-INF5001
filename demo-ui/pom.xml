@@ -55,15 +55,25 @@
           </configuration>
         </execution>
         <execution>
-        <id>ngdateTime</id>
-        <goals>
-          <goal>npm</goal>
-        </goals>
-        <phase>generate-resources</phase>
-        <configuration>
-          <arguments>install @busacca/ng-pick-datetime --save</arguments>
-        </configuration>
-      </execution>
+          <id>moment</id>
+          <goals>
+            <goal>npm</goal>
+          </goals>
+          <phase>generate-resources</phase>
+          <configuration>
+            <arguments>i @types/moment --save</arguments>
+          </configuration>
+        </execution>
+        <execution>
+          <id>ngdateTime</id>
+          <goals>
+            <goal>npm</goal>
+          </goals>
+          <phase>generate-resources</phase>
+          <configuration>
+            <arguments>install @busacca/ng-pick-datetime --save</arguments>
+          </configuration>
+        </execution>
         <execution>
           <id>sprintf</id>
           <goals>
