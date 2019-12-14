@@ -42,7 +42,9 @@ Certains ide permettent d'installer sans que l'utilisateur voit l'utilisation de
 
 ##communauté
 ### Tutoriels
-[![Nos tutoriels](https://i.imgur.com/vKb2F1B.png)](https://www.youtube.com/playlist?list=PLGN2Dvm8fzLdt1HE0D9ajoTfsN_DwecXf)
+<a href="https://www.youtube.com/playlist?list=PLGN2Dvm8fzLdt1HE0D9ajoTfsN_DwecXf" alt="Nos tutoriels" target="_blank">
+<img src="https://i.imgur.com/vKb2F1B.png" />
+</a>
 
 ## Technologies
 * springBoot
