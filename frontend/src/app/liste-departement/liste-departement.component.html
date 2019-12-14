@@ -1,14 +1,14 @@
 <div class="panel-group col-sm-8 col-sm-offset-2">
     <div class="row">
-        <div class="panel-group col-sm-6" *ngIf="doisPaginer">
+        <div  class="panel-group col-sm-3">
+            <button class="btn btn-success" (click)="onAjouterDepartement()"> + Ajouter départmeent</button>
+        </div>
+        <div class="panel-group col-sm-offset-2 col-sm-7" *ngIf="doisPaginer">
             <mat-paginator [length]="length"
                 [pageSize]="pageSize"
                 [pageSizeOptions]="pageSizeOptions"
                 (page)="pageEvent = getServerData($event)">
             </mat-paginator>
-        </div>
-        <div  class="col-sm-offset-4 panel-group col-sm-2">
-            <button class="btn btn-success" (click)="onAjouterDepartement()"> + Ajouter départmeent</button>
         </div>
     </div>
     <div class="row">
