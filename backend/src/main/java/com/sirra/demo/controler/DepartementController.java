@@ -91,10 +91,6 @@ public class DepartementController  {
 
         this.generateurLignesDeTemps.initialiserRequete(horaireDep, departement);
 
-        // comdamnation de l'ancien générateur afin de démontrer la fonctionnalité
-        /*ArrayList<LigneDeTemps> list = new ArrayList<>();
-        list = GenerationFeuilleTmp.declencherGeneartionAvecControleur(departement,sem) ;*/
-
         return this.generateurLignesDeTemps.generate(fillOpt);
     }
 
