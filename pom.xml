@@ -16,10 +16,10 @@
     </parent>
 
     <groupId>sirra.web</groupId>
-    <artifactId>tutorial-parent</artifactId>
+    <artifactId>sirra-entreprise</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>AppName</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Générateur d'horaire automatiques</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

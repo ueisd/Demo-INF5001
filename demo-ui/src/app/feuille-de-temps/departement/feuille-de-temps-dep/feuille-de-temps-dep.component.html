@@ -47,8 +47,6 @@
             <button class="btn btn-success" [disabled]="requeteForm.invalid" type="submit">Envoyer requête </button>
         </div>
     </form>
-    <h3>Requête contenu</h3>
-    <pre>{{requeteForm.value | json}}</pre>
 
     <div class="row">
         <mat-form-field>
@@ -87,13 +85,6 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-
-
-    <h3>Retour de la requête</h3>
-    <pre>{{lignesDeTempsSuggestion | json}}</pre>
-    </div>
-          
-          
 
 </div>
 

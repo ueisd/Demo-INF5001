@@ -34,7 +34,6 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   public alignementVOpt: EnumOption[] = [
     {value: 0, viewValue: 'Fill_BOTTOM'},
     {value: 1, viewValue: 'Fill_TOP'},
-    {value: 2, viewValue: 'FILL_MIDDLE'},
     {value: 3, viewValue: 'FILL_RANDOM'}
   ];
 
