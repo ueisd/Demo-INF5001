@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -130,6 +129,21 @@ class GenerateurHoraireImpTest {
         generateur.initialiserRequete(dateDebut, dateDebut, fakeDep);
 
         ArrayList<HoraireOuvertureSemaine> horairesRes = generateur.trimDebut(horairesSemaines);
+        assertEquals(horaireExpect, horairesRes);
+    }
+
+    @Test
+    void generate() {
+        ArrayList<HoraireOuvertureSemaine> horaireExpect = MokcHorairesOuverture.getLsHoraireGenerate();
+        ArrayList<HoraireOuvertureSemaine> horairesSemaines = MokcHorairesOuverture.getListeHoraireSemainesCompletes();
+        GenerateurHoraireImp generateur = new GenerateurHoraireImp();
+        Departement fakeDep = MockDepartement.getDepartementOuvert();
+        ZonedDateTime dateFin = ZonedDateTime.parse("2019-12-12T14:41-05:00[UTC-05:00]");
+        ZonedDateTime dateDebut = ZonedDateTime.parse("2019-12-06T14:41-05:00[UTC-05:00]");
+
+        generateur.initialiserRequete(dateDebut, dateFin, fakeDep);
+
+        ArrayList<HoraireOuvertureSemaine> horairesRes = generateur.generate();
         assertEquals(horaireExpect, horairesRes);
     }
 }

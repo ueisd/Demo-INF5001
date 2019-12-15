@@ -121,6 +121,13 @@ public class MokcHorairesOuverture {
         return listeHoraires;
     }
 
+    public static ArrayList<HoraireOuvertureSemaine> getLsHoraireGenerate() {
+        ArrayList<HoraireOuvertureSemaine> listeHoraires = new ArrayList<HoraireOuvertureSemaine>();
+        listeHoraires.add(getHoraireTrimDebut());
+        listeHoraires.add(getHoraireTrimFin());
+        return listeHoraires;
+    }
+
 
     public static ArrayList<IntervalTempsZoneLocale> getIntervalTrimDebutIterator() {
         ArrayList<IntervalTempsZoneLocale> intervales = new ArrayList<IntervalTempsZoneLocale>();
