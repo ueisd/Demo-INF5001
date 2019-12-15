@@ -2,6 +2,7 @@ package com.sirra.demo.metier;
 
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.HoraireOuvertureSemaine;
+import com.sirra.demo.model.IntervalTempsZoneLocale;
 import com.sirra.demo.ressources.FakeDepartement;
 import com.sirra.demo.ressources.MockDepartement;
 import com.sirra.demo.ressources.MokcHorairesOuverture;
@@ -9,6 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,5 +73,20 @@ class GenerateurHoraireImpTest {
         HoraireOuvertureSemaine horaireExpected = MokcHorairesOuverture.getHoraireComplet();
         HoraireOuvertureSemaine horaireResultat = GenerateurHoraireImp.genererHoraireSemaineDep(dateDebut, fakeDep);
         assertEquals(horaireExpected, horaireResultat);
+    }
+
+    @Test
+    void trimDebutOnIterator() {
+        ArrayList<IntervalTempsZoneLocale> intervalExpected = MokcHorairesOuverture.getIntervalTrimDebutIterator();
+        GenerateurHoraireImp generateur = new GenerateurHoraireImp();
+        Departement fakeDep = MockDepartement.getDepartementOuvert();
+        ZonedDateTime dateDebut = ZonedDateTime.parse("2019-12-05T14:41-05:00[UTC-05:00]");
+
+        generateur.initialiserRequete(dateDebut, dateDebut, fakeDep);
+        ArrayList<IntervalTempsZoneLocale> intervalRes = MokcHorairesOuverture.getHoraireComplet().getIntervales();
+        ListIterator<IntervalTempsZoneLocale> iter = intervalRes.listIterator();
+        generateur.trimDebutOnIterator(iter);
+
+        assertEquals(intervalExpected, intervalRes);
     }
 }
