@@ -115,11 +115,21 @@ class GenerateurHoraireImpTest {
 
         generateur.initialiserRequete(dateFin, dateFin, fakeDep);
 
-
         ArrayList<HoraireOuvertureSemaine> horairesRes = generateur.trimFin(horairesSemaines);
-        assertEquals(MokcHorairesOuverture.getListeHoraireSemainesCompletes(), MokcHorairesOuverture.getListeHoraireSemainesCompletes());
-        int test = 1;
+        assertEquals(horaireExpect, horairesRes);
+    }
 
+    @Test
+    void trimDebut() {
+        ArrayList<HoraireOuvertureSemaine> horaireExpect = MokcHorairesOuverture.getLsHoraireTrimDebut();
+        ArrayList<HoraireOuvertureSemaine> horairesSemaines = MokcHorairesOuverture.getListeHoraireSemainesCompletes();
+        GenerateurHoraireImp generateur = new GenerateurHoraireImp();
+        Departement fakeDep = MockDepartement.getDepartementOuvert();
+        ZonedDateTime dateDebut = ZonedDateTime.parse("2019-12-06T14:41-05:00[UTC-05:00]");
+
+        generateur.initialiserRequete(dateDebut, dateDebut, fakeDep);
+
+        ArrayList<HoraireOuvertureSemaine> horairesRes = generateur.trimDebut(horairesSemaines);
         assertEquals(horaireExpect, horairesRes);
     }
 }

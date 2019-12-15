@@ -90,10 +90,34 @@ public class MokcHorairesOuverture {
         return horaire;
     }
 
+    public static HoraireOuvertureSemaine getHoraireTrimDebut() {
+        HoraireOuvertureSemaine horaire = new HoraireOuvertureSemaine();
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-06T14:41-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-06T21:45-05:00[UTC-05:00]")
+        );
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-07T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-07T21:45-05:00[UTC-05:00]")
+        );
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-08T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-08T21:45-05:00[UTC-05:00]")
+        );
+        return horaire;
+    }
+
     public static ArrayList<HoraireOuvertureSemaine> getLsHoraireTrimFin() {
         ArrayList<HoraireOuvertureSemaine> listeHoraires = new ArrayList<HoraireOuvertureSemaine>();
         listeHoraires.add(getHoraireComplet());
         listeHoraires.add(getHoraireTrimFin());
+        return listeHoraires;
+    }
+
+    public static ArrayList<HoraireOuvertureSemaine> getLsHoraireTrimDebut() {
+        ArrayList<HoraireOuvertureSemaine> listeHoraires = new ArrayList<HoraireOuvertureSemaine>();
+        listeHoraires.add(getHoraireTrimDebut());
+        listeHoraires.add(getHoraireCompletSem1());
         return listeHoraires;
     }
 
