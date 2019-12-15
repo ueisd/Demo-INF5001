@@ -46,6 +46,7 @@ public class GenerateurHoraireImp implements GenerateurHoraire {
         HoraireOuvertureSemaine horaireSemaine = horaireSem.get(horaireSem.size()-1);
         ListIterator<IntervalTempsZoneLocale> iter = horaireSemaine.getIntervales().listIterator();
         trimFinOnIterator(iter);
+        horaireSemaine.updateDureTotale();
         return horaireSem;
     }
 
@@ -68,6 +69,7 @@ public class GenerateurHoraireImp implements GenerateurHoraire {
         HoraireOuvertureSemaine horaireSemaine = horaireSem.get(0);
         ListIterator<IntervalTempsZoneLocale> iter = horaireSemaine.getIntervales().listIterator();
         trimDebutOnIterator(iter);
+        horaireSemaine.updateDureTotale();
         return horaireSem;
     }
 

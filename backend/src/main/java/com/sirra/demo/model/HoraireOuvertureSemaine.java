@@ -2,6 +2,7 @@ package com.sirra.demo.model;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class HoraireOuvertureSemaine {
@@ -17,6 +18,15 @@ public class HoraireOuvertureSemaine {
         IntervalTempsZoneLocale interval = new IntervalTempsZoneLocale(dateDebut, dateFin);
         this.dureeTotaleEnMinutes += interval.getDureeEnMinutes();
         this.intervales.add(interval);
+    }
+
+    public void updateDureTotale() {
+        this.dureeTotaleEnMinutes = 0;
+        Iterator<IntervalTempsZoneLocale> iter = intervales.listIterator();
+        while(iter.hasNext()) {
+            IntervalTempsZoneLocale iterval = iter.next();
+            this.dureeTotaleEnMinutes += iterval.getDureeEnMinutes();
+        }
     }
 
     protected void setIntervales(ArrayList<IntervalTempsZoneLocale> intervales) {

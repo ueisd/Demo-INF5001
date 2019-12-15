@@ -47,6 +47,57 @@ public class MokcHorairesOuverture {
         return horaire;
     }
 
+    public static HoraireOuvertureSemaine getHoraireCompletSem1() {
+        HoraireOuvertureSemaine horaire = new HoraireOuvertureSemaine();
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-09T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-09T21:45-05:00[UTC-05:00]")
+        );
+        for(int i = 0; i <= 6; i++) {
+            horaire.addInterval(
+                    ZonedDateTime.parse("2019-12-1" + i + "T08:34-05:00[UTC-05:00]"),
+                    ZonedDateTime.parse("2019-12-1" + i + "T21:45-05:00[UTC-05:00]")
+            );
+        }
+        return horaire;
+    }
+
+    public static ArrayList<HoraireOuvertureSemaine> getListeHoraireSemainesCompletes() {
+        ArrayList<HoraireOuvertureSemaine> listeHoraires = new ArrayList<HoraireOuvertureSemaine>();
+        listeHoraires.add(getHoraireComplet());
+        listeHoraires.add(getHoraireCompletSem1());
+        return listeHoraires;
+    }
+
+    public static HoraireOuvertureSemaine getHoraireTrimFin() {
+        HoraireOuvertureSemaine horaire = new HoraireOuvertureSemaine();
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-09T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-09T21:45-05:00[UTC-05:00]")
+        );
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-10T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-10T21:45-05:00[UTC-05:00]")
+        );
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-11T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-11T21:45-05:00[UTC-05:00]")
+        );
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-12T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-12T14:41-05:00[UTC-05:00]")
+        );
+        return horaire;
+    }
+
+    public static ArrayList<HoraireOuvertureSemaine> getLsHoraireTrimFin() {
+        ArrayList<HoraireOuvertureSemaine> listeHoraires = new ArrayList<HoraireOuvertureSemaine>();
+        listeHoraires.add(getHoraireComplet());
+        listeHoraires.add(getHoraireTrimFin());
+        return listeHoraires;
+    }
+
+
     public static ArrayList<IntervalTempsZoneLocale> getIntervalTrimDebutIterator() {
         ArrayList<IntervalTempsZoneLocale> intervales = new ArrayList<IntervalTempsZoneLocale>();
         intervales.add(new IntervalTempsZoneLocale(
