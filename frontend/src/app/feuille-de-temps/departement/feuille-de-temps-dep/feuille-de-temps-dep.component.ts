@@ -19,7 +19,7 @@ export enum StatutLigne {
 }
 
 export class LigneTempsAfficher {
-  idUI: number;
+  employe: ObjetIdent;
   nom: string;
   jour: Date;
   heureDebut: Date;
@@ -30,6 +30,10 @@ export class LigneTempsAfficher {
     this.statut = StatutLigne.Unspecified;
     this.statutTexte = "ind";
   }
+}
+
+export interface ObjetIdent {
+  id: number;
 }
 
 export interface EnumOption {
@@ -190,7 +194,7 @@ export class FeuilleDeTempsDepComponent implements OnInit {
     let lignesAfficher: LigneTempsAfficher[] = [];
     lignesDeTemps.forEach((element, index) => {
       let ligneAfficher: LigneTempsAfficher = new LigneTempsAfficher();
-      ligneAfficher.idUI = index;
+      ligneAfficher.employe = {id: element.employe.id};
       ligneAfficher.nom = element.employe.individu.prenom + " " + element.employe.individu.nom;
       ligneAfficher.jour = element.dateEntre;
       ligneAfficher.heureDebut = element.dateEntre;

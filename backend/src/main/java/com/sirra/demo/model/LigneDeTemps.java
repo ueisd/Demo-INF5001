@@ -1,19 +1,38 @@
 package com.sirra.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+@Entity
 public class LigneDeTemps {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
+
+    @JsonIgnoreProperties(value = "ligneDeTemps", allowSetters = true)
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "employe_id")
     private Employe employe;
+
     private ZonedDateTime dateEntre;
     private ZonedDateTime dateSortie;
+
+    public LigneDeTemps() { }
 
     public LigneDeTemps(Employe employe, ZonedDateTime dateEntre, ZonedDateTime dateSortie) {
         this.employe = employe;
         this.dateEntre = dateEntre;
         this.dateSortie = dateSortie;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Employe getEmploye() {
@@ -40,7 +59,7 @@ public class LigneDeTemps {
         this.dateSortie = dateSortie;
     }
 
-    public long getDureeEnMinutes() {
+    public long calculerDureeEnMinutes() {
         return ChronoUnit.MINUTES.between(this.dateEntre, this.dateSortie);
     }
 

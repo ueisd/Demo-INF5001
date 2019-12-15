@@ -17,7 +17,7 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.sirra.demo"))
                 .paths(PathSelectors.regex("/Employes.*|/Individus.*|/Poste.*|/Note.*|/Document.*" +
-                        "|/Diplome.*|/Contacts.*|/Departement.*|/Job"))
+                        "|/Diplome.*|/Contacts.*|/Departement.*|/Job.*|/lignesDeTemps"))
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -17,7 +18,7 @@ public class Employe {
     private int id;
 
     @JsonIgnoreProperties(value = "employes", allowSetters = true)
-    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "departemnet_id")
     private Departement departement;
 
@@ -28,6 +29,12 @@ public class Employe {
     public void setDepartement(Departement departement) {
         this.departement = departement;
     }
+
+    @OneToMany(
+            mappedBy = "employe",
+            orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}
+    )
+    private Collection<LigneDeTemps> ligneDeTemps;
 
 
     public void setIndividu(Individu individu) {

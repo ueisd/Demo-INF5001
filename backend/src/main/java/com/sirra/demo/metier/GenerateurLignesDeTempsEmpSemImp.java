@@ -34,7 +34,7 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
 
     protected void ajouterLigneDeTemps(LigneDeTemps ligneDeTemps) {
         this.lignesDeTemps.add(ligneDeTemps);
-        this.minutesAjoutes += ligneDeTemps.getDureeEnMinutes();
+        this.minutesAjoutes += ligneDeTemps.calculerDureeEnMinutes();
     }
 
     public void initialiseRequest(Employe employe, HoraireOuvertureSemaine horaireSemaine) {
