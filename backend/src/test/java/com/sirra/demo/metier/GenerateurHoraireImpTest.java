@@ -3,6 +3,8 @@ package com.sirra.demo.metier;
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.ressources.FakeDepartement;
+import com.sirra.demo.ressources.MockDepartement;
+import com.sirra.demo.ressources.MokcHorairesOuverture;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
@@ -54,15 +56,18 @@ class GenerateurHoraireImpTest {
 
     @Test
     void genererHoraireSemaineDep() {
-        /*Departement dep = new Departement();
-        dep.setJournesOuvert(new boolean[] {false, false, true, true, true, true ,true});
-        dep.setHeure_Ouverture(30840000);
-        dep.setHeure_Fermeture(78300000);*/
-        ZonedDateTime dateDebut = ZonedDateTime.of(2019, 12, 2, 0,
-                0, 0, 0, ZoneId.of("UTC-5"));
+        ZonedDateTime dateDebut = ZonedDateTime.parse("2019-12-02T00:00-05:00[UTC-05:00]");
         FakeDepartement fakeDep = new FakeDepartement();
-        // horaire = GenerateurHoraireImp.genererHoraireSemaineDep(dateDebut, fakeDep);
-        HoraireOuvertureSemaine horaire2 = GenerateurHoraireImp.genererHoraireSemaineDep(dateDebut, fakeDep);
-        //assertTrue(horaire.equals(horaire2));
+        HoraireOuvertureSemaine horaireExpected = MokcHorairesOuverture.getHoraire1();
+        assertEquals(horaireExpected, GenerateurHoraireImp.genererHoraireSemaineDep(dateDebut, fakeDep));
+    }
+
+    @Test
+    void genererHoraireSemaineToutOuvert() {
+        ZonedDateTime dateDebut = ZonedDateTime.parse("2019-12-02T00:00-05:00[UTC-05:00]");
+        Departement fakeDep = MockDepartement.getDepartementOuvert();
+        HoraireOuvertureSemaine horaireExpected = MokcHorairesOuverture.getHoraireComplet();
+        HoraireOuvertureSemaine horaireResultat = GenerateurHoraireImp.genererHoraireSemaineDep(dateDebut, fakeDep);
+        assertEquals(horaireExpected, horaireResultat);
     }
 }

@@ -37,4 +37,9 @@ public class MocksIntervalTempsZoneLocale {
                 9, 8, 7, ZoneId.of("UTC-5"));
         return new IntervalTempsZoneLocale(int1debut, int1Fin);
     }
+
+
+
+
+
 }

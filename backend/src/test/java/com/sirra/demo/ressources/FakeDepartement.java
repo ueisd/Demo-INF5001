@@ -5,7 +5,7 @@ import com.sirra.demo.model.Departement;
 public class FakeDepartement extends Departement {
     private Integer heure_Ouverture = 30840000;
     private Integer heure_Fermeture = 78300000;
-    private boolean[] journesOuvert =  {true, true, true, true, true, false, false};
+    private boolean[] journesOuvert =  {true, true, false, false, false, false, false};
     public FakeDepartement() {
     }
 

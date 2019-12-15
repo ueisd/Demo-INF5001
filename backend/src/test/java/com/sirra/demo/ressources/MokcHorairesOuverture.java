@@ -1,6 +1,9 @@
 package com.sirra.demo.ressources;
 
+import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.model.IntervalTempsZoneLocale;
+
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class MokcHorairesOuverture {
@@ -19,4 +22,29 @@ public class MokcHorairesOuverture {
         intervals.add(MocksIntervalTempsZoneLocale.getInterval4());
         return intervals;
     }
+
+    public static HoraireOuvertureSemaine getHoraire1() {
+        HoraireOuvertureSemaine horaire = new HoraireOuvertureSemaine();
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-02T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-02T21:45-05:00[UTC-05:00]")
+        );
+        horaire.addInterval(
+                ZonedDateTime.parse("2019-12-03T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-03T21:45-05:00[UTC-05:00]")
+        );
+        return horaire;
+    }
+
+    public static HoraireOuvertureSemaine getHoraireComplet() {
+        HoraireOuvertureSemaine horaire = new HoraireOuvertureSemaine();
+        for(int i = 2; i <= 8; i++) {
+            horaire.addInterval(
+                    ZonedDateTime.parse("2019-12-0" + i + "T08:34-05:00[UTC-05:00]"),
+                    ZonedDateTime.parse("2019-12-0" + i + "T21:45-05:00[UTC-05:00]")
+            );
+        }
+        return horaire;
+    }
+
 }
