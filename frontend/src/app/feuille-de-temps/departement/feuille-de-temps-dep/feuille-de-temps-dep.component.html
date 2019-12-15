@@ -48,34 +48,48 @@
         </div>
     </form>
 
-    <div class="row">
+    <div class="row" *ngIf="(datasourceElements.data.length > 0)">
+        <button class="btn btn-success" type="submit" (click)="onOperation()">Operation </button>
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
         <table mat-table [dataSource]="datasourceElements" class="mat-elevation-z8">
 
-            <!--- Note that these columns can be defined in any order.
-                    The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+                </td>
+            </ng-container>
+
             
-            <!-- Position Column -->
             <ng-container matColumnDef="nom">
                 <th mat-header-cell *matHeaderCellDef> Employe </th>
                 <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
             </ng-container>
             
-            <!-- Name Column -->
             <ng-container matColumnDef="jourDebut">
                 <th mat-header-cell *matHeaderCellDef> Jour </th>
                 <td mat-cell *matCellDef="let element"> {{element.jour | date: 'EEEE le d MMMM y ':timezone:'fr'}} </td>
             </ng-container>
             
-            <!-- Weight Column -->
             <ng-container matColumnDef="heureDebut">
                 <th mat-header-cell *matHeaderCellDef> Heure Début </th>
                 <td mat-cell *matCellDef="let element"> {{element.heureDebut | date: 'HH:mm'}} </td>
             </ng-container>
 
-            <!-- Weight Column -->
             <ng-container matColumnDef="heureFin">
                 <th mat-header-cell *matHeaderCellDef> Heure Fin </th>
                 <td mat-cell *matCellDef="let element"> {{element.heureFin | date: 'HH:mm'}} </td>
@@ -85,6 +99,9 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
+    <pre>
+        {{ selection| json }}
+    </pre>
 
 </div>
 

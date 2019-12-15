@@ -90,6 +90,7 @@ const appRoutes: Routes = [
     MatSortModule,
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
+    MatCheckboxModule
   ],
   providers: [
     AuthService,

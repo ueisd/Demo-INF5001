@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { Employe } from 'src/app/models/Employe.model';
 import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
 import { MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 export class LigneTempsAfficher {
@@ -40,25 +41,49 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   public dateTimeRange1: Date;
   public dateTimeRange2: Date;
 
-  displayedColumns: string[] = ['nom', 'jourDebut', 'heureDebut', 'heureFin'];
+  displayedColumns: string[] = ['select', 'nom', 'jourDebut', 'heureDebut', 'heureFin'];
 
   public departement: Departement;
   public depIsLoaded = false;
-  requeteForm: FormGroup;
+  public requeteForm: FormGroup;
   public validationRequeteMessages = FeuilleDeTemps.getValidationMessagesRequete();
   private generationLignesDeTempsSubsription: Subscription;
   timezone = "+0" + new Date().getTimezoneOffset();
   datasourceElements: MatTableDataSource<LigneTempsAfficher>;
-
-  
-
-
+  selection = new SelectionModel<LigneTempsAfficher>(true, []);
 
   lignesDeTempsSuggestion: LigneDeTemps[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router,
     private departementService: DepartementsService, private fb: FormBuilder,
-    private genFeuilleTempsService: FeuilleDeTempsRequeteGenererService) { }
+    private genFeuilleTempsService: FeuilleDeTempsRequeteGenererService) { 
+      this.datasourceElements = new MatTableDataSource<LigneTempsAfficher>();
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.datasourceElements.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.datasourceElements.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: LigneTempsAfficher): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+
+   // return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  
 
   ngOnInit() {
     this.initForm();
@@ -104,10 +129,11 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   onSendRequest() {
     this.generationLignesDeTempsSubsription = this.genFeuilleTempsService.ligneDeTempsGenerationSubject.subscribe(
       (requete: LigneDeTemps[]) => {
+        console.log("grandeurAvant:" + this.datasourceElements.data.length);
         let lignesDeTempsRet: LigneDeTemps[];
         lignesDeTempsRet = this.filterFeuillesDeTempsPropety(requete);
         this.lignesDeTempsSuggestion = lignesDeTempsRet;
-        this.datasourceElements = new MatTableDataSource(this.getTableauAffichage(requete));
+        this.datasourceElements = new MatTableDataSource(this.getTableauAffichage(requete));      
       }
     );
     let idDep = this.requeteForm.controls.idDep.value;
@@ -146,6 +172,10 @@ export class FeuilleDeTempsDepComponent implements OnInit {
 
   onAnnuler() {
     this.router.navigate(['/departements']);
+  }
+
+  onOperation() {
+    //console.log(JSON.stringify(this.selection));
   }
 
 }
