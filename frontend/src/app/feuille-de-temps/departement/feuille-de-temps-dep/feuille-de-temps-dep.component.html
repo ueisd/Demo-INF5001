@@ -49,7 +49,18 @@
     </form>
 
     <div class="row" *ngIf="(datasourceElements.data.length > 0)">
-        <button class="btn btn-success" type="submit" (click)="onOperation()">Operation </button>
+
+        <form [formGroup]="operationForm" (ngSubmit)="onOperation()"> 
+            <mat-form-field>
+                <mat-label>Sélection de l'opération</mat-label>
+                <mat-select formControlName="operation">
+                    <mat-option *ngFor="let opt of operationOptMap | keyvalue" [value]="opt.key">
+                        {{opt.value.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button class="btn btn-success" type="submit"> Appliquer </button>
+        </form>
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
@@ -94,14 +105,24 @@
                 <th mat-header-cell *matHeaderCellDef> Heure Fin </th>
                 <td mat-cell *matCellDef="let element"> {{element.heureFin | date: 'HH:mm'}} </td>
             </ng-container>
+
+            <ng-container matColumnDef="statut">
+                <th mat-header-cell *matHeaderCellDef> Statut </th>
+                <td mat-cell *matCellDef="let element"> {{ element.statutTexte }} </td>
+            </ng-container>
             
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{'bg-success': row.statut == StatutLigne.Approved, 
+                'bg-danger': row.statut == StatutLigne.Disaproved }"></tr>
         </table>
     </div>
+    <h2>tableau</h2>
     <pre>
-        {{ selection| json }}
+        {{ datasourceElements.data | json }}
     </pre>
+
+
 
 </div>
 

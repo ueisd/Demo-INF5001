@@ -11,18 +11,35 @@ import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 
+export enum StatutLigne {
+  Unspecified,
+  Approved,
+  Disaproved,
+  Saved,
+}
 
 export class LigneTempsAfficher {
+  idUI: number;
   nom: string;
   jour: Date;
   heureDebut: Date;
   heureFin: Date;
-  constructor() {}
+  statut: StatutLigne;
+  statutTexte: string;
+  constructor() {
+    this.statut = StatutLigne.Unspecified;
+    this.statutTexte = "ind";
+  }
 }
 
 export interface EnumOption {
   value: number;
   viewValue: string;
+}
+
+export interface OptionSpec {
+  viewValue: string;
+  displaySetedValue: string;
 }
 
 @Component({
@@ -32,20 +49,30 @@ export interface EnumOption {
 })
 export class FeuilleDeTempsDepComponent implements OnInit {
 
+  StatutLigne = StatutLigne;
+
   public alignementVOpt: EnumOption[] = [
     {value: 0, viewValue: 'Fill_BOTTOM'},
     {value: 1, viewValue: 'Fill_TOP'},
     {value: 3, viewValue: 'FILL_RANDOM'}
   ];
 
+  public operationOptMap : Map<number, OptionSpec> = new Map<StatutLigne, OptionSpec>([
+    [StatutLigne.Unspecified, {viewValue: 'Rendre indéterminée',  displaySetedValue: 'ind'    }],
+    [StatutLigne.Approved,    {viewValue: 'Approuver',            displaySetedValue: 'aprouvé'}],
+    [StatutLigne.Disaproved,  {viewValue: 'Refuser',              displaySetedValue: 'refusé' }],
+  ]);
+
+
   public dateTimeRange1: Date;
   public dateTimeRange2: Date;
 
-  displayedColumns: string[] = ['select', 'nom', 'jourDebut', 'heureDebut', 'heureFin'];
+  displayedColumns: string[] = ['select', 'nom', 'jourDebut', 'heureDebut', 'heureFin', 'statut'];
 
   public departement: Departement;
   public depIsLoaded = false;
   public requeteForm: FormGroup;
+  public operationForm: FormGroup;
   public validationRequeteMessages = FeuilleDeTemps.getValidationMessagesRequete();
   private generationLignesDeTempsSubsription: Subscription;
   timezone = "+0" + new Date().getTimezoneOffset();
@@ -124,12 +151,14 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         Validators.minLength(1)
       ])]
     })
+    this.operationForm = this.fb.group({
+      operation: [StatutLigne.Unspecified]
+    })
   }
 
   onSendRequest() {
     this.generationLignesDeTempsSubsription = this.genFeuilleTempsService.ligneDeTempsGenerationSubject.subscribe(
       (requete: LigneDeTemps[]) => {
-        console.log("grandeurAvant:" + this.datasourceElements.data.length);
         let lignesDeTempsRet: LigneDeTemps[];
         lignesDeTempsRet = this.filterFeuillesDeTempsPropety(requete);
         this.lignesDeTempsSuggestion = lignesDeTempsRet;
@@ -159,13 +188,14 @@ export class FeuilleDeTempsDepComponent implements OnInit {
 
   getTableauAffichage(lignesDeTemps: LigneDeTemps[]): LigneTempsAfficher[] {
     let lignesAfficher: LigneTempsAfficher[] = [];
-    lignesDeTemps.forEach(element => {
-      let essai: LigneTempsAfficher = new LigneTempsAfficher();
-      essai.nom = element.employe.individu.prenom + " " + element.employe.individu.nom;
-      essai.jour = element.dateEntre;
-      essai.heureDebut = element.dateEntre;
-      essai.heureFin = element.dateSortie;
-      lignesAfficher.push(essai);
+    lignesDeTemps.forEach((element, index) => {
+      let ligneAfficher: LigneTempsAfficher = new LigneTempsAfficher();
+      ligneAfficher.idUI = index;
+      ligneAfficher.nom = element.employe.individu.prenom + " " + element.employe.individu.nom;
+      ligneAfficher.jour = element.dateEntre;
+      ligneAfficher.heureDebut = element.dateEntre;
+      ligneAfficher.heureFin = element.dateSortie;
+      lignesAfficher.push(ligneAfficher);
     });
     return lignesAfficher;
   }
@@ -175,7 +205,12 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   }
 
   onOperation() {
-    //console.log(JSON.stringify(this.selection));
+    let operationVal = this.operationForm.get('operation').value;
+    this.selection.selected.forEach(element => {
+      element.statut = operationVal;
+      element.statutTexte = this.operationOptMap.get(element.statut).displaySetedValue;
+    });
+    this.selection.clear();
   }
 
 }
