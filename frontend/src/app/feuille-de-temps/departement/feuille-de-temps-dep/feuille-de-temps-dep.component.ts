@@ -215,6 +215,18 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       element.statutTexte = this.operationOptMap.get(element.statut).displaySetedValue;
     });
     this.selection.clear();
+
+  }
+
+  onSoumettreLignes() {
+    this.genFeuilleTempsService.addLignesDeTemps(this.datasourceElements.data).subscribe(
+      (lignesDeTemps) => { 
+        console.log('ajout des lignes de temps!');
+      },
+      (error) => {
+        console.log('Erreur de sauvegarde !' + error);
+      }
+    );
   }
 
 }

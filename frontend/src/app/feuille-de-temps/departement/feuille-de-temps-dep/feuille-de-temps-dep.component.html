@@ -64,6 +64,7 @@
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
+        <button class="btn btn-success" (click)="onSoumettreLignes()" type="submit"> Soumettre les lignes de temps aprouvées</button>
         <table mat-table [dataSource]="datasourceElements" class="mat-elevation-z8">
 
 

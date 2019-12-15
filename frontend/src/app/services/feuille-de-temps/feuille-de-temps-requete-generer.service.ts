@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BaseUrlService } from '../base-url.service.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { LigneTempsAfficher } from 'src/app/feuille-de-temps/departement/feuille-de-temps-dep/feuille-de-temps-dep.component';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +18,19 @@ export class FeuilleDeTempsRequeteGenererService {
 
   private baseUrl: string;
   private getRequeteUrl: string;
+  private postLignesDeTempsUrl: string;
   ligneDeTempsGenerationSubject = new Subject<LigneDeTemps[]>();
   private lignesDeTempsGeneration: LigneDeTemps[] = [];
 
   constructor(private baseUrlService: BaseUrlService, private httpClient: HttpClient) { 
     this.baseUrl = baseUrlService.baseUrl;
     this.getRequeteUrl = this.baseUrl + '/Departement/';
+    this.postLignesDeTempsUrl = this.baseUrl + '/lignesDeTemps/addAll/'
 
+  }
+
+  addLignesDeTemps (lignesDeTemps: LigneTempsAfficher[]): Observable<LigneTempsAfficher[]> {
+    return this.httpClient.post<LigneTempsAfficher[]>(this.postLignesDeTempsUrl, lignesDeTemps, httpOptions);
   }
 
   emitLigneDeTempsGenerationSubject() {
@@ -39,4 +52,6 @@ export class FeuilleDeTempsRequeteGenererService {
             }
         )
   }
+
+
 }
