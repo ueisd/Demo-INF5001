@@ -68,4 +68,17 @@ public class MokcHorairesOuverture {
         return intervales;
     }
 
+    public static ArrayList<IntervalTempsZoneLocale> getIntervalTrimFinIterator() {
+        ArrayList<IntervalTempsZoneLocale> intervales = new ArrayList<IntervalTempsZoneLocale>();
+        intervales.add(new IntervalTempsZoneLocale(
+                ZonedDateTime.parse("2019-12-07T14:41-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-07T21:45-05:00[UTC-05:00]")
+        ));
+        intervales.add(new IntervalTempsZoneLocale(
+                ZonedDateTime.parse("2019-12-08T08:34-05:00[UTC-05:00]"),
+                ZonedDateTime.parse("2019-12-08T21:45-05:00[UTC-05:00]")
+        ));
+        return intervales;
+    }
+
 }

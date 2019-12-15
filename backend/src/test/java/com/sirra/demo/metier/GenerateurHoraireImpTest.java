@@ -89,4 +89,19 @@ class GenerateurHoraireImpTest {
 
         assertEquals(intervalExpected, intervalRes);
     }
+
+    @Test
+    void trimFinOnIterator() {
+        ArrayList<IntervalTempsZoneLocale> intervalExpected = MokcHorairesOuverture.getIntervalTrimFinIterator();
+        GenerateurHoraireImp generateur = new GenerateurHoraireImp();
+        Departement fakeDep = MockDepartement.getDepartementOuvert();
+        ZonedDateTime dateFin = ZonedDateTime.parse("2019-12-07T14:41-05:00[UTC-05:00]");
+
+        generateur.initialiserRequete(dateFin, dateFin, fakeDep);
+        ArrayList<IntervalTempsZoneLocale> intervalRes = MokcHorairesOuverture.getHoraireComplet().getIntervales();
+        ListIterator<IntervalTempsZoneLocale> iter = intervalRes.listIterator();
+        generateur.trimDebutOnIterator(iter);
+
+        assertEquals(intervalExpected, intervalRes);
+    }
 }
