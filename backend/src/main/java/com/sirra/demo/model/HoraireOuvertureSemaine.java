@@ -19,6 +19,14 @@ public class HoraireOuvertureSemaine {
         this.intervales.add(interval);
     }
 
+    protected void setIntervales(ArrayList<IntervalTempsZoneLocale> intervales) {
+        this.intervales = intervales;
+    }
+
+    protected void setDureeTotaleEnMinutes(int dureeTotaleEnMinutes) {
+        this.dureeTotaleEnMinutes = dureeTotaleEnMinutes;
+    }
+
     public ArrayList<IntervalTempsZoneLocale> getIntervales() {
         return intervales;
     }
