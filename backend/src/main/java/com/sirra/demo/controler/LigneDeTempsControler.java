@@ -48,6 +48,7 @@ public class LigneDeTempsControler {
         return lignesDeTemps;
     }
 
+
     @PostMapping(value = "lignesDeTemps")
     public ResponseEntity<Void> ajouterLigneDeTemps(@Valid @RequestBody LigneDeTemps ligneDeTemps) {
 
@@ -89,6 +90,20 @@ public class LigneDeTempsControler {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @ApiOperation(value = "Obtien une liste de lignes de temps d'un departement dans un interval déterminé")
+    @GetMapping(value = "lignesDeTemps/employe/{depId}/dateDebut/{dateDebut}/dateFin/{dateFin}")
+    public ArrayList<LigneDeTemps> getLignesDeTempsEmp(@PathVariable int depId,
+                                              @PathVariable String dateDebut, @PathVariable String dateFin
+    ) throws FdtException {
+        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
+
+        ZonedDateTime dateDebutD = ZonedDateTime.parse(dateDebut);
+        ZonedDateTime dateFinD = ZonedDateTime.parse(dateFin);
+
+        lignesDeTemps = (ArrayList<LigneDeTemps>) ligneDeTempsDao.getLignesDeTempsEmp(depId, dateDebutD, dateFinD);
+        return lignesDeTemps;
     }
 
 

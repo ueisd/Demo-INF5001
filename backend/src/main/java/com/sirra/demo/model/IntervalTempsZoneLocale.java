@@ -37,6 +37,11 @@ public class IntervalTempsZoneLocale {
         return ChronoUnit.HOURS.between(this.dateDebut, this.dateFin) >= heure;
     }
 
+    public boolean isInSameDayOf(ZonedDateTime zonedDateTime) {
+        ZonedDateTime dateDeb = this.getDateDebut();
+        return (dateDeb.getDayOfYear() ==  zonedDateTime.getDayOfYear() && dateDeb.getYear() == zonedDateTime.getYear());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

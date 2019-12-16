@@ -27,8 +27,7 @@ public interface LigneDeTempsDao extends JpaRepository<LigneDeTemps, Integer> {
 
     @Transactional
     @Query(
-            value = "SELECT DISTINCT l FROM LigneDeTemps l INNER JOIN l.employe e " +
-                    "where e.id=:empId AND l.dateEntre > :dateD AND l.dateEntre < :dateF"
+            value = "SELECT DISTINCT l FROM LigneDeTemps l where l.employe = :empId AND l.dateEntre >= :dateD AND l.dateEntre < :dateF"
     )
     Collection<LigneDeTemps> getLignesDeTempsEmp(
             @Param("empId") Integer empId,

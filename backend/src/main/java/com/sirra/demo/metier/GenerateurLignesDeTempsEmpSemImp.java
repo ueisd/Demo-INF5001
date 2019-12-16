@@ -1,5 +1,6 @@
 package com.sirra.demo.metier;
 
+import com.sirra.demo.controler.LigneDeTempsControler;
 import com.sirra.demo.dao.LigneDeTempsDao;
 import com.sirra.demo.model.Employe;
 import com.sirra.demo.model.HoraireOuvertureSemaine;
@@ -7,10 +8,15 @@ import com.sirra.demo.model.IntervalTempsZoneLocale;
 import com.sirra.demo.model.LigneDeTemps;
 import com.sirra.demo.model.options.FillOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+@Component
 public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTempsEmpSem {
 
     @Autowired
@@ -21,7 +27,7 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
     int minutesAjoutes;
     FillOptions fillOptions;
     ArrayList<LigneDeTemps> lignesDeTemps;
-    ArrayList<LigneDeTemps> lignesDeTempsSauvegardees;
+    List<LigneDeTemps> lignesDeTempsSauvegardees;
     AligneurVertical generateurVertical;
 
 
@@ -49,10 +55,12 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         this.employe = employe;
         this.horaireSemaine = horaireSemaine;
         this.minutesAjoutes = 0;
+        ZonedDateTime dateDeb = horaireSemaine.getDateDebutSemaine();
+        ZonedDateTime dateFin = horaireSemaine.getDateDebutSemaine().plusWeeks(1);
+        this.lignesDeTempsSauvegardees = employe.getLigneDeTemps();
     }
 
     public ArrayList<LigneDeTemps> generatePourEmpSem(FillOptions fillOptions) {
-        //this.lignesDeTempsSauvegardees =  @todo
         reinitLignesDeTemps();
         this.fillOptions = fillOptions;
         switch (this.fillOptions.getLateralOption()) {
@@ -67,12 +75,26 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
         int minutesDeTravailMaxParSemaine = this.employe.getMinutesSemaine();
         while(iterLigne.hasNext() && this.minutesAjoutes < minutesDeTravailMaxParSemaine) {
             IntervalTempsZoneLocale interval = iterLigne.next();
-            if(ifIntervalHaveSuffisentLast(interval)) {
+            if(ifIntervalHaveSuffisentLast(interval) && !selectAlreadySavedLignes(interval)) {
                 generateurVertical.initialiserRequete(this.employe, this.fillOptions);
                 this.ajouterLigneDeTemps(generateurVertical.generateVLine(interval));
             }
         }
         trimAtEndOverAllocatedAtEnd(lignesDeTemps);
+    }
+
+
+    protected boolean selectAlreadySavedLignes(IntervalTempsZoneLocale interval) {
+        Iterator<LigneDeTemps> iter = this.lignesDeTempsSauvegardees.listIterator();
+        boolean retour = false;
+        while (iter.hasNext()) {
+            LigneDeTemps ligneTemps = iter.next();
+            if(interval.isInSameDayOf(ligneTemps.getDateEntre())) {
+                this.ajouterLigneDeTemps(ligneTemps);
+                retour = true;
+            }
+        }
+        return retour;
     }
 
     protected boolean ifIntervalHaveSuffisentLast(IntervalTempsZoneLocale interval) {
