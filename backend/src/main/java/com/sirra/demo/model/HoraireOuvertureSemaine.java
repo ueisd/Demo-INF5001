@@ -8,6 +8,7 @@ import java.util.Objects;
 public class HoraireOuvertureSemaine {
     private ArrayList<IntervalTempsZoneLocale> intervales;
     private int dureeTotaleEnMinutes;
+    private ZonedDateTime dateDebutSemaine;
 
     public HoraireOuvertureSemaine() {
         this.intervales = new ArrayList<IntervalTempsZoneLocale>();
@@ -27,6 +28,14 @@ public class HoraireOuvertureSemaine {
             IntervalTempsZoneLocale iterval = iter.next();
             this.dureeTotaleEnMinutes += iterval.getDureeEnMinutes();
         }
+    }
+
+    public ZonedDateTime getDateDebutSemaine() {
+        return dateDebutSemaine;
+    }
+
+    public void setDateDebutSemaine(ZonedDateTime dateDebutSemaine) {
+        this.dateDebutSemaine = dateDebutSemaine;
     }
 
     protected void setIntervales(ArrayList<IntervalTempsZoneLocale> intervales) {
