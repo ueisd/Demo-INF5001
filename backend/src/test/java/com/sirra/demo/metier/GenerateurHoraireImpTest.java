@@ -3,6 +3,7 @@ package com.sirra.demo.metier;
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.model.IntervalTempsZoneLocale;
+import com.sirra.demo.model.options.HoraireOuvertureRequete;
 import com.sirra.demo.ressources.FakeDepartement;
 import com.sirra.demo.ressources.MockDepartement;
 import com.sirra.demo.ressources.MokcHorairesOuverture;
@@ -143,7 +144,7 @@ class GenerateurHoraireImpTest {
 
         generateur.initialiserRequete(dateDebut, dateFin, fakeDep);
 
-        ArrayList<HoraireOuvertureSemaine> horairesRes = generateur.generate();
-        assertEquals(horaireExpect, horairesRes);
+        HoraireOuvertureRequete horairesRes = generateur.generate();
+        assertEquals(horaireExpect, horairesRes.getHoraireOuvertureSemaines());
     }
 }

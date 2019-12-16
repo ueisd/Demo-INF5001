@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
 import { Subject, Observable } from 'rxjs';
 import { LigneTempsAfficher } from 'src/app/feuille-de-temps/departement/feuille-de-temps-dep/feuille-de-temps-dep.component';
+import { StatutLigne } from 'src/app/models/EnumStatutLigne';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -33,6 +34,7 @@ export class FeuilleDeTempsRequeteGenererService {
     lignesDeTemps.forEach(ligneTemps => {
       ligneTemps.strDateEntre = ligneTemps.heureDebut.toString();
       ligneTemps.strDateSortie = ligneTemps.heureFin.toString();
+      ligneTemps.statut = StatutLigne.Saved;
     });
     return this.httpClient.post<LigneTempsAfficher[]>(this.postLignesDeTempsUrl, lignesDeTemps, httpOptions);
   }

@@ -3,6 +3,7 @@ package com.sirra.demo.metier;
 import com.sirra.demo.model.Departement;
 import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.model.IntervalTempsZoneLocale;
+import com.sirra.demo.model.options.HoraireOuvertureRequete;
 
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
@@ -25,7 +26,7 @@ public class GenerateurHoraireImp implements GenerateurHoraire {
         this.departement = departement;
     }
 
-    public ArrayList<HoraireOuvertureSemaine> generate() {
+    public HoraireOuvertureRequete generate() {
         ArrayList<HoraireOuvertureSemaine> horaireSemaine = new ArrayList<HoraireOuvertureSemaine>();
         ZonedDateTime dateDebutSemaine = getFirstDayOfWeek(dateDebutGeneration);
         ZonedDateTime dateJourFinGeneration = dateFinGeneration.with(LocalTime.of ( 0 , 0 ));
@@ -37,7 +38,8 @@ public class GenerateurHoraireImp implements GenerateurHoraire {
         }
         horaireSemaine = trimDebut(horaireSemaine);
         horaireSemaine = trimFin(horaireSemaine);
-        return horaireSemaine;
+
+        return new HoraireOuvertureRequete(this.dateDebutGeneration, this.dateFinGeneration, horaireSemaine);
     }
 
     protected ArrayList<HoraireOuvertureSemaine> trimFin(ArrayList<HoraireOuvertureSemaine> horairesSemaines) {

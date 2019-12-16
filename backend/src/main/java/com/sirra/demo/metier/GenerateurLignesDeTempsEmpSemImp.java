@@ -1,19 +1,27 @@
 package com.sirra.demo.metier;
 
+import com.sirra.demo.dao.LigneDeTempsDao;
 import com.sirra.demo.model.Employe;
 import com.sirra.demo.model.HoraireOuvertureSemaine;
 import com.sirra.demo.model.IntervalTempsZoneLocale;
 import com.sirra.demo.model.LigneDeTemps;
 import com.sirra.demo.model.options.FillOptions;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTempsEmpSem {
+
+    @Autowired
+    private LigneDeTempsDao ligneDeTempsDao;
+
     Employe employe;
     HoraireOuvertureSemaine horaireSemaine;
     int minutesAjoutes;
     FillOptions fillOptions;
     ArrayList<LigneDeTemps> lignesDeTemps;
+    ArrayList<LigneDeTemps> lignesDeTempsSauvegardees;
     AligneurVertical generateurVertical;
 
 
@@ -44,6 +52,7 @@ public class GenerateurLignesDeTempsEmpSemImp implements GenerateurLignesDeTemps
     }
 
     public ArrayList<LigneDeTemps> generatePourEmpSem(FillOptions fillOptions) {
+        //this.lignesDeTempsSauvegardees =  @todo
         reinitLignesDeTemps();
         this.fillOptions = fillOptions;
         switch (this.fillOptions.getLateralOption()) {

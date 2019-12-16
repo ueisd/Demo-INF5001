@@ -2,11 +2,13 @@ package com.sirra.demo.metier;
 
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
+import com.sirra.demo.model.options.HoraireOuvertureRequete;
+
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class GenerateurLignesDeTempsImp implements GenerateurLignesDeTemps {
-    ArrayList<HoraireOuvertureSemaine> horaireSemaine;
+    HoraireOuvertureRequete horaireSemaine;
     Departement departement;
     FillOptions fillOptions;
     GenerateurLignesDeTempsEmpSem genLnEmpSem;
@@ -19,7 +21,8 @@ public class GenerateurLignesDeTempsImp implements GenerateurLignesDeTemps {
         this.genLnEmpSem = genLnEmpSem;
     }
 
-    public void initialiserRequete(ArrayList<HoraireOuvertureSemaine> horaireSemaine, Departement departement) {
+    public void initialiserRequete(HoraireOuvertureRequete horaireSemaine, Departement departement) {
+
         this.horaireSemaine = horaireSemaine;
         this.departement = departement;
     }
@@ -30,7 +33,8 @@ public class GenerateurLignesDeTempsImp implements GenerateurLignesDeTemps {
         ListIterator<Employe> iterEmpl = departement.getEmployes().listIterator();
         while(iterEmpl.hasNext()){
             Employe employe = iterEmpl.next();
-            ListIterator<HoraireOuvertureSemaine> iterSemaine = horaireSemaine.listIterator();
+            ListIterator<HoraireOuvertureSemaine> iterSemaine =
+                    horaireSemaine.getHoraireOuvertureSemaines().listIterator();
             while(iterSemaine.hasNext()){
                 HoraireOuvertureSemaine horaireSemaine = iterSemaine.next();
                 this.genLnEmpSem.initialiseRequest(employe, horaireSemaine);

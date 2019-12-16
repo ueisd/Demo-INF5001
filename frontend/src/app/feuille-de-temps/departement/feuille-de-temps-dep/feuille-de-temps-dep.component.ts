@@ -10,13 +10,9 @@ import { Employe } from 'src/app/models/Employe.model';
 import { LigneDeTemps } from 'src/app/models/ligneDeTemps.model';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { StatutLigne } from 'src/app/models/EnumStatutLigne';
 
-export enum StatutLigne {
-  Unspecified,
-  Approved,
-  Disaproved,
-  Saved,
-}
+
 
 export class LigneTempsAfficher {
   employe: ObjetIdent;

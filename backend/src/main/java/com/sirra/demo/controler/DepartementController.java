@@ -4,11 +4,13 @@ package com.sirra.demo.controler;
 import com.sirra.demo.configuration.AppConfig;
 import com.sirra.demo.dao.DepartementDao;
 import com.sirra.demo.dao.EmployeDao;
+import com.sirra.demo.dao.LigneDeTempsDao;
 import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.metier.*;
 import com.sirra.demo.model.*;
 import com.sirra.demo.model.options.FillOptions;
 import com.sirra.demo.model.options.FillVerticalOptions;
+import com.sirra.demo.model.options.HoraireOuvertureRequete;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class DepartementController  {
 
     @Autowired
     EmployeDao employeDao;
+
+    @Autowired
+    LigneDeTempsDao ligneDeTempsDao;
 
     GenerateurLignesDeTemps generateurLignesDeTemps;
     GenerateurHoraire generateurHoraire;
@@ -86,10 +91,12 @@ public class DepartementController  {
         ZonedDateTime dateLocaleDebut =  Instant.parse(dateDebut).atZone(AppConfig.ZONE_ID);
         ZonedDateTime dateLocaleFin =  Instant.parse(dateFin).atZone(AppConfig.ZONE_ID);
 
-        this.generateurHoraire.initialiserRequete(dateLocaleDebut, dateLocaleFin, departement);
-        ArrayList<HoraireOuvertureSemaine> horaireDep = this.generateurHoraire.generate();
 
-        this.generateurLignesDeTemps.initialiserRequete(horaireDep, departement);
+        this.generateurHoraire.initialiserRequete(dateLocaleDebut, dateLocaleFin, departement);
+        //ArrayList<HoraireOuvertureSemaine> horaireDep = this.generateurHoraire.generate();
+        HoraireOuvertureRequete horaireOuvertureDep = this.generateurHoraire.generate();
+
+        this.generateurLignesDeTemps.initialiserRequete(horaireOuvertureDep, departement);
 
         return this.generateurLignesDeTemps.generate(fillOpt);
     }
