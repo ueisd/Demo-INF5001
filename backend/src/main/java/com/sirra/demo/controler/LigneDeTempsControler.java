@@ -3,6 +3,7 @@ package com.sirra.demo.controler;
 import com.sirra.demo.dao.LigneDeTempsDao;
 import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.model.LigneDeTemps;
+import com.sirra.demo.model.StatutLigneTemps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,12 +73,26 @@ public class LigneDeTempsControler {
     @PostMapping(value = "lignesDeTemps/addAll")
     public ResponseEntity<Void> ajouterPlusieursLigneDeTemps(@Valid @RequestBody ArrayList<LigneDeTemps> ligneDeTemps) {
 
+        List<LigneDeTemps> ligneDeTempsSupprimer = new ArrayList<LigneDeTemps>();
 
         Iterator<LigneDeTemps> iter = ligneDeTemps.listIterator();
         while(iter.hasNext()) {
-            iter.next().metreAjourDates();
+            LigneDeTemps ligne = iter.next();
+            if(ligne.getStatut() == StatutLigneTemps.DELETE_SAVED.ordinal()) {
+                iter.remove();
+                //ligneDeTempsSupprimer.add(ligne);
+                if(ligne.getId()!= 0 && ligneDeTempsDao.existsById(ligne.getId())) {
+                    ligneDeTempsDao.deleteById(ligne.getId());
+                }
+            }else if(ligne.getStatut() == StatutLigneTemps.APROVED.ordinal()) {
+                ligne.metreAjourDates();
+                ligne.setStatut(StatutLigneTemps.SAVED.ordinal());
+            }
         }
-        List<LigneDeTemps> ligneDeTemps1 = ligneDeTempsDao.saveAll(ligneDeTemps);
+        List<LigneDeTemps> ligneDeTemps1 = new ArrayList<>();
+        if(!ligneDeTemps.isEmpty()) {
+            ligneDeTemps1 = ligneDeTempsDao.saveAll(ligneDeTemps);
+        }
 
         if(ligneDeTemps1.size() == 0) {
             return ResponseEntity.noContent().build();
@@ -90,6 +105,11 @@ public class LigneDeTempsControler {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping (value = "lignesDeTemps/Delete/{id}")
+    public void supprimerLigneDeTemps(@PathVariable int id) {
+        ligneDeTempsDao.deleteById(id);
     }
 
     @ApiOperation(value = "Obtien une liste de lignes de temps d'un departement dans un interval déterminé")

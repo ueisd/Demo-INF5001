@@ -15,6 +15,7 @@ import { StatutLigne } from 'src/app/models/EnumStatutLigne';
 
 
 export class LigneTempsAfficher {
+  id: number;
   employe: ObjetIdent;
   nom: string;
   jour: Date;
@@ -187,6 +188,7 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       employe.id = e.id;
       employe.nom = e.individu.prenom + " " + e.individu.nom;
       let ligneDeTemps: LigneDeTemps =  new LigneDeTemps(employe, i.dateEntre, i.dateSortie, i.statut);
+      ligneDeTemps.id = i.id;
       return ligneDeTemps;
     });
     return feuillesDeTemps;
@@ -203,6 +205,7 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       ligneAfficher.heureFin = element.dateSortie;
       ligneAfficher.statut = element.statut;
       ligneAfficher.statutTexte = this.getStatutTexteFronStatus(ligneAfficher.statut);
+      ligneAfficher.id = element.id;
       lignesAfficher.push(ligneAfficher);
     });
     return lignesAfficher;
@@ -242,10 +245,12 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   onSoumettreLignes() {
     let lignesPoster: LigneTempsAfficher[] = [];
     this.datasourceElements.data.forEach(ligneTemps => {
-      if(ligneTemps.statut == StatutLigne.Approved) {
+      if(ligneTemps.statut == StatutLigne.Approved || ligneTemps.statut == StatutLigne.DeleteSaved) {
         lignesPoster.push(ligneTemps);
       }
     });
+
+    console.log(JSON.stringify(this.datasourceElements.data));
 
     this.genFeuilleTempsService.addLignesDeTemps(lignesPoster).subscribe(
       (lignesDeTemps) => { 

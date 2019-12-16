@@ -16,7 +16,7 @@ public class LigneDeTemps {
     private int id;
 
     @JsonIgnoreProperties(value = "ligneDeTemps", allowSetters = true)
-    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "employe_id")
     private Employe employe;
 

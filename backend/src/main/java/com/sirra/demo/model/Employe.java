@@ -34,7 +34,7 @@ public class Employe {
 
     @OneToMany(
             mappedBy = "employe",
-            orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}
+            cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}
     )
     private List<LigneDeTemps> ligneDeTemps;
 

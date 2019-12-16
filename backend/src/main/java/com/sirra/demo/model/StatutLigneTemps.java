@@ -5,4 +5,5 @@ public enum StatutLigneTemps {
     APROVED,
     DISAPROVED,
     SAVED,
+    DELETE_SAVED,
 }
