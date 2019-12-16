@@ -1,8 +1,10 @@
 package com.sirra.demo.controler;
 
 import com.sirra.demo.dao.LigneDeTempsDao;
+import com.sirra.demo.exceptions.FdtException;
 import com.sirra.demo.model.LigneDeTemps;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +12,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Api(description = "Gestion des contacts")
@@ -20,15 +24,34 @@ public class LigneDeTempsControler {
     @Autowired
     private LigneDeTempsDao ligneDeTempsDao;
 
-    //Retourne la liste de tout les contacts
+
+
     @GetMapping(value = "lignesDeTemps")
     public List<LigneDeTemps> listeLigneDeTemps(){
         return ligneDeTempsDao.findAll();
     }
 
+
+    @ApiOperation(value = "Obtien une liste de lignes de temps d'un departement dans un interval déterminé")
+    @GetMapping(value = "lignesDeTemps/departement/{depId}/dateDebut/{dateDebut}/dateFin/{dateFin}")
+    public ArrayList<LigneDeTemps> GenererFDT(@PathVariable int depId,
+                                              @PathVariable String dateDebut, @PathVariable String dateFin
+    ) throws FdtException {
+        ArrayList<LigneDeTemps> lignesDeTemps = new ArrayList<LigneDeTemps>();
+
+        ZonedDateTime dateDebutD = ZonedDateTime.parse(dateDebut);
+        ZonedDateTime dateFinD = ZonedDateTime.parse(dateFin);
+
+
+
+        lignesDeTemps = (ArrayList<LigneDeTemps>) ligneDeTempsDao.getLignesDeTempsDep(depId, dateDebutD, dateFinD);
+        return lignesDeTemps;
+    }
+
     @PostMapping(value = "lignesDeTemps")
     public ResponseEntity<Void> ajouterLigneDeTemps(@Valid @RequestBody LigneDeTemps ligneDeTemps) {
 
+        ligneDeTemps.metreAjourDates();
 
         LigneDeTemps ligneDeTemps1 = ligneDeTempsDao.save(ligneDeTemps);
 
@@ -48,9 +71,13 @@ public class LigneDeTempsControler {
     @PostMapping(value = "lignesDeTemps/addAll")
     public ResponseEntity<Void> ajouterPlusieursLigneDeTemps(@Valid @RequestBody ArrayList<LigneDeTemps> ligneDeTemps) {
 
+
+        Iterator<LigneDeTemps> iter = ligneDeTemps.listIterator();
+        while(iter.hasNext()) {
+            iter.next().metreAjourDates();
+        }
         List<LigneDeTemps> ligneDeTemps1 = ligneDeTempsDao.saveAll(ligneDeTemps);
 
-        //LigneDeTemps ligneDeTemps1 = null;
         if(ligneDeTemps1.size() == 0) {
             return ResponseEntity.noContent().build();
         }

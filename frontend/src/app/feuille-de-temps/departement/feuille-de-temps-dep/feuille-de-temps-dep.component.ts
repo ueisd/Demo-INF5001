@@ -26,6 +26,8 @@ export class LigneTempsAfficher {
   heureFin: Date;
   statut: StatutLigne;
   statutTexte: string;
+  strDateEntre: string;
+  strDateSortie: string;
   constructor() {
     this.statut = StatutLigne.Unspecified;
     this.statutTexte = "ind";
@@ -219,9 +221,17 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   }
 
   onSoumettreLignes() {
-    this.genFeuilleTempsService.addLignesDeTemps(this.datasourceElements.data).subscribe(
+    let lignesPoster: LigneTempsAfficher[] = [];
+    this.datasourceElements.data.forEach(ligneTemps => {
+      if(ligneTemps.statut == StatutLigne.Approved) {
+        lignesPoster.push(ligneTemps);
+      }
+    });
+
+    this.genFeuilleTempsService.addLignesDeTemps(lignesPoster).subscribe(
       (lignesDeTemps) => { 
         console.log('ajout des lignes de temps!');
+        this.datasourceElements.data = [];
       },
       (error) => {
         console.log('Erreur de sauvegarde !' + error);

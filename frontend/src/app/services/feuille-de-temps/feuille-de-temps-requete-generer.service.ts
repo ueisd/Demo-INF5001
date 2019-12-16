@@ -30,6 +30,10 @@ export class FeuilleDeTempsRequeteGenererService {
   }
 
   addLignesDeTemps (lignesDeTemps: LigneTempsAfficher[]): Observable<LigneTempsAfficher[]> {
+    lignesDeTemps.forEach(ligneTemps => {
+      ligneTemps.strDateEntre = ligneTemps.heureDebut.toString();
+      ligneTemps.strDateSortie = ligneTemps.heureFin.toString();
+    });
     return this.httpClient.post<LigneTempsAfficher[]>(this.postLignesDeTempsUrl, lignesDeTemps, httpOptions);
   }
 

@@ -20,8 +20,32 @@ public class LigneDeTemps {
     @JoinColumn(name = "employe_id")
     private Employe employe;
 
+    @Column(columnDefinition="TIMESTAMP")
     private ZonedDateTime dateEntre;
+    @Column(columnDefinition="TIMESTAMP")
     private ZonedDateTime dateSortie;
+
+    private String strDateEntre;
+    private String strDateSortie;
+
+
+    public String getStrDateEntre() {
+        return strDateEntre;
+    }
+
+    public void setStrDateEntre(String strDateEntre) {
+        this.strDateEntre = strDateEntre;
+    }
+
+    public String getStrDateSortie() {
+        return strDateSortie;
+    }
+
+    public void setStrDateSortie(String strDateSortie) {
+        this.strDateSortie = strDateSortie;
+    }
+
+    private int statut;
 
     public LigneDeTemps() { }
 
@@ -33,6 +57,15 @@ public class LigneDeTemps {
 
     public int getId() {
         return id;
+    }
+
+    // pour l'interface graphique
+    public int getStatut() {
+        return statut;
+    }
+
+    public void setStatut(int statut) {
+        this.statut = statut;
     }
 
     public Employe getEmploye() {
@@ -70,6 +103,13 @@ public class LigneDeTemps {
     public void decalerADroiteDeSecondes(int secondes) {
         this.dateEntre = ChronoUnit.SECONDS.addTo(this.dateEntre, secondes);
         this.dateSortie = ChronoUnit.SECONDS.addTo(this.dateSortie, secondes);
+    }
+
+    public void metreAjourDates() {
+        if(this.getStrDateEntre() != null && this.getStrDateSortie() != null){
+            this.setDateEntre(ZonedDateTime.parse(this.getStrDateEntre()));
+            this.setDateSortie(ZonedDateTime.parse(this.getStrDateSortie()));
+        }
     }
 
     @Override

@@ -5,8 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -34,8 +36,16 @@ public class Employe {
             mappedBy = "employe",
             orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}
     )
-    private Collection<LigneDeTemps> ligneDeTemps;
+    private List<LigneDeTemps> ligneDeTemps;
 
+    @JsonIgnore
+    public List<LigneDeTemps> getLigneDeTemps() {
+        return ligneDeTemps;
+    }
+
+    public void setLigneDeTemps(List<LigneDeTemps> ligneDeTemps) {
+        this.ligneDeTemps = ligneDeTemps;
+    }
 
     public void setIndividu(Individu individu) {
         this.individu = individu;
