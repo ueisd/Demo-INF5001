@@ -164,8 +164,7 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         let lignesDeTempsRet: LigneDeTemps[];
         lignesDeTempsRet = this.filterFeuillesDeTempsPropety(requete);
         this.lignesDeTempsSuggestion = lignesDeTempsRet;
-        this.datasourceElements = new MatTableDataSource(this.getTableauAffichage(requete));     
-        console.log();
+        this.datasourceElements = new MatTableDataSource(this.getTableauAffichage(requete));
       }
     );
     let idDep = this.requeteForm.controls.idDep.value;
@@ -200,7 +199,6 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       ligneAfficher.heureDebut = element.dateEntre;
       ligneAfficher.heureFin = element.dateSortie;
       ligneAfficher.statut = element.statut;
-      console.log(ligneAfficher.statut);
       ligneAfficher.statutTexte = this.getStatutTexteFronStatus(ligneAfficher.statut);
       lignesAfficher.push(ligneAfficher);
     });
@@ -222,8 +220,10 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   onOperation() {
     let operationVal = this.operationForm.get('operation').value;
     this.selection.selected.forEach(element => {
-      element.statut = operationVal;
-      element.statutTexte = this.operationOptMap.get(element.statut).displaySetedValue;
+      if(element.statut != StatutLigne.Saved) {
+        element.statut = operationVal;
+        element.statutTexte = this.operationOptMap.get(element.statut).displaySetedValue;
+      }
     });
     this.selection.clear();
 

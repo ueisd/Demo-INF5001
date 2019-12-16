@@ -78,7 +78,7 @@
                 </mat-checkbox>
                 </th>
                 <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()"
+                <mat-checkbox *ngIf="row.statut != StatutLigne.Saved" (click)="$event.stopPropagation()"
                                 (change)="$event ? selection.toggle(row) : null"
                                 [checked]="selection.isSelected(row)"
                                 [aria-label]="checkboxLabel(row)">
@@ -115,13 +115,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"
                 [ngClass]="{'bg-success': row.statut == StatutLigne.Approved, 
-                'bg-danger': row.statut == StatutLigne.Disaproved }"></tr>
+                'bg-danger': row.statut == StatutLigne.Disaproved,
+                'bg-info': row.statut == StatutLigne.Saved }"></tr>
         </table>
     </div>
-    <h2>tableau</h2>
-    <pre>
-        {{ datasourceElements.data | json }}
-    </pre>
 
 
 
