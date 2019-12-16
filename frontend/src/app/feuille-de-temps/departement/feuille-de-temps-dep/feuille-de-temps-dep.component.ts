@@ -51,6 +51,7 @@ export interface OptionSpec {
 })
 export class FeuilleDeTempsDepComponent implements OnInit {
 
+
   StatutLigne = StatutLigne;
 
   public alignementVOpt: EnumOption[] = [
@@ -63,6 +64,8 @@ export class FeuilleDeTempsDepComponent implements OnInit {
     [StatutLigne.Unspecified, {viewValue: 'Rendre indéterminée',  displaySetedValue: 'ind'    }],
     [StatutLigne.Approved,    {viewValue: 'Approuver',            displaySetedValue: 'aprouvé'}],
     [StatutLigne.Disaproved,  {viewValue: 'Refuser',              displaySetedValue: 'refusé' }],
+    [StatutLigne.DeleteSaved, {viewValue: 'Suprimer',             displaySetedValue: 'A suprimer' }],
+    [StatutLigne.Saved,       {viewValue: 'Annuler supression',    displaySetedValue: 'Sauvegarder' }],
   ]);
 
 
@@ -220,13 +223,20 @@ export class FeuilleDeTempsDepComponent implements OnInit {
   onOperation() {
     let operationVal = this.operationForm.get('operation').value;
     this.selection.selected.forEach(element => {
-      if(element.statut != StatutLigne.Saved) {
+      if(element.statut < StatutLigne.Saved && operationVal < StatutLigne.Saved) {
+        element.statut = operationVal;
+        element.statutTexte = this.operationOptMap.get(element.statut).displaySetedValue;
+      }else if(element.statut >= StatutLigne.Saved && operationVal >= StatutLigne.Saved){
         element.statut = operationVal;
         element.statutTexte = this.operationOptMap.get(element.statut).displaySetedValue;
       }
     });
     this.selection.clear();
 
+  }
+
+  estCochable(row) {
+    row.statut != StatutLigne.Saved;
   }
 
   onSoumettreLignes() {
