@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
 import { BaseUrlService } from './base-url.service.service';
 import { Departement } from '../models/Departement.model';
+import {sprintf} from "sprintf-js";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -81,5 +82,12 @@ export class DepartementsService {
                 console.log('Erreur de chargement !' + error);
             }
         )
+  }
+
+  formatMilisecondesVersHeures(nombre: number): String {
+    let heure = Math.floor(nombre / (60000 * 60));
+    let milisecobdesRest = (nombre % (60000 * 60));
+    let minutes = Math.floor(milisecobdesRest / 60000);
+    return sprintf("%02d:%02d", heure, minutes);
   }
 }

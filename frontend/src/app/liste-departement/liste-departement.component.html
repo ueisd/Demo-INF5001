@@ -12,9 +12,12 @@
         </div>
     </div>
     <div class="row">
-        <app-departement-vue *ngFor="let departement of departementsAfficher; let i = index"
-        [heure_Ouverture]="departement.heure_Ouverture" 
-        [heure_Fermeture]="departement.heure_Fermeture"
-        [departementId]="departement.id"></app-departement-vue>
+        <div class="panel-group">
+            <app-departement-vue *ngFor="let departement of departementsAfficher; let i = index"
+            [heure_Ouverture]="departement.heure_Ouverture" 
+            [heure_Fermeture]="departement.heure_Fermeture"
+            [test]="departement"
+            [departementId]="departement.id"></app-departement-vue>
+        </div>
     </div>
 </div>

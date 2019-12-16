@@ -1,9 +1,41 @@
+
 <div class="panel panel-default">
-    <div class="panel-heading">{{ heure_Ouverture }}, {{ heure_Fermeture }}  -- (Prénom, nom)</div>
-    <div class="panel-body">
-        <p>Test</p>
-        <a [routerLink]="['/edit/departement', departementId]">Éditer</a>   
-        <a [routerLink]="['/feuilleDeTemps/departement', departementId]">Gérer les feuilles de temps</a>  
-        <button class="btn btn-danger" (click)="onDelete()">Supprimer</button>
+    <div class="panel-heading">
+        <div class="btn-group">
+            <a [routerLink]="['/edit/departement', departementId]" class="btn btn-success">
+                <i class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></i>
+                Éditer
+            </a>   
+            <a [routerLink]="['/feuilleDeTemps/departement', departementId]"  class="btn btn-primary">
+                Gérer les feuilles de temps
+            </a>
+            <a class="btn btn-danger" (click)="onDelete()">
+                Supprimer
+                <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+            </a>
+        </div>
     </div>
+    <div class="panel-body">         
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>membres</h2>
+                <ul class="list-group">
+                    <li *ngFor="let employe of test.employes; let i = index" class="list-group-item">
+                        {{ employe.individu.prenom }} {{ employe.individu.nom }} ( {{ employe.heureSemaine }}h/sem )
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <h2>Heures d'ouverture</h2>
+                <ul class="list-group">
+                    <li *ngFor="let siJour of test.journesOuvert; let i = index" class="list-group-item">
+                        {{ joursSemaine[i] }} 
+                        <span *ngIf="siJour" class="font-weight-bold">Ouvert de {{ strHeure_Ouverture }} à {{ strHeure_Fermeture }}</span>
+                        <span *ngIf="!siJour">Fermé</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
 </div>

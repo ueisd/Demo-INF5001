@@ -1,9 +1,19 @@
 <div class="panel panel-default">
-    <div class="panel-heading">{{ individuPrenom }}, {{ individuNom }}  -- (Prénom, nom)</div>
+    <div class="panel-heading">
+        <div class="btn-group">
+            <a [routerLink]="['/edit/individu', individuId]" class="btn btn-success active">
+                <i class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></i>
+                Éditer
+            </a>
+            <a class="btn btn-danger" (click)="onDelete()">
+                Supprimer
+                <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
     <div class="panel-body">
+        {{ individuPrenom }}, {{ individuNom }}  -- (Prénom, nom)
         <p>Ville: {{ individuVille }}</p>
-        <a [routerLink]="['/edit/individu', individuId]">Éditer</a>   
-        <button class="btn btn-danger" (click)="onDelete()">Supprimer</button>
     </div>
 </div>
     

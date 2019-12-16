@@ -92,8 +92,8 @@ export class DepartementFormComponent implements OnInit {
 
 
   initForm() {
-    let heureOuvertureStr = this.formatMilisecondesVersHeures(this.departement.heure_Ouverture);
-    let heuresFermetureStr = this.formatMilisecondesVersHeures(this.departement.heure_Fermeture);
+    let heureOuvertureStr = this.departementService.formatMilisecondesVersHeures(this.departement.heure_Ouverture);
+    let heuresFermetureStr = this.departementService.formatMilisecondesVersHeures(this.departement.heure_Fermeture);
     this.departementForm = this.fb.group({
       id: [this.departement.id],
       heure_Ouverture: [heureOuvertureStr, Validators.compose([

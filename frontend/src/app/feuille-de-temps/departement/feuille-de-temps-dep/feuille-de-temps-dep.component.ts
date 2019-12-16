@@ -250,8 +250,6 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       }
     });
 
-    console.log(JSON.stringify(this.datasourceElements.data));
-
     this.genFeuilleTempsService.addLignesDeTemps(lignesPoster).subscribe(
       (lignesDeTemps) => { 
         console.log('ajout des lignes de temps!');
