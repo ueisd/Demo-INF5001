@@ -3,7 +3,7 @@
     idDep: {{ departement.id }}
 
 
-    <form [formGroup]="requeteForm" (ngSubmit)="onSendRequest()">   
+    <form [formGroup]="requeteForm" (ngSubmit)="onSendRequest()">
 
         <mat-form-field class="full-width">
             <input matInput type="text" placeholder="Générer pour la période"
@@ -25,21 +25,21 @@
           </mat-form-field>
 
         <mat-form-field class="full-width">
-            <input matInput type="number" placeholder="Nombre d'heures max par jours" 
+            <input matInput type="number" placeholder="Nombre d'heures max par jours"
             formControlName="setFillMax" required>
             <mat-error *ngFor="let validation of validationRequeteMessages.setFillMax">
-                <mat-error class="error-message" *ngIf="requeteForm.get('setFillMax').hasError(validation.type) && 
+                <mat-error class="error-message" *ngIf="requeteForm.get('setFillMax').hasError(validation.type) &&
                 (requeteForm.get('setFillMax').dirty || requeteForm.get('setFillMax').touched)">{{validation.message}}</mat-error>
-            </mat-error>   
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-            <input matInput type="number" placeholder="Nombre d'heures minimale pour génerer" 
+            <input matInput type="number" placeholder="Nombre d'heures minimale pour génerer"
             formControlName="setFiilMinOnVoid" required>
             <mat-error *ngFor="let validation of validationRequeteMessages.setFillMax">
-                <mat-error class="error-message" *ngIf="requeteForm.get('setFiilMinOnVoid').hasError(validation.type) && 
+                <mat-error class="error-message" *ngIf="requeteForm.get('setFiilMinOnVoid').hasError(validation.type) &&
                 (requeteForm.get('setFiilMinOnVoid').dirty || requeteForm.get('setFiilMinOnVoid').touched)">{{validation.message}}</mat-error>
-            </mat-error>   
+            </mat-error>
         </mat-form-field>
 
         <div class="btn-toolbar">
@@ -50,7 +50,7 @@
 
     <div class="row" *ngIf="(datasourceElements.data.length > 0)">
 
-        <form [formGroup]="operationForm" (ngSubmit)="onOperation()"> 
+        <form [formGroup]="operationForm" (ngSubmit)="onOperation()">
             <mat-form-field>
                 <mat-label>Sélection de l'opération</mat-label>
                 <mat-select formControlName="operation">
@@ -81,7 +81,7 @@
                 <mat-checkbox *ngIf="(
                     (row.statut < StatutLigne.Saved) &&
                     (this.operationForm.get('operation').value < StatutLigne.Saved)
-                ) 
+                )
                 || (
                     (row.statut == StatutLigne.Saved) &&
                     (this.operationForm.get('operation').value == StatutLigne.DeleteSaved)
@@ -96,17 +96,17 @@
                 </td>
             </ng-container>
 
-            
+
             <ng-container matColumnDef="nom">
                 <th mat-header-cell *matHeaderCellDef> Employe </th>
                 <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="jourDebut">
                 <th mat-header-cell *matHeaderCellDef> Jour </th>
                 <td mat-cell *matCellDef="let element"> {{element.jour | date: 'EEEE le d MMMM y ':timezone:'fr'}} </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="heureDebut">
                 <th mat-header-cell *matHeaderCellDef> Heure Début </th>
                 <td mat-cell *matCellDef="let element"> {{element.heureDebut | date: 'HH:mm'}} </td>
@@ -121,10 +121,10 @@
                 <th mat-header-cell *matHeaderCellDef> Statut </th>
                 <td mat-cell *matCellDef="let element"> {{ element.statutTexte }} </td>
             </ng-container>
-            
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                [ngClass]="{'bg-success': row.statut == StatutLigne.Approved, 
+                [ngClass]="{'bg-success': row.statut == StatutLigne.Approved,
                 'bg-warning': row.statut == StatutLigne.Disaproved,
                 'bg-info': row.statut == StatutLigne.Saved,
                 'bg-danger': row.statut == StatutLigne.DeleteSaved }"></tr>
