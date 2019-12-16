@@ -164,7 +164,8 @@ export class FeuilleDeTempsDepComponent implements OnInit {
         let lignesDeTempsRet: LigneDeTemps[];
         lignesDeTempsRet = this.filterFeuillesDeTempsPropety(requete);
         this.lignesDeTempsSuggestion = lignesDeTempsRet;
-        this.datasourceElements = new MatTableDataSource(this.getTableauAffichage(requete));      
+        this.datasourceElements = new MatTableDataSource(this.getTableauAffichage(requete));     
+        console.log();
       }
     );
     let idDep = this.requeteForm.controls.idDep.value;
@@ -183,7 +184,8 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       let employe = new Employe(e.horaire, e.tauxHoraire, e.heureSemaine, e.titrePoste);
       employe.id = e.id;
       employe.nom = e.individu.prenom + " " + e.individu.nom;
-      return new LigneDeTemps(employe, i.dateEntre, i.dateSortie);
+      let ligneDeTemps: LigneDeTemps =  new LigneDeTemps(employe, i.dateEntre, i.dateSortie, i.statut);
+      return ligneDeTemps;
     });
     return feuillesDeTemps;
   }
@@ -197,9 +199,20 @@ export class FeuilleDeTempsDepComponent implements OnInit {
       ligneAfficher.jour = element.dateEntre;
       ligneAfficher.heureDebut = element.dateEntre;
       ligneAfficher.heureFin = element.dateSortie;
+      ligneAfficher.statut = element.statut;
+      console.log(ligneAfficher.statut);
+      ligneAfficher.statutTexte = this.getStatutTexteFronStatus(ligneAfficher.statut);
       lignesAfficher.push(ligneAfficher);
     });
     return lignesAfficher;
+  }
+
+  protected getStatutTexteFronStatus(statut: StatutLigne) : string {
+    if(statut == StatutLigne.Saved) {
+      return 'Sauvegardé';
+    } else {
+      return this.operationOptMap.get(statut).displaySetedValue;
+    }
   }
 
   onAnnuler() {
