@@ -63,3 +63,9 @@ Certains ide permettent d'installer sans que l'utilisateur voit l'utilisation de
 ## Version
 1.0.0
 
+## License 
+
+Le projet est sous licence MIT X11.
+
+Consulter le fichier [LICENSE.md](LICENSE.md) pour les détails de la licence.
+
