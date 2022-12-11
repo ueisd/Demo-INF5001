@@ -31,7 +31,7 @@
     "@ng-select/ng-select": "^3.7.0",
     "@types/moment": "^2.13.0",
     "bootstrap": "^3.4.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "hammerjs": "^2.0.8",
     "path": "^0.12.7",
     "rxjs": "~6.4.0",
